@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Labelの中の文字列の位置揃え</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Labelの中の文字列の位置揃え</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>labelの中の文字列の位置揃えを指定します。</li>
+      <li><span class="highlight">set_justify(引数)</span>を実行します。</li>
+      <li>引数は次の4通りです。
+        <ul style="list-style-type: none!important;">
+          <li>左寄せ(<span class="align">Gtk::Justification::LEFT</span>)</li>
+          <li>中央(<span class="align">Gtk::Justification::CENTER</span>)</li>
+          <li>右寄せ(<span class="align">Gtk::Justification::RIGHT</span>)</li>
+          <li>均等(<span class="align">Gtk::Justification::FILL</span>)</li>
+        </ul>
+      </li>
+      <li>デフォルトは、中央です。</li>
+      <li>文字列の中に"\n"を挟むと改行します。</li>
+    </ul>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;  
+private:
+    Gtk::Box m_vbox;
+    Gtk::Label m_label1, m_label2, m_label3, m_label4;
+};
+  
+MyWindow::MyWindow()
+ : m_vbox( Gtk::Orientation::VERTICAL ),
+   m_label1( "The marathon will be\n held tomorrow" ),
+   m_label2( "The marathon will be\n held tomorrow" ),
+   m_label3( "The marathon will be\n held tomorrow" ),
+   m_label4( "The marathon will be\n held tomorrow" )
+{
+     set_title("Label( justification )");
+     m_vbox.set_margin( 15 );
+     m_vbox.set_spacing( 10 );
+     m_vbox.set_expand();
+     set_child( m_vbox );
+  
+   // Left
+     m_label1.<span class="highlight">set_justify(</span> <span class="align">Gtk::Justification::LEFT</span> <span class="highlight">)</span>;
+     m_vbox.append( m_label1 ); 
+   // Right
+     m_label2.<span class="highlight">set_justify(</span> <span class="align">Gtk::Justification::RIGHT</span> <span class="highlight">)</span>;
+     m_vbox.append( m_label2 ); 
+   // Center
+     m_label3.<span class="highlight">set_justify(</span> <span class="align">Gtk::Justification::CENTER</span> <span class="highlight">)</span>;
+     m_vbox.append( m_label3 );
+   // Fill
+     m_label4.<span class="highlight">set_justify(</span> <span class="align">Gtk::Justification::FILL</span> <span class="highlight">)</span>;
+     m_vbox.append( m_label4 );
+}
+  
+int main(int argc, char* argv[])
+{
+      auto app = Gtk::Application::create( "gtkmm4.example" );   
+      return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <center><img src="./images/label-justify.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="label-valign.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="label-wrap.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

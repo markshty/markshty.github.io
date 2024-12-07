@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Labelの配置（鉛直）</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Labelの配置（鉛直）</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>Window内でのLabelの鉛直方向の位置を指定します。</li>
+      <li><span class="highlight">set_valign()</span>で上端(<span class="align">Gtk::Align::START</span>)・中央(<span class="align">Gtk::Align::CENTER</span>)・下端(<span class="align">Gtk::Align::END</span>)を指定します。</li>
+      <li>デフォルトは中央(Gtk::Align::CENTER)</li>
+    </ul>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+    Gtk::Label m_label;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title("Label( VAlign - CENTER )");
+    set_default_size( 320, 240 );
+  
+   // CENTER
+    m_label.set_text( "I think,therefore I am" );
+    m_label.<span class="highlight">set_valign(</span> Gtk::Align::CENTER <span class="highlight">)</span>;
+    m_label.set_margin_top( 5 );
+    m_label.set_margin_bottom( 10 );
+    m_label.set_margin_start( 20 );
+    m_label.set_margin_end( 20 );
+    set_expand();
+    set_child( m_label );
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <div class="result-table">
+      <hr>
+      <table width="50%" summary="Result Display" align="center">
+        <tr>
+          <td width="25%" align="center" valign="top">Gtk::Align::SRART</td>
+          <td width="25%" align="center" valign="top">Gtk::Align::CENTER</td>
+          <td width="25%" align="center" valign="top">Gtk::Align::END</td>
+        </tr>
+        <tr>
+          <td width="25%" align="center" valign="top"><img src="./images/label-valign-start.png"></td>
+          <td width="25%" align="center" valign="top"><img src="./images/label-valign-center.png"></td>
+          <td width="25%" align="center" valign="top"><img src="./images/label-valign-end.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="label-halign.html">Previous</td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="label-justify.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

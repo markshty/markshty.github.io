@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Labelの配置（水平）</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <h1 class="title">Labelの配置（水平）</h1>
+    <hr>
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>Window内でのLabelの水平方向の位置を指定します。</li>
+      <li><span class="highlight">set_halign()</span>で左端(<span class="align">Gtk::Align::START</span>)・中央(<span class="align">Gtk::Align::CENTER</span>)・右端(<span class="align">Gtk::Align::END</span>)を指定します。</li>
+      <LI>デフォルトは中央(Gtk::Align::CENTER)</LI>
+    </ul>
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+  
+private:
+    Gtk::Box m_vbox;
+    Gtk::Label m_label1, m_label2, m_label3, m_label4;
+};
+  
+MyWindow::MyWindow()
+ : m_vbox( Gtk::Orientation::VERTICAL )
+{
+    set_title("Label( HAlign )");
+    m_vbox.set_margin( 15 );
+    m_vbox.set_spacing( 10 );
+    set_child( m_vbox );
+  
+  // START
+    m_label1.set_text( "I think,therefore I am" );
+    m_label1.<span class="highlight">set_halign(</span> <span class="align">Gtk::Align::START</span> <span class="highlight">)</span>;
+    m_vbox.append( m_label1 ); 
+  // CENTER
+    m_label2.set_text( "I think,therefore I am" );
+    m_label2.<span class="highlight">set_halign(</span> <span class="align">Gtk::Align::CENTER</span> <span class="highlight">)</span>;
+    m_vbox.append( m_label2 );
+  // END
+    m_label3.set_text( "I think,therefore I am" );
+    m_label3.<span class="highlight">set_halign(</span> <span class="align">Gtk::Align::END</span> <span class="highlight">)</span>;
+    m_vbox.append( m_label3 );
+  
+    m_vbox.set_expand();
+} 
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create("gtkmm4.example");
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <h2 class="ex3">Result</h2>
+    <center><img src="./images/label-halign.png"></center>
+
+    <!-- フッター -->
+    <div id="footer">
+      <hr>
+      <medium>
+        Copyright (c) Henrry Yamm Projects All Rights Rserved.
+      </medium>
+    </div>
+  </body>
+</html>

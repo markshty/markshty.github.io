@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Labelの表示</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Labelの表示</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>作成したい label widget を Gtk::Window に<span class="highlight">set_child()</span>で貼り付けます。</li>
+      <li><span class="highlight">set_text( "Name" )</span>でラベルの文字列をセットします。</li>
+    </ul>
+    
+    <!-- Sample Program -->
+    <h2 class="ex2">プログラム</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+    Gtk::Label m_label;
+};
+        
+MyWindow::MyWindow()
+{
+    set_title("Label");
+    set_default_size( 320, 240 );
+        
+    <span class="highlight">set_child(</span> m_label <span class="highlight">)</span>;
+    m_label.<span class="highlight">set_text(</span> "Label example" <span class="highlight">)</span>;
+}
+        
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create("org.gtkmm4.examples");
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <center><img src="./images/label.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="window-fullscreen.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="label-halign.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
