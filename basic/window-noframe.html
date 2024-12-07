@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Windowの枠(フレーム)の解除</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Windowの枠(フレーム)の解除</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>Windowの枠（フレーム）を無くします。</li>
+      <li><span class="highlight">set_decorated( false )</span>でWindowの枠を無くします。</li>
+      <li><span class="highlight">set_decorated( true )</span>でWindowの枠を付加します。</li>  
+    </ul>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm/application.h&gt;
+#include &lt;gtkmm/box.h&gt;
+#include &lt;gtkmm/button.h&gt;
+#include &lt;gtkmm/window.h&gt;
+#include &lt;iostream&gt;     
+      
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+      
+protected:
+   // Signal handlers:
+    void on_button1_clicked();
+    void on_button2_clicked();
+      
+   // Child widgets:
+    Gtk::Box m_box;
+    Gtk::Button m_button1, m_button2;
+};     
+      
+MyWindow::MyWindow()
+ : m_box( Gtk::Orientation::VERTICAL, 10 ),
+   m_button1( "on" ),
+   m_button2( "off" )
+{
+   // This just sets the title of our new window.
+    set_title( "Frame" );
+      
+   // Sets the margin around the box.
+    m_box.set_margin( 10 );
+      
+   // put the box into the main window.
+    set_child( m_box );
+      
+    m_button1.signal_clicked().connect(
+        sigc::mem_fun(*this, &MyWindow::on_button1_clicked));
+    m_box.append( m_button1 );
+    m_button1.set_expand();
+      
+    m_button2.signal_clicked().connect(
+        sigc::mem_fun(*this, &MyWindow::on_button2_clicked));
+    m_box.append( m_button2 );
+    m_button2.set_expand();
+}
+      
+void MyWindow::on_button1_clicked()
+{
+    <span class="highlight">set_decorated( true )</span>;   // frame 有り
+    std::cout &lt;&lt; "ON" &lt;&lt; std::endl;
+}
+      
+void MyWindow::on_button2_clicked()
+{
+    <span class="highlight">set_decorated( false )</span>;  // frame 無し
+    std::cout &lt;&lt; "OFF" &lt;&lt; std::endl;
+}
+      
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <div class="result-table">
+    <hr>
+    <table width="50%" summary="Result Display" align="center">
+      <tr>
+        <td width="25%" align="center" valign="top">Frame 無し</td>
+        <td width="25%" align="center" valign="top">Frame 有り</td>
+      </tr>
+      <tr>
+        <td width="25%" align="center" valign="top"><img src="./images/window-noframe1.png"></td>
+        <td width="25%" align="center" valign="top"><img src="./images/window-noframe2.png"></td>
+      </tr>
+    </table>
+    </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="window-fixed.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="window-fullscreen.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

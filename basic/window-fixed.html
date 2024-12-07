@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Windowのサイズの固定</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Windowのサイズの固定</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li><span class="highlight">set_resizable( false )</span>でwindowのサイズを固定します。</li>
+      <li>また、<span class="highlight">set_resizable( true )</span>でWindowのサイズを可変にすることができます。</li>  
+    </ul>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow( );
+    virtual ~MyWindow() = default;
+};
+        
+MyWindow::MyWindow( )
+{
+    set_title( "Windowのサイズの固定" );
+    set_default_size( 320, 240 );
+            
+    <span class="highlight">set_resizable( false )</span>;    // Windowのサイズの固定
+}
+        
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <h2 class="ex3">Result</h2>
+    <center><img src="./images/window-fixed.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="window-quit.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="window-noframe.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
