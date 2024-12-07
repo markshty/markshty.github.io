@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Labelの中の文字列の折り返し</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Labelの中の文字列の折り返し</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>labelの中の文字列を折り返します。</li>
+      <li><span class="highlight">set_wrap()</span>を実行します。</li>
+    </ul>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+    Gtk::Box m_vbox;
+    Gtk::Frame m_frame1, m_frame2;
+    Gtk::Label m_label1, m_label2;
+};
+  
+MyWindow::MyWindow()
+ : m_vbox( Gtk::Orientation::VERTICAL ),
+   m_frame1( "Line Wrapped" ),
+   m_frame2( "Fill Line Wrapped" )
+{
+    set_title("Label( wrapped )");
+    m_vbox.set_margin( 15 );
+    m_vbox.set_spacing( 10 );
+    set_child( m_vbox );
+    set_default_size( 200, 350 );
+  
+  // LineWrapped
+    m_label1.set_text( "ABCD EFGH IJKL MNOP QRST UVWX YZ "
+                       "ABCD EFGH IJKL MNOP QRST UVWX YZ "
+                       "ABCD EFGH IJKL MNOP QRST UVWX YZ "
+                       "---- ---- ---- ---- --" );
+    m_label1.<span class="highlight">set_wrap()</span>;
+    m_frame1.set_child( m_label1 );
+    m_vbox.append( m_frame1 ); 
+  
+   // FilledWrapped
+    m_label2.set_text( "ABCD EFGH IJKL MNOP QRST UVWX YZ "
+                       "ABCD EFGH IJKL MNOP QRST UVWX YZ "
+                       "ABCD EFGH IJKL MNOP QRST UVWX YZ "
+                       "---- ---- ---- ---- --" );
+    m_label2.set_justify( Gtk::Justification::FILL );
+    m_label2.<span class="highlight">set_wrap()</span>;
+    m_frame2.set_child( m_label2 );
+    m_vbox.append( m_frame2 ); 
+}
+    
+int main(int argc, char* argv[])
+{
+      auto app = Gtk::Application::create( "gtkmm4.example" );   
+      return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <div border="1px" class="paragraph">
+      <p>サンプルプログラムの上のフレームはset_wrap()のみ</p>
+      <p>下のフレームは、set_justify()でframeの幅いっぱいに位置揃えを行っています。</p>
+    </div>   
+    <center><img src="./images/label-wrap-on.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="label-justify.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="label-decoration-1font.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
