@@ -11,8 +11,10 @@
     <br>
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">Gdk::pixbufに空の画像領域を作成します。</p>
+    <h3>使い方</h3>
     <ul class="paragraph">
-      <li>Gdk::pixbufに空の画像領域を作成します。</li>
       <li><span class="highlight">Gdk::pixbuf( Gdk::Colorspace::RGB, false, 8, width, height )</span>で幅width×高さheightの領域を作成します。</li>
       <li>第一引数は、Gdk::Colorspace::RGBは固定です。</li>
       <li>第二引数は、領域の画像データがアルファ値を持つならture、持たない場合はfalseを指定します。trueの場合は、fill()を実行したときにアルファ値が有効になります。</li>

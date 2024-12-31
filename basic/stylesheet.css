@@ -25,12 +25,15 @@ h2 {
 }
 
 h3 {
-    
-
-
-
+    margin-left:      100px;
+    padding-left:     20px;
+    width:            80px;
+    color:            #008000;
+    background:       #ffffdb;
+    border-radius:    7px 7px 7px 7px;
+    border-bottom:    solid 3px #2e8b67;
 }
-
+  
 .paragraph {
     width:            78%;
     margin-left:      10%;

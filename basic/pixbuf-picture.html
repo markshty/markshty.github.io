@@ -11,14 +11,12 @@
     <br>
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">Gdk::pixbufに読み込まれた画像データをWindowの背景にセットします。</p>
+    <h3>使い方</h3>
     <ul class="paragraph">
-      <li>Gdk::pixbufに読みかまれた画像データをWindowの背景にセットします。</li>
-      <li><span class="highlight">Gdk::pixbuf( Gdk::Colorspace::RGB, false, 8, width, height )</span>で幅width×高さheightの領域を作成します。</li>
-      <li>第一引数は、Gdk::Colorspace::RGBは固定です。</li>
-      <li>第二引数は、領域の画像データがアルファ値を持つならture、持たない場合はfalseを指定します。trueの場合は、fill()を実行したときにアルファ値が有効になります。</li>
-      <li>第三引数は、８に固定です。</li> 
-      <li>作成された領域は、<span class="highlight">fill(</span> <span class="emphasis">color</span> <span class="highlight">)</span>によって着色することができます。</li>
-      <li><span class="emphasis">color</span>: 例 0xffffff(white) 0x000000(black)</li>
+      <li><span class="highlight">Gdk::pixbuf::create_from_file( "ファイル名" )</span>に画像を読み込みます。</li>
+      <li>次にWindowの幅、高さに合わせて、<span class="highlight">scale_simple(</span> <span class="emphasis">幅, 高さ</span> <span class="highlight">)</span>によって拡大・縮小します。</li>
     </ul>
     <!-- Sample Program -->
     <h2 class="ex2">Sample Program</h2>
@@ -41,7 +39,7 @@ MyDrawArea::MyDrawArea() {
     set_draw_func( sigc::mem_fun( *this, &MyDrawArea::on_draw ));
    // 画像読み込み
     try {
-        m_pixbuf = Gdk::Pixbuf::create_from_file( "bridge.jpeg" );
+        m_pixbuf = <span class="highlight">Gdk::Pixbuf::create_from_file(</span> "bridge.jpeg" <span class="highlight">)</span>;
     }
     catch(...)
     {
@@ -54,7 +52,7 @@ void MyDrawArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int wid
   
    // 描画
    // Gdk::Pixbuf::scale_simple()を使ってウィンドウに画像サイズを合わせる
-    Gdk::Cairo::set_source_pixbuf( cr, m_pixbuf->scale_simple( width, height, Gdk::InterpType::NEAREST ), 0, 0 );
+    Gdk::Cairo::set_source_pixbuf( cr, m_pixbuf-><span class="highlight">scale_simple(</span> width, height, Gdk::InterpType::NEAREST <span class="highlight">)</span>, 0, 0 );
     cr->paint();
 }
   
