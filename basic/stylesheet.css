@@ -24,6 +24,13 @@ h2 {
     border-bottom:    solid 3px #d7d7d7;
 }
 
+h3 {
+    
+
+
+
+}
+
 .paragraph {
     width:            78%;
     margin-left:      10%;
@@ -73,6 +80,11 @@ div#pagebody {
 
 .align {
     color:          #006400;    
+    font-weight:      bold;
+}
+
+.emphasis {
+    color:          #008000;
     font-weight:      bold;
 }
 
