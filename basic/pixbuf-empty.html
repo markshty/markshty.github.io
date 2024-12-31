@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>空のpixbuf領域の作成</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">空のpixbuf領域の作成</h1>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>Gdk::pixbufに空の画像領域を作成します。</li>
+      <li><span class="highlight">Gdk::pixbuf( Gdk::Colorspace::RGB, false, 8, width, height )</span>で幅width×高さheightの領域を作成します。</li>
+      <li>第一引数は、Gdk::Colorspace::RGBは固定です。</li>
+      <li>第二引数は、領域の画像データがアルファ値を持つならture、持たない場合はfalseを指定します。trueの場合は、fill()を実行したときにアルファ値が有効になります。</li>
+      <li>第三引数は、８に固定です。</li> 
+      <li>作成された領域は、<span class="highlight">fill(</span> <span class="emphasis">color</span> <span class="highlight">)</span>によって着色することができます。</li>
+      <li><span class="emphasis">color</span>: 例 0xffffff(white) 0x000000(black)</li>
+    </ul>
+    <!-- Sample Program -->
+    <h2 class="ex2">Sample Program</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+  
+private:
+    Gtk::Image m_image;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Background Color" );
+    set_default_size( 640, 480 );
+  
+    Glib::RefPtr&lt;Gdk::Pixbuf&gt; pixbuf = <span=class=highlight">Gdk::Pixbuf::create(</span> Gdk::Colorspace::RGB, false, 8, 150, 125 <span class="highlight">)</span>;
+    pixbuf-><span class="highlight">fill(</span> 0x3355aaff <span class="highlight">)</span>; 
+    m_image.set( pixbuf ); 
+  
+    set_child( m_image );
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <center><img src="./images/pixbuf-empty.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pixbuf-composite.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pixbuf-picture.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

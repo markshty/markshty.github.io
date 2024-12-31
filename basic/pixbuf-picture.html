@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>背景画像</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">背景画像</h1>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>Gdk::pixbufに読みかまれた画像データをWindowの背景にセットします。</li>
+      <li><span class="highlight">Gdk::pixbuf( Gdk::Colorspace::RGB, false, 8, width, height )</span>で幅width×高さheightの領域を作成します。</li>
+      <li>第一引数は、Gdk::Colorspace::RGBは固定です。</li>
+      <li>第二引数は、領域の画像データがアルファ値を持つならture、持たない場合はfalseを指定します。trueの場合は、fill()を実行したときにアルファ値が有効になります。</li>
+      <li>第三引数は、８に固定です。</li> 
+      <li>作成された領域は、<span class="highlight">fill(</span> <span class="emphasis">color</span> <span class="highlight">)</span>によって着色することができます。</li>
+      <li><span class="emphasis">color</span>: 例 0xffffff(white) 0x000000(black)</li>
+    </ul>
+    <!-- Sample Program -->
+    <h2 class="ex2">Sample Program</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyDrawArea : public Gtk::DrawingArea {
+private:
+    Glib::RefPtr&lt;Gdk::Pixbuf&gt; m_pixbuf;
+public:
+    MyDrawArea();
+    virtual ~MyDrawArea() = default;
+protected:
+    virtual void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+  
+MyDrawArea::MyDrawArea() {
+    set_draw_func( sigc::mem_fun( *this, &MyDrawArea::on_draw ));
+   // 画像読み込み
+    try {
+        m_pixbuf = Gdk::Pixbuf::create_from_file( "bridge.jpeg" );
+    }
+    catch(...)
+    {
+        Glib::exception_handlers_invoke();
+        exit(1);
+    }
+}
+  
+void MyDrawArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height ) {
+  
+   // 描画
+   // Gdk::Pixbuf::scale_simple()を使ってウィンドウに画像サイズを合わせる
+    Gdk::Cairo::set_source_pixbuf( cr, m_pixbuf->scale_simple( width, height, Gdk::InterpType::NEAREST ), 0, 0 );
+    cr->paint();
+}
+  
+  
+class MyWindow : public Gtk::Window
+{
+private:
+    MyDrawArea m_drawarea;
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+};
+  
+MyWindow::MyWindow() {
+    set_title( "Background Image" );
+    set_default_size( 640, 320 );
+  
+    set_child( m_drawarea );
+}
+    
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <center><img src="./images/pixbuf-picture.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pixbuf-empty.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pixbuf-dma.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

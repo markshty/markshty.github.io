@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>画像データの拡大・縮小</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">画像データの拡大・縮小</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>Gdk::pixbufにセットされている画像データを拡大・縮小します。</li> 
+      <li>画像データを拡大・縮小するためには、<span class="highlight">Gdk::Pixbuf::scale_simple(</span><span class="emphasis">幅</span>、<span class="emphasis">高さ</span>、<span class="emphasis">補間方式</span><span class="highlight">)</span>を使用します。</li>
+      <li><span class="emphasis">幅</span>：拡大・縮小後の幅をセット </li>
+      <li><span class="emphasis">高さ</span>：拡大・縮小後の幅をセット</li>
+      <li><span class="emphasis">補間方式</span>：次表参照</li>
+    </ul>
+    <table width="60%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+      <tr>
+        <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">補間方式</font></th>
+      </tr>
+      <tr>
+        <td width="20%" class="table_heading">書式</td>
+        <td width="40%" class="table_heading">意味</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">Gdk::InterpType::NEAREST</td>
+        <td width="40%" class="table_cell">拡大・縮小の速さが最も優れているが、画像の質が低い</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">Gdk::InterpType::TILES</td>
+        <td width="40%" class="table_cell">補間の処理無しに正確に表示することができる</td>      
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">Gdk::InterpType::BILINEAR</td>
+        <td width="40%" class="table_cell">デフォルト、最も質と速さがバランスがよい。</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">Gdk::InterpType::HYPER</td>
+        <td width="40%" class="table_cell">速さは遅いが画像の質が最も良い</td>
+      </tr>
+    </table>
+    <!-- Sample Program -->
+    <h2 class="ex2">Sample Program</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyArea : public Gtk::DrawingArea
+{
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+    MyArea m_area;
+};
+  
+MyArea::MyArea()
+{
+    set_draw_func(sigc::mem_fun(*this, &MyArea::on_draw));
+}
+  
+void MyArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    auto image1 = Gdk::Pixbuf::create_from_file( "test.bmp" );
+    Gdk::Cairo::set_source_pixbuf( cr, image1, 5, 0 );
+    cr->paint();
+  
+    int w = image1->get_width();
+    int h = image1->get_height();
+  
+   // 画像データを拡大・縮小( 幅50% 高さ50% )
+    auto image2 = image1-><span class="highlight">scale_simple(</span> 5 + 0.5*w, 0.5*h, Gdk::InterpType::NEAREST <span class="highlight">)</span>;
+    Gdk::Cairo::set_source_pixbuf( cr, image2, w, h );
+    cr->paint();
+}
+  
+MyWindow::MyWindow()
+{
+    set_title( "Scale" );
+    set_default_size( 400, 420 );
+  
+    set_child( m_area );
+} 
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <center><img src="./images/pixbuf-scale.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pixbuf-write.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pixbuf-rotate.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

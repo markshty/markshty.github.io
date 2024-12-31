@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>画像ファイルの読み込み</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">画像ファイルの読み込み</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <ul class="paragraph">
+      <li>Gdk::pixbufは、様々なフォーマットの画像ファイルを読み込むことができます。</li> 
+      <li>読み込まれた画像データは、別のフォーマットで画像ファイルに書き出したり、ラベルやボタンに表示することができます。</li>
+      <li>また、画像データはグラフィック画面(Gtk::DrawingArea)に表示することもできます。</li>
+      <li>その他画像データを回転させたり、拡大・縮小させることができます。</li>  
+      <li>画像ファイルを読み込むためには、<span class="highlight">Gdk::Pixbuf::create_from_file("</span>画像ファイル名<span class="highlight">")</span>を使用します。</li>
+    </ul>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">Sample Program</h2>
+    <p class="paragraph">update:2024/11/8</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+  
+private:
+    Gtk::Image m_image;
+    Glib::RefPtr&lt;Gdk::Pixbuf&gt; data;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "画像の読み込み" );
+    set_default_size( 256, 256 );
+  
+   // 画像ファイルの読み込み
+    data = <span class="highlight">Gdk::Pixbuf::create_from_file(</span> "test.png" <span class="highlight">)</span>;
+  
+   // 画像ファイルを読み込んで表示
+    m_image.set( data );
+  
+   // ウィンドウに画像を追加
+    set_child( m_image );
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">Result</h2>
+    <center><img src="./images/pixbuf-read.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="image-display.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pixbuf-display-gui.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
