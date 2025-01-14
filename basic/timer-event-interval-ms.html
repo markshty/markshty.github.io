@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>インターバルタイマー</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">インターバルタイマー</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+    <p class="paragraph">インターバルタイマーは一定の時間間隔で繰り返し起動されるタイマーです。(これに対してワンショットタイマーは一定時間後に一度だけ呼び出されるタイマーです。)</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li>イベント「<span class="highlight">Glib::signal_timeout().connect()</span>」において、「<span class="emphasis">スロット関数</span>」を指定します。</li>
+      <li>インターバルタイマーとして使用する場合は、connect()関数を使います。ワンショットタイマーとして使用する場合はconnect_once()関数を使用します。</li>
+      <li>connect()関数では、<span class="highlight">ミリ秒単位</span>で<span class="emphasis">スロット関数</span>の<span class="highlight">発生間隔</span>を指定することができます。</li>
+      <li>connect_seconds()関数では、秒単位でイベントの発生間隔を指定することができます。</li>
+      <li>connect()関数で指定するスロット関数の返値はは<span class="emphasis">&lt;bool&gt;</span>となります。<span class="highlight">「true」</span>ならタイマーイベントが<span class="emphasis">継続</span>され、<span class="highlight">「false」</span>まらイベントは中止されます。</li>
+      <li>なお、connect_once()関数を使用する場合はスロット関数の返値は、&lt;void&gt;となります。</li>
+    </ul>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2025/1/12</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;ctime&gt;
+#include &lt;cmath&gt;
+  
+class Clock : public Gtk::DrawingArea
+{
+public:
+    Clock();
+    virtual ~Clock() = default;
+  
+protected:
+    void   on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+    <span class="emphasis">bool</span>   on_timeout();
+    double m_radius;
+    double m_line_width;
+private:
+    void   getTime();
+    double minutes;
+    double hours;
+    double seconds;
+};
+  
+Clock::Clock()
+ : m_radius( 0.42 ), m_line_width( 0.02 )
+{
+   // <spna class="highlight">1000ミリ秒ごと</spna>に、<span class="emphasis">スロット関数Clock::on_timeout()</span>が呼び出される。
+    <span class="highlight">Glib::signal_timeout()</span>.<span class="emphasis">connect</span>( sigc::mem_fun( *this, <span class="emphasis">&Clock::on_timeout</span>), <span class="highlight">1000</span> );
+    set_draw_func(sigc::mem_fun( *this, &Clock::on_draw ));
+}
+  
+void Clock::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height)
+{
+    double x0, y0, x1, y1, x2, y2;
+  
+   // 現在時刻の取得 
+    getTime();
+   // 文字盤
+    cr->scale(width, height);
+    cr->translate( 0.5, 0.5 );
+    cr->set_line_width( m_line_width );
+    cr->save();
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->paint();
+    cr->restore();
+    cr->arc( 0, 0, m_radius, 0, 2 * M_PI );
+    cr->save();
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 0.8 );
+    cr->stroke_preserve();
+  
+    cr->set_line_cap( Cairo::Context::LineCap::ROUND );
+  
+   // インデクス(時字)
+    for (int i = 0; i &lt; 12; i++)  {
+        double inset = 0.08;
+        cr->save();
+  
+        if( i % 3 != 0 ) {
+            inset *= 0.85;
+            cr->set_line_width( 0.01 );
+        }
+  
+        cr->move_to(
+            ( m_radius - inset ) * cos ( i * M_PI / 6 ),
+            ( m_radius - inset ) * sin ( i * M_PI / 6 ));
+        cr->line_to (
+            m_radius * cos ( i * M_PI / 6 ),
+            m_radius * sin ( i * M_PI / 6 ));
+            cr->stroke();
+            cr->restore();
+    }
+  
+   // 秒針
+    cr->set_line_width( m_line_width / 3 );
+    cr->set_source_rgba( 0.7, 0.7, 0.7, 0.8 );
+  
+    x1 =  sin( seconds ) * ( m_radius * 0.9 );
+    y1 = -cos( seconds ) * ( m_radius * 0.9 );
+    cr->move_to( 0, 0 );
+    cr->line_to( x1, y1 );
+    cr->stroke();
+  
+   // 分針
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    cr->set_line_width( m_line_width/ 10 );
+    cr->set_line_join( Cairo::Context::LineJoin::MITER );
+      
+    x0 =  sin( minutes + seconds / 60 ) * ( m_radius * 0.8 );
+    y0 = -cos( minutes + seconds / 60 ) * ( m_radius * 0.8 );
+    x1 =  sin( minutes + seconds / 60 + M_PI / 2 ) * ( m_radius * 0.02 );
+    y1 = -cos( minutes + seconds / 60 + M_PI / 2 ) * ( m_radius * 0.02 );
+    x2 =  sin( minutes + seconds / 60 - M_PI / 2 ) * ( m_radius * 0.02 );
+    y2 = -cos( minutes + seconds / 60 - M_PI / 2 ) * ( m_radius * 0.02 );
+  
+    cr->move_to( x0, y0 );
+    cr->line_to( x1, y1 );
+    cr->line_to( x2, y2 );
+    cr->close_path();
+    cr->fill_preserve();
+    cr->stroke();
+  
+   // 時針
+    x0 =  sin( hours + minutes / 12.0 ) * ( m_radius * 0.5 );
+    y0 = -cos( hours + minutes / 12.0 ) * ( m_radius * 0.5 );
+    x1 =  sin( hours + minutes / 12.0  + M_PI / 2 ) * ( m_radius * 0.02 );
+    y1 = -cos( hours + minutes / 12.0  + M_PI / 2 ) * ( m_radius * 0.02 );
+    x2 =  sin( hours + minutes / 12.0  - M_PI / 2 ) * ( m_radius * 0.02 );
+    y2 = -cos( hours + minutes / 12.0  - M_PI / 2 ) * ( m_radius * 0.02 );
+  
+    cr->move_to( x0, y0 );
+    cr->line_to( x1, y1 );
+    cr->line_to( x2, y2 );
+    cr->close_path();
+    cr->fill_preserve();
+    cr->stroke();
+}
+  
+void Clock::getTime()
+{
+   // 現在時刻の取得
+    time_t rawtime;
+    time( &rawtime );
+    struct tm * timeinfo = localtime( &rawtime) ;
+  
+   // 時分秒
+    hours   = timeinfo->tm_hour * M_PI / 6;
+    minutes = timeinfo->tm_min  * M_PI / 30;
+    seconds = timeinfo->tm_sec  * M_PI / 30;  
+}
+  
+<span class="emphasis">bool</span> Clock::on_timeout()
+{
+    getTime();
+    queue_draw();
+    return true;
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+    Clock m_clock;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Analog Clock" );
+    set_size_request( 320, 360 );
+    set_child( m_clock );
+}
+  
+int main( int argc, char** argv ) 
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/timer-event-interval-ms.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="mouse-event-7scroll.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="timer-event-oneshot-ms.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
