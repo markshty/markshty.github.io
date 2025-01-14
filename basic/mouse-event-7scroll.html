@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>マウスのスクロールボタンを回転(scroll)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">マウスのスクロールボタンを回転(scroll)</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">マウスのスクロールボタンを前後に回転させたときの動作を指定します。</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li><span class="highlight">Gtk::EventControllerScroll::create()</span>でGtk::EventControllerScrollのスマートポインタを作成します。</li>
+      <li>イベント「<span class="emphasis">signal_scroll()</span>」が発生した時の「<span class="emphasis">signal_handler</span>」を指定します。</li>
+      <li><span class="highlight">add_contoroller()</span>でマウスイベントをwidgetに結びつけます。</li>
+      <li>「<span class="emphasis">signal_handler</span>」では、イベントが発生した時の<span class="highlight">マウスの回転の方向</span>( <span class="emphasis">double dx, double dy</span> )を取得することができます。</li>
+      <li>dy:1 後進（後ろ回り）  dy:-1 前進（前回り）</li>
+    </ul>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2025/1/2</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+ 
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    ~MyWindow()=default;
+protected:
+    bool on_mouse_scroll( <span class="emphasis">double dx, double dy</span> );
+};
+  
+MyWindow::MyWindow() {
+    set_title( "Mouse Event - Scroll" );
+    set_default_size( 320, 240 );
+  
+    auto m_controller = <span class="highlight">Gtk::EventControllerScroll::create()</span>;
+    m_controller-><span class="emphasis">signal_scroll()</span>.connect(sigc::mem_fun(*this, <span class="emphasis">&MyWindow::on_mouse_scroll</span>), true );
+    m_controller->set_flags( Gtk::EventControllerScroll::Flags::VERTICAL );
+    <span class="highlight">add_controller(</span>m_controller<span class="highlight">)</span>;
+}
+  
+bool MyWindow::on_mouse_scroll( <span class="emphasis">double dx, double dy</span> ) {
+    std::cout &lt;&lt; "dx:" &lt;&lt; dx &lt;&lt; " dy:" &lt;&lt; dy &lt;&lt; std::endl;
+    return true;
+}  
+ 
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    
+    <div class=""result-table">
+      <hr>
+      <table width="65%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Mouse event</font></th>
+        </tr>
+        <tr>
+          <td width="45%" class="table_heading">Console</td>
+          <td width="20%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="45%" class="terminal_cell">
+          dx:0 dy:1      // 後退（後ろ回り）<br>
+          dx:0 dy:-1     // 前進（前回り）<br>
+          </td>
+          <td width="20%" class="table_cell"><img src="./images/mouse-event-scroll.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="mouse-event-6motion.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="timer-event-interval-ms.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

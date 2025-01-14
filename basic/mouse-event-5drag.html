@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>マウスのドラッグ(GestureDrag)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">マウスのドラッグ(GestureDrag)</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">マウスをドラッグしたときの動作を指定します。</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li><span class="highlight">Gtk::GestureDrag::create()</span>でGtk::GestureDragのスマートポインタを作成します。</li>
+      <li>イベントが発生した時の「<span class="emphasis">signal_handler</span>」を指定します。</li>
+      <li><span class="emphasis">signal_drag_begin()</span>は、ドラッグが始まったときに発生するイベントです。</li>
+      <li><span class="emphasis">signal_drag_updaten()</span>は、ドラッグの途中に随時発生するイベントです。</li>
+      <li><span class="emphasis">signal_drag_end()</span>は、ドラッグが終了したときに発生するイベントです。</li>
+      <li><span class="highlight">add_contoroller()</span>でマウスイベントをwidgetに結びつけます。</li>
+    </ul>
+    <p class="paragraph">signal_handlerの引数は次表のとおり。</p>
+    <table width="55%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+      <tr>
+        <th bgcolor="#23ff91" colspan="3"><font color="#ffffff">signal_handlerの引数</font></th>
+      </tr>
+      <tr>
+        <td width="10%" class="table_heading">イベント</td>
+        <td width="15%" class="table_heading">引数</td>
+        <td width="30%" class="table_heading">意味</td>>
+      </tr>
+      <tr>
+        <td width="10%" class="table_cell">signal_drag_begin</td>
+        <td width="15%" class="table_cell">double start_x<br>double start_y</td>
+        <td width="30%" class="table_cell">ドラッグ開始時のｘ座標の絶対座標<br>ドラッグ開始時のｙ座標の絶対座標</td>
+      </tr>
+      <tr>
+        <td width="10%" class="table_cell">signa_drag_update</td>
+        <td width="15%" class="table_cell">double offset_x<br>double offset_y</td>
+        <td width="30%" class="table_cell">ドラッグ途中のｘ座標の相対座標<br>ドラッグ途中のｙ座標の相対座標</td>
+      </tr>
+      <tr>
+        <td width="10%" class="table_cell">signal_drag_end</td>
+        <td width="15%" class="table_cell">double offset_x<br>double offset_y</td>      
+        <td width="30%" class="table_cell">ドラッグ終了時のｘ座標の相対座標<br>ドラッグ終了時のｙ座標の相対座標</td>
+      </tr>
+    </table>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2025/1/2</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+  
+class Screen : public Gtk::DrawingArea {
+public:
+    Screen();
+    ~Screen() = default;
+    int px0, py0, px1, py1;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+  
+Screen::Screen()
+{
+    set_draw_func(sigc::mem_fun( *this, &Screen::on_draw ));
+}
+  
+void Screen::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height ) {
+   // BackgroundColor
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->paint();
+  
+   // coordinate axis
+    cr->set_line_width(0.9);
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    cr->move_to( px0, py0 );
+    cr->line_to( px1, py1 );
+    cr->stroke();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    Screen plt;
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+   // Signal handlers
+    void on_mouse_drag_begin( <span class="emphasis">double start_x, double start_y</span> );
+    void on_mouse_drag_update( <span class="emphasis">double offset_x, double offset_y</span> );
+    void on_mouse_drag_end( <span class="emphasis">double offset_x, double offset_y</span> );
+  
+    Glib::RefPtr&lt;Gtk::GestureDrag&gt; m_controller_b, m_controller_u, m_controller_e;
+};
+  
+MyWindow::MyWindow() {
+    set_title( "Mouse Drag" );
+    set_default_size( 320, 240 );
+  
+    m_controller_b = <span class="highlight">Gtk::GestureDrag::create()</span>;
+    m_controller_b-><span class="emphasis">signal_drag_begin()</span>.connect(
+        sigc::mem_fun( *this, <span class="emphasis">&MyWindow::on_mouse_drag_begin</span> ));
+    plt.<span class="highlight">add_controller(</span> m_controller_b <span class="highlight">)</span>;
+  
+    m_controller_u = Gtk::GestureDrag::create();
+    m_controller_u-><span class="emphasis">signal_drag_update()</span>.connect(
+        sigc::mem_fun( *this, <span class="emphasis">&MyWindow::on_mouse_drag_update</span> ));
+    plt.add_controller( m_controller_u );
+      
+    m_controller_e = Gtk::GestureDrag::create();
+    m_controller_e-><span class="emphasis">signal_drag_end()</span>.connect(
+        sigc::mem_fun( *this, <span class="emphasis">&MyWindow::on_mouse_drag_end</span> ));
+    plt.add_controller( m_controller_e );
+    set_child( plt );
+}
+  
+  
+void MyWindow::on_mouse_drag_begin( <span class="emphasis">double start_x, double start_y</span> ) {
+  
+    plt.px0 = (int)start_x;
+    plt.py0 = (int)start_y;;
+  
+    std::cout &lt;&lt; "Begin:" &lt;&lt; (int)start_x &lt;&lt; "," &lt;&lt; (int)start_y &lt;&lt; std::endl;
+}
+  
+void MyWindow::on_mouse_drag_update( <span class="emphasis">double offset_x, double offset_y</span> ) {
+  
+    plt.px1 = plt.px0 + (int)offset_x;
+    plt.py1 = plt.py0 + (int)offset_y;;
+  
+    std::cout &lt;&lt; "Update:" &lt;&lt; (int)offset_x &lt;&lt; "," &lt;&lt;(int)offset_y &lt;&lt; std::endl;
+    plt.queue_draw();
+}
+  
+void MyWindow::on_mouse_drag_end( <span class="emphasis">double offset_x, double offset_y</span> ) {
+  
+    plt.px1 = plt.px0 + (int)offset_x;
+    plt.py1 = plt.py0 + (int)offset_y;;
+  
+    std::cout &lt;&lt; "End:" &lt;&lt; (int)offset_x &lt;&lt; "," &lt;&lt; (int)offset_y &lt;&lt; std::endl;
+    plt.queue_draw();
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    
+    <div class=""result-table">
+      <hr>
+      <table width="65%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Mouse event</font></th>
+        </tr>
+        <tr>
+          <td width="45%" class="table_heading">Console</td>
+          <td width="20%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="45%" class="terminal_cell">
+          $ Begin:63, 42<br>
+          Update:0,0<br>
+          Update:2,2<br>
+          Update:21,19<br>
+          Update:50,38<br>
+          Update:61,45<br>
+          Update:87,59<br>
+          Update:131,80<br>
+          Update:148,86<br>
+          Update:154,86<br>
+          Update:158,86<br>
+          Update:161,86<br>
+          Update:164,87<br>
+          Update:165,88<br>
+          Update:165,90<br>
+          Update:166,90<br>
+          Update:170,94<br>
+          Update:174,96<br>
+          Update:176,98<br>
+          Update:177,98<br>
+          End:177,98
+          </td>
+          <td width="20%" class="table_cell"><img src="./images/mouse-event-drag.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="mouse-event-4image.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="mouse-event-6motion.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>マウスを上下・左右に動かす(motion)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">マウスを上下・左右に動かす(motion)</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">マウスをWindow上で上下・左右に動かしたときの動作を指定します。</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li><span class="highlight">Gtk::EventControllerMotion::create()</span>でGtk::EventControllerMotionのスマートポインタを作成します。</li>
+      <li>イベント「<span class="emphasis">signal_motion()</span>」が発生した時の「<span class="emphasis">signal_handler</span>」を指定します。</li>
+      <li><span class="highlight">add_contoroller()</span>でマウスイベントをwidgetに結びつけます。</li>
+      <li>「<span class="emphasis">signal_handler</span>」では、イベントが発生した時の<span class="highlight">マウスの座標</span>( <span class="emphasis">double x, double y</span> )を取得することができます。</li>
+    </ul>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2025/1/2</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class Screen : public Gtk::DrawingArea {
+public:
+    Screen();
+    ~Screen() = default;
+      
+    int center_x;
+    int center_y;
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+  
+Screen::Screen()
+{
+    set_draw_func(sigc::mem_fun( *this, &Screen::on_draw ));
+}
+  
+void Screen::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height ) {
+   // BackgroundColor
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->paint();
+  
+   // coordinate axis
+    cr->set_line_width(0.9);
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    cr->move_to( 0, center_y);
+    cr->line_to( width, center_y);
+    cr->move_to( center_x, 0 );
+    cr->line_to( center_x, height );
+    cr->stroke();
+} 
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    Screen plt;
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+   // Signal handlers
+    void on_mouse_motion( <span class="emphasis">double x, double y</span> );
+};
+  
+MyWindow::MyWindow() {
+    set_title( "Mouse Motion" );
+    set_default_size( 320, 240 );
+  
+    auto m_controller = <span class="highlight">Gtk::EventControllerMotion::create()</span>;
+    m_controller-><span class="emphasis">signal_motion()</span>.connect(
+        sigc::mem_fun( *this, <span class="emphasis">&MyWindow::on_mouse_motion</span> ));
+    plt.<span class="highlight">add_controller(</span> m_controller <span class="highlight">)</span>;
+  
+    set_child( plt );
+}
+  
+void MyWindow::on_mouse_motion( <span class="emphasis">double x, double y</span> ) {
+    plt.center_x = (int)x;
+    plt.center_y = (int)y;; 
+  
+    std::cout &lt;&lt; "x:" &lt;&lt; plt.center_x &lt;&lt; " y:" &lt;&lt; plt.center_y &lt;&lt; std::endl;
+    plt.queue_draw();
+}  
+ 
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    
+    <div class=""result-table">
+      <hr>
+      <table width="65%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Mouse event</font></th>
+        </tr>
+        <tr>
+          <td width="45%" class="table_heading">Console</td>
+          <td width="20%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="45%" class="terminal_cell">
+          x:65 y:145<br>
+          x:97 y:151<br>
+          x:187 y:154<br>
+          x:287 y:154
+          </td>
+          <td width="20%" class="table_cell"><img src="./images/mouse-event-motion.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="mouse-event-5drag.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="mouse-event-7scroll.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

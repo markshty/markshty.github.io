@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>マウスのボタンのクリック(GestureClick その１)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">マウスのボタンのクリック(GestureClick その１)</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">マウスの各ボタンを押したときの動作を指定します。</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li><span class="highlight">Gtk::GestureClick::create()</span>でGtk::GestureClickのスマートポインタを作成します。</li>
+      <li><span class="highlight">set_button( 引数 )</span>でイベントと結びつけるボタンを指定します。</li>
+      <li>イベント「<span class="emphasis">signal_pressed</span>」が発生した時の「<span class="emphasis">signal_handler</span>」を指定します。</li>
+      <li><span class="highlight">add_contoroller()</span>でマウスイベントをwidgetに結びつけます。</li>
+      <li>「<span class="emphasis">signal_handler</span>」では、イベントが発生した時に<span class="highlight">マウスをクリックした回数</span>(<span class="emphasis">int n_press</span>)と<span class="highlight">マウスの座標</span>(<span class="emphasis">double x, double y</span>)を取得することができます。</li>   
+    </ul>
+
+    <table width="35%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+      <tr>
+        <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">set_button( 引数 )</font></th>
+      </tr>
+      <tr>
+        <td width="20%" class="table_heading">引数</td>
+        <td width="15%" class="table_heading">意味</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">GDK_BUTTON_PRIMARY</td>
+        <td width="15%" class="table_cell">左ボタン</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">GDK_BUTTON_MIDDLE</td>
+        <td width="15%" class="table_cell">スクロールボタン</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">GDK_BUTTON_SECONDARY</td>
+        <td width="15%" class="table_cell">右ボタン</td>      
+      </tr>
+    </table>
+    <br>
+    <table width="35%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+      <tr>
+        <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">signal_handlerの引数</font></th>
+      </tr>
+      <tr>
+        <td width="15%" class="table_heading">書式</td>
+        <td width="20%" class="table_heading">意味</td>
+      </tr>
+      <tr>
+        <td width="15%" class="table_cell">int n_press</td>
+        <td width="20%" class="table_cell">1:シングルクリック<br>2:ダブルクリック<br>3:トリプルクリック</td>
+      </tr>
+      <tr>
+        <td width="15%" class="table_cell">double x</td>
+        <td width="20%" class="table_cell">マウスのｘ座標</td>
+      </tr>
+      <tr>
+        <td width="15%" class="table_cell">double y</td>
+        <td width="20%" class="table_cell">マウスのｙ座標</td>      
+      </tr>
+    </table>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2025/1/2</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+   // Signal handlers:
+    void mouse_Left_pressed(<span class="emphasis">int n_press, double x, double y</span>);
+    void mouse_Middle_pressed(int n_press, double x, double y);
+    void mouse_Right_pressed(int n_press, double x, double y);
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Mouse Events - press" );
+    set_default_size( 320, 240 );
+
+    Glib::RefPtr&lt;Gtk::GestureClick&gt; m_window_click = <span class="highlight">Gtk::GestureClick::create()</span>;
+    m_window_click-><span class="highlight">set_button(</span> GDK_BUTTON_PRIMARY <span class="highlight">)</span>;
+    m_window_click-><span class="highlight">signal_pressed()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::mouse_Left_pressed )); 
+    <span class="highlight">add_controller(</span> m_window_click <span class="highlight">)</span>;
+
+    m_window_click = Gtk::GestureClick::create();
+    m_window_click->set_button( GDK_BUTTON_MIDDLE );
+    m_window_click->signal_pressed().connect(
+        sigc::mem_fun( *this, &MyWindow::mouse_Middle_pressed ));
+    add_controller( m_window_click );
+
+    m_window_click = Gtk::GestureClick::create();
+    m_window_click->set_button( GDK_BUTTON_SECONDARY );
+    m_window_click->signal_pressed().connect(
+        sigc::mem_fun( *this, &MyWindow::mouse_Right_pressed ));
+    add_controller( m_window_click );
+}
+
+void MyWindow::mouse_Left_pressed(int n_press, double x, double y)
+{
+    std::cout &lt;&lt; "Left pressed"
+        &lt;&lt; ", " &lt;&lt; n_press &lt;&lt; ", " &lt;&lt; (int)x &lt;&lt; ", " &lt;&lt; (int)y &lt;&lt; std::endl;
+}
+
+void MyWindow::mouse_Middle_pressed(int n_press, double x, double y)
+{
+    std::cout &lt;&lt; "Middle pressed"
+        &lt;&lt; ", " &lt;&lt; n_press &lt;&lt; ", " &lt;&lt; (int)x &lt; ", " &lt; (int)y &lt;&lt; std::endl;
+}
+
+void MyWindow::mouse_Right_pressed(int n_press, double x, double y)
+{
+    std::cout &lt;&lt; "Right pressed"
+        &lt;&lt; ", " &lt;&lt; n_press &lt;&lt; ", " &lt;&lt; (int)x &lt;&lt; ", " &lt;&lt; (int)y &lt;&lt; std::endl;
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    
+    <div class=""result-table">
+      <hr>
+      <table width="65%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Mouse event</font></th>
+        </tr>
+        <tr>
+          <td width="45%" class="table_heading">Console</td>
+          <td width="20%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="45%" class="terminal_cell">
+          $ Left pressed, 1,  80,  76<br>
+          $ Right pressed, 1,  80,  76<br>
+          $ Middle pressed, 1,  80,  76<br>
+          $ Left pressed, 2,  193,  100<br>
+          $ Left pressed, 3,  193,  100
+          </td>
+          <td width="20%" class="table_cell"><img src="./images/mouse-event-press.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="keyboard-event-unicode.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="mouse-event-2press.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
