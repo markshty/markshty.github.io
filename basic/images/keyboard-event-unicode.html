@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>キーボードから入力された文字列</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">キーボードから入力された文字列</h1>
+    <br>
+
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">キーボードが押されたときの文字を取得します。</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li><span class="highlight">Gtk::EventControllerKey::create()</span>でGtk::EventControllerkeyのスマートポインタを作成します。</li>
+      <li>イベント「<span class="emphasis">signal_key_pressed</span>」が発生した時の「<span class="emphasis">signal_handler</span>」を指定します。</li>
+      <li><span class="highlight">add_contoroller()</span>でマウスイベントをwidgetに結びつけます。</li>
+      <li>「<span class="emphasis">signal_handler</span>」では、イベントが発生した時の<span class="highlight">キーの値</span>(<span class="emphasis">guint keyval</span>)と<span class="highlight">キーコード</span>(<span class="emphasis">guint keycode</span>)および<span class="highlight">修飾キーの状態</span>( <span class="emphasis">Gtk::ModifierType state</span> )を取得することができます。</li>
+      <li>押されたキーの文字を取得するためには、<span class="highlight">gdk_keyval_to_unicode(</span> <span class="emphasis">keyval</span> <span class="highlight">)</span>でkeyvalの値をunicodeに変換します。</li>
+    </ul>
+
+    <table width="40%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+      <tr>
+        <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Gtk::ModifierType</font></th>
+      </tr>
+      <tr>
+        <td width="15%" class="table_heading">返値</td>
+        <td width="25%" class="table_heading">意味</td>
+      </tr>
+      <tr>
+        <td width="15%" class="table_cell">NO_MODIFIER_MASK</td>
+        <td width="20%" class="table_cell">コントロールボタンやシフトボタンは押されていない</td>
+      </tr>
+      <tr>
+        <td width="15%" class="table_cell">CONTROL_MASK</td>
+        <td width="20%" class="table_cell">コントロールボタン</td>
+      </tr>
+      <tr>
+        <td width="15%" class="table_cell">SHIFT_MASK</td>
+        <td width="20%" class="table_cell">シフトボタン</td>
+      </tr>
+      <tr>
+        <td width="15%" class="table_cell">ALT_MASK</td>
+        <td width="20%" class="table_cell">altボタン</td>      
+      </tr>
+    </table>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <p class="paragraph">update:2025/1/2</p>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+  
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;  
+private:
+    bool on_key_pressed( guint keyval, guint keycode, Gdk::ModifierType state );
+};
+  
+MyWindow::MyWindow() {
+    set_title( "Keyboard Event - unicode" );
+    set_default_size( 320, 240 );
+  
+    auto controller = <span class="highlight">Gtk::EventControllerKey::create()</span>;
+    controller-><span class="emphasis">signal_key_pressed()</span>.connect(
+        sigc::mem_fun( *this, <span class="emphasis">&MyWindow::on_key_pressed</span>), false );
+    <span class="highlight">add_controller(</span> controller <span class="highlight">)</span>;
+}
+  
+bool MyWindow::on_key_pressed( guint keyval, guint keycode, Gdk::ModifierType state ) {
+  
+    const gunichar unichar = <span class="highlight">gdk_keyval_to_unicode(</span> <span class="emphasis">keyval</span> <span class="highlight">)</span>;
+    const Glib::ustring buffer( 1, unichar );
+  
+    switch ( keyval ) {
+      // Ctrl + x
+       case GDK_KEY_x:
+            if (( state & Gdk::ModifierType::CONTROL_MASK ) == Gdk::ModifierType::CONTROL_MASK) {
+                std::cout &lt;&lt; "CTRL + " &lt;&lt;  buffer &lt;&lt; std::endl;
+            }
+            return true;
+      // Shift + m
+       case GDK_KEY_M: // SHIFT+MのMは大文字
+            if (( state & Gdk::ModifierType::SHIFT_MASK ) == Gdk::ModifierType::SHIFT_MASK ) {
+                std::cout &lt;&lt; "SHIFT + " &lt;&lt; buffer &lt;&lt; std::endl;
+            }
+            return true;
+      // Alt + f
+       case GDK_KEY_f:
+            if (( state & Gdk::ModifierType::ALT_MASK ) == Gdk::ModifierType::ALT_MASK ) {
+                std::cout &lt;&lt; "ALT + " &lt;&lt; buffer &lt;&lt; std::endl;
+            }
+            return true;
+
+      // SPACE
+       case GDK_KEY_space:
+            std::cout &lt;&lt; "press space !" &lt;&lt; std::endl;
+            return true;
+
+      // Return
+       case GDK_KEY_Return:
+            std::cout &lt;&lt; "press Retrun !" &lt;&lt; std::endl;
+            return true;
+  
+         // Escape key
+       case GDK_KEY_Escape:
+            std::cout &lt;&lt; "Escape ---&gt; Exit!!" &lt;&lt; std::endl;
+            close();
+            return true;
+    }
+    return false;
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    
+    <div class=""result-table">
+      <hr>
+      <table width="65%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Keyboard event</font></th>
+        </tr>
+        <tr>
+          <td width="45%" class="table_heading">Console</td>
+          <td width="20%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="45%" class="terminal_cell">
+          $ press space !<br>
+          press Return !<br>
+          CTRL + x<br>
+          SHIFT + M<br>
+          ALT + f
+          </td>
+          <td width="20%" class="table_cell"><img src="./images/keyboard-event-unicode.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="keyboard-event-press.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="mouse-event-1press.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Rserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
