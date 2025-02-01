@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Cairoについて</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Cairoについて</h1>
+    <p class="update">(update:2025/2/1)</p>
+    
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>Cairoとは</h3> 
+    <p class="paragraph">cairoは、二次元グラフィックスライブラリーです。また、cairommは、gtkmm4の中でcairoの機能を呼び出しています。Gtk::DrawingArea上で線画や図形および文字を描くことができます。</p>
+    <h3>描画モデル</h3>
+    <p class="paragraph">cairoの描画モデルは、ソース(source)、パス(path)、サーフェース(surface)で構成されています。</p>
+    <p>
+      <img src="image/cairo-draw-model.png" alt="Cairoの描画モデル" class="figure">
+    </p>
+    <h4>ソース</h4>
+    <p class="paragraph">ソースは、作成する画面のもとになるものです。色、画像、グラデーション、サーフェースを指定することができます。</p>
+    <h4>パス</h4>
+    <p class="paragraph">パスは、ペンで描いた時の軌跡に相当します。</p>
+    <h4>サーフェース</h4>
+    <p class="paragraph">サーフェースは、図形や文字を描く紙のようなものです。画像ファイル、pdfファイル、svgファイルを使用することができます。</p>
+    <h4>コンテキスト</h4>
+    <p class="paragraph">コンテキストは、ソースに色やグラデーションをセットしたり、パスを作成する他、サーフェースにパスを写すライブラリです。出力先のサーフェースをもとに作成します。</p>
+    <h3>描画の手順</h3>
+    <p class="paragraph">線や図形を描く手順は、</p>
+    <ol class="paragraph">
+      <li>出力先に合わせてサーフェースを作成する。</li>
+      <li>サーフェースをもとにコンテキストを作成する。</li>
+      <li>ソースに色、画像、グラデーションをセットする。</li>
+      <li>線や図形を描画する(コンテキストでパスを作成する)。</li>  
+      <li>出力先に表示する画像を送る(パスをサーフェースに写す)。</li>
+    </ol>
+    <h3>Cairoの座標系</h3>
+    <p>
+      <img src="image/xy-coordinate.png" alt="Cairoの座標系" class="figure">
+    </p>
+    <p class="paragraph">Cairoの座標系は、画像の左上を原点( 0.0, 0.0 )として、x軸は下向きに正、y軸は右向きに正となります。座標は、x座標・y座標ともに実数形式となります。</p>
+    <hr>
+    
+    <!-- Basic StyleStyle -->
+    <h2 class="ex2">基本的な描画スタイル</h2>
+    
+    <p>
+      <img src="image/cairo-draw-stroke.png" alt="線画の書き込み" class="figure_M">
+    </p>
+    <h5>線画の書き込み(stroke)</h5>
+    <ol>
+      <li>出力先に合わせてサーフェースを作成する。</li>
+      <li>サーフェースをもとにコンテキストを作成する。</li>
+      <li>ソースに色、画像、グラデーションをセットする。</li>
+      <li>線や図形を描画する(コンテキストでパスを作成する)。</li>  
+      <li>出力先に表示する画像を送る。</li>
+    </ol>
+    <hr>
+    
+    <p>
+      <img src="image/cairo-draw-fill.png" alt="塗りつぶし" class="figure_M">
+    </p>
+    <h5>塗りつぶし(fill)</h5>
+    <ol class="paragraph">
+      <li>出力先に合わせてサーフェースを作成する。</li>
+      <li>サーフェースをもとにコンテキストを作成する。</li>
+      <li>ソースに色、画像、グラデーションをセットする。</li>
+      <li>線や図形を描画する(コンテキストでパスを作成する)。</li>  
+      <li>出力先にパスの枠内のソースを表示。</li>
+    </ol>
+    <hr>
+
+    <p>
+      <img src="image/cairo-draw-clip.png" alt="クリッピング" class="figure_M">
+    </p>
+    <h5>クリッピング(clip)</h5>
+    <ol class="paragraph">
+      <li>出力先に合わせてサーフェースを作成する。</li>
+      <li>サーフェースをもとにコンテキストを作成する。</li>
+      <li>ソースに色、画像、グラデーションをセットする。</li>
+      <li>線や図形を描画する(コンテキストでパスを作成する)。</li>  
+      <li>出力先にパスの枠内のソースを表示。</li>
+    </ol>
+    <hr>
+
+    <p>
+      <img src="image/cairo-draw-paint.png" alt="背景の着色" class="figure_M">
+    </p>
+    <h5>背景の着色(paint)</h5>
+    <ol>
+      <li>出力先に合わせてサーフェースを作成する。</li>
+      <li>サーフェースをもとにコンテキストを作成する。</li>
+      <li>ソースに色、画像、グラデーションをセットする。</li>  
+      <li>ソースを出力先に表示。</li>
+    </ol>
+    <hr>
+    <p class="paragraph">
+      (補足)上記のうち1,2は、Gtk::DrawingAreaでは、ライブラリ側で自動的に作成されます。
+    </p>
+    <hr>
+    <!-- フッター -->
+    <div id="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="../basic/timer-event-interval-start.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="window-quit.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>
