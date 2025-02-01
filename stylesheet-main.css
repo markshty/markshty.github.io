@@ -37,6 +37,10 @@ hr{
     border:1px dotted #cccccc     /*内容の区切りをグレーの点線表示にする*/
 }
 
+.update {
+    text-align:       right;
+}
+
 .paragraph {
     margin:            20px;
     padding-left:      20px;
