@@ -1,0 +1,139 @@
+@charset "utf-8";
+body {
+    font-size:        95%;      /* フォントサイズを95%にする */
+    font-family:      "ＭＳ ゴシック",sans-serif;    /* フォントの種類をゴシック系にする */
+    padding:          10px 20px 20px 5px;  
+    line-height:      1.5;
+    color:            #333333;
+    background-color: #fff4ff; 
+}
+
+h1 {
+    color:            #8b008b;/*文字色*/
+    text-align:       center;
+    padding:          0.5em 0;/*上下の余白*/
+    border-top:       solid 3px #ee82ee;/*上線*/
+    border-bottom:    solid 3px #ee82ee;/*下線*/
+}
+
+h2 {
+    padding:          0.25em;   /* 上下　左右の余白 */
+    color:            #494949;
+    background:       #fffaf4;
+    border-left:      solid 3px #ff69b4;
+    border-bottom:    solid 3px #d7d7d7;
+}
+
+h3 {
+    margin-left:      100px;
+    padding-left:     20px;
+    width:            140px;
+    color:            #800080;
+    background:       #ffffdb;
+    border-radius:    7px 7px 7px 7px;
+    border-bottom:    solid 2px #800080;
+    border-left:      solid 1px #800080;
+}
+
+h4 {
+    margin-left:      120px;
+    padding-left:     0px;
+    width:            120px;
+    text-align:       center;
+    color:            #9932cc;
+    background:       #ffffff;
+    border-radius:    10px 10px 10px 10px;
+    border:           solid 1px #9932cc;
+}
+
+h5 {
+    color:            #800080;
+}
+
+.update {
+    text-align:       right;
+}
+
+.paragraph {
+    width:            78%;
+    margin-left:      10%;
+    padding-left:     20px;    
+}
+
+.figure {
+	width:            250px;              /* 画像の表示サイズ(幅)   */
+    height:           190px;              /* 画像の表示サイズ(高さ) */
+	margin:           0px 20px 20px 20px; /* マージン 上 右 下 左   */
+	float:            right;              /* 画像を左寄せにする     */
+}
+
+.figure_M {
+    margin-left:      100px;
+    padding:          15px 30px 15px 15px; /* パディング 上 右 下 左   */
+	width:            440px;              /* 画像の表示サイズ(幅)   */
+    height:           250px;              /* 画像の表示サイズ(高さ) */
+	float:            left;               /* 画像を左寄せにする     */
+}
+
+.table_heading {
+    text-align:       center;
+    color:          #556b2f;
+    background:     #ffffff;    
+}
+
+.table_cell {
+    text-align:       left;
+    padding-left:     3%;
+    color:          #556b2f;
+    background:     #ffffff;    
+}
+
+.terminal_cell {
+    text-align:       left;
+    padding-left:     1%;
+    color:          #ffffff;
+    background:     #003300;
+}
+
+.ex1 {
+    width:            75px;    
+}
+
+.ex2 {
+    width:            240px;
+}
+
+.ex3 {
+    width:            100px;
+}
+
+div#pagebody {
+    width:auto;
+    margin:           10px;
+    /*border:           solid 1px #2f4f4f;*/
+    padding-left:     10px;
+    padding-right:    10px;
+   
+    background-color: #fffff4; 
+}
+
+.highlight {
+    color:          #ff4500;
+    font-weight:      bold;
+}
+
+.align {
+    color:          #006400;    
+    font-weight:      bold;
+}
+
+.emphasis {
+    color:          #008000;
+    font-weight:      bold;
+}
+
+hr{
+    clear:both;                     /*フロート配置をクリアする*/
+    margin:           5px 0px 10px 100px;                /*マージン*/
+    border:1px dotted #cccccc     /*内容の区切りをグレーの点線表示にする*/
+}
