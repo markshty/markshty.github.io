@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>線の端部(LineCap)</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">線の端部(LineCap)</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">線の端部の種類を指定します。</p>
+    <h3>使い方</h3>
+    <div class="paragraph">
+      <p>set_line_cap()関数を使用して線の端部の種類を指定します。</p> 
+      <table width="75%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="30%" class="function_heading">void Cairo::Context::set_line_cap(</th>
+          <td width="5%" class="function_cell">LineCap</th>
+          <td width="10%" class="function_cell">line_cap <a style="font-weight:BOLD">)</a></td>
+          <td width="30%" class="function_cell">// 線の端部の種類</td>
+        </tr>
+      </table>
+      <p style="clear:both">線の端部の種類は、次の通りです。</p>
+      <table width="30%" border="0" cellspacong="1" bgcolor="#000000" align="left">
+        <tr>
+          <th class="table_heading" colspan="2">Cairo::Context::LineCap</th>
+        </tr>
+        <tr>
+          <td width="15%" class="table_heading">書式</td>
+          <td width="15%" class="table_heading">内容</td>
+        </tr>
+        <tr>
+          <td width="15%" class="table_cell">BUTT</td>
+          <td width="15%" class="table_cell">端</td>
+        </tr>
+        <tr>
+          <td width="15%" class="table_cell">ROUND</td>
+          <td width="15%" class="table_cell">丸める</td>      
+        </tr>
+        <tr>
+          <td width="15%" class="table_cell">SQUARE</td>
+          <td width="15%" class="table_cell">四角</td>
+        </tr>
+      </table>
+      <p style="clear:both">※LineCapのデフォルトはBUTTです。</p>
+    </div>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {          
+   // background
+    cr->set_source_rgba( 0.9, 0.9, 1.0, 1.0 );
+    cr->paint();
+  
+    cr->set_line_width( 30.0 );
+    cr->set_source_rgb( 0.0, 0.0, 0.0 );
+  
+   // BUTT(Default)
+    cr-><span class="highlight">set_line_cap(</span> <span class="emphasis">Cairo::Context::LineCap::BUTT</span> <span class="highlight">)</span>;
+    cr->move_to(  50.0, 40.0 );
+    cr->line_to( 270.0, 40.0 );
+    cr->stroke();
+  
+   // ROUND
+    cr-><span class="highlight">set_line_cap(</span> <span class="emphasis">Cairo::Context::LineCap::ROUND</span> <span class="highlight">)</span>;
+    cr->move_to(  50.0, 100.0 );
+    cr->line_to( 270.0, 100.0 );
+    cr->stroke();
+  
+   // SQUARE
+    cr-><span class="highlight">set_line_cap(</span> <span class="emphasis">Cairo::Context::LineCap::SQUARE</span> <span class="highlight">)</span>;
+    cr->move_to(  50.0, 160.0 );
+    cr->line_to( 270.0, 160.0 );
+    cr->stroke();
+  
+   // Auxiliary line
+    cr->set_line_width( 1.5 );
+    cr->set_source_rgb( 1.0, 1.0, 0.0 );
+    cr->move_to(  50.0,  40.0 );
+    cr->line_to( 270.0,  40.0 );
+    cr->move_to(  50.0, 100.0 );
+    cr->line_to( 270.0, 100.0 );
+    cr->move_to(  50.0, 160.0 );
+    cr->line_to( 270.0, 160.0 );
+    cr->stroke();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "LineCap" );
+    set_default_size( 320, 240 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-context-linecap.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-context-Line.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-context-linejoin.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

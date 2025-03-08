@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>文字列の表示(text)</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">文字列の表示(text)</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">グラフィック画面に文字列を表示します。</p>
+    <h3>使い方</h3>
+    <h4>text</h4>
+    <p class="paragraph">グラフィック画面の指定の位置に文字列を表示します。</p>
+    <ol>
+      <li >フォント,文字の傾斜,太字</li>
+      <p>select_font_face()関数を実行して１フォントの種類,２フォントの斜体,３フォントを太字にするかどうかをを指定します。</p>
+      <table width="80%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="35%" class="function_heading">void Cairo::Context::select_font_face(</th>
+          <td width="15%" class="function_cell">const std::string &</th>
+          <td width="10%" class="function_cell">family,</td>
+          <td width="20%" class="function_cell">// フォントの種類</td>
+        </tr>
+        <tr>
+          <th width="35%" class="function_heading" rowspan="2"></th>
+          <td width="15%" class="function_cell">ToyFontFace::Slant</th>
+          <td width="10%" class="function_cell">slant,</td>
+          <td width="20%" class="function_cell">// フォントの斜体</td>
+        </tr>
+        <tr>
+          <td width="15%" class="function_cell">ToyFontFace::Weight</th>
+          <td width="10%" class="function_cell">weight <a style="font-weight:bold">)</a></td>
+          <td width="20%" class="function_cell">// フォントの太字</td>
+        </tr>
+      </table>
+      <br style="clear:both">
+
+      <h5>○フォントの種類</h5>
+      <p>
+      自分のPCの環境で使用できるフォントを指定します。使用できるフォントを調べるためには、debianなどではterminalで
+      </p>
+      <span class="command_line">% fc-list | cut -d : -f 2 | cut -d , -f 1 | less </span>
+      <p>
+      を実行すると、自分のPCの環境にインストールされているフォントを調べることができます。
+      </p>
+      <h5>○フォントの斜体</h5>
+      <a class="comment1">
+      ToyFontFace::Slant で指定できる斜体は、ITALIC,OBLIQUEです。ITALICは、筆記体を元に右側へ傾けてバランスをとった書体であり、OBLIQUEは、文字の形をそのまま斜めに傾けた書体です。日本語フォントでは、ほとんどの場合、Italic体がデザインされていませんので日本語表示ではITALICもOBLIQUEも違いが出ません。
+      </a>
+      <table width="35%" border="0" cellspacong="1" bgcolor="#000000">
+        <tr>
+          <th class="table_heading" colspan="2">ToyFontFace::Slant</th>
+        </tr>
+        <tr>
+          <td width="15%" class="table_heading">書式</td>
+          <td width="20%" class="table_heading">内容</td>
+        </tr>
+        <tr>
+          <td width="15%" class="table_cell">NORMAL</td>
+          <td width="20%" class="table_cell">直立体</td>
+        </tr>
+        <tr>
+          <td width="15%" class="table_cell">ITALIC</td>
+          <td width="20%" class="table_cell">イタリック体</td>      
+        </tr>
+        <tr>
+          <td width="15%" class="table_cell">OBLIQUE</td>
+          <td width="20%" class="table_cell">斜体</td>
+        </tr>
+      </table>
+      <br style="clear:both">
+      <h5>○フォントを太字</h5>
+      <a class="comment1">
+      フォントを太字にする場合は、ToyFontFace::Weight::BOLD を指定します。標準の書体の場合はNORMALを指定します。
+      </a>
+      <table width="35%" border="0" cellspacong="1" bgcolor="#000000">
+        <tr>
+          <th class="table_heading" colspan="2">ToyFontFace::Weit</th>
+        </tr>
+        <tr>
+          <td width="15%" class="table_heading">書式</td>
+          <td width="20%" class="table_heading">内容</td>
+        </tr>
+        <tr>
+          <td width="15%" class="table_cell">NORMAL</td>
+          <td width="20%" class="table_cell">通常の書体</td>
+        </tr>
+        <tr>
+          <td width="15%" class="table_cell">BOLD</td>
+          <td width="20%" class="table_cell">太字</td>      
+        </tr>
+      </table>
+      <br style="clear:both">
+      <br>
+      <li>フォントのサイズ</li>
+      <table width="75%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="30%" class="function_heading">void Cairo::Context::set_font_size(</th>
+          <td width="5%" class="function_cell">double</th>
+          <td width="10%" class="function_cell">size <a style="font-weight:BOLD">)</a></td>
+          <td width="30%" class="function_cell">// フォントのサイズ(ピクセル数)</td>
+        </tr>
+      </table>
+      <br style="clear:both">
+      <p>※1.set_font_size()関数では、ピクセル数を指定しますので、文字の大きさ（ポイント数）をピクセル数に変換しなければなりません。</p>
+      <p>※2.DTPソフトでは、1ポイント＝1/72インチとされています。</p>
+      <p>※3.画面のDPI(dots/inch)は、<span class="highlight">get_pango_context()->get_resolution()</span>関数で取得することができます。</p>
+      <p>※4.ピクセル数とドット数を等しいと考えると、<span class="emphasis">ピクセル数＝ポイント数/72×DPI</span>となります。</p>
+      <br>
+      <li>文字列の色</li>
+      <p>set_source_rgba()関数を実行して文字列に着色する色をセットします。</p>
+      <li>文字列の表示位置</li>
+      <p>グラフィック画面上での文字列の表示位置を指定します。move_to( x, y )関数で指定するx,y座標は、文字列の左下の角付近となります。（今回のサンプルプログラムでは赤色の円として表示しています。</p>
+      <li>文字列の表示</li>
+      <p>show_text()関数を実行すると文字列のパスがソースにセットされます。</p>
+      <table width="75%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="30%" class="function_heading">void Cairo::Context::show_text(</th>
+          <td width="20%" class="function_cell">const std::string &</th>
+          <td width="10%" class="function_cell">utf8 <a style="font-weight:BOLD">)</a></td>
+          <td width="15%" class="function_cell">// 表示する文字列</td>
+        </tr>
+      </table>
+      <br style="clear:both">
+      <br>
+      <li>ストローク</li>
+      <p>stroke()関数を実行すると,ソースに形成されたパスがサーフェース(画面)に表示されます。</p>
+    </ol>
+    <br>
+    <h4>text_path</h4>
+    <p class="paragraph">グラフィック画面の指定の位置に文字列の外殻にそったパスを形成し、文字列を表示します。パスは色をつけたり、グラデーションを表示することができます。</p>
+    <ol>
+      <li>フォント,文字の傾斜,太字</li>
+      <p>select_font_face()関数を実行して１フォントの種類,２フォントの斜体,３フォントを太字にするかどうかをを指定します。</p>      
+      <li>フォントのサイズ</li>
+      <p>set_font_size()関数を実行して文字列のサイズを指定します。</p>
+      <li>文字列の色</li>
+      <p>set_source_rgba()関数を実行して文字列に着色する色をセットします。</p>
+      <li>文字列の表示位置</li>
+      <p>グラフィック画面上での文字列の表示位置を指定します。move_to( x, y )関数で指定するx,y座標は、文字列の左下の角付近となります。（今回のサンプルプログラムでは赤色の円として表示しています)</p>
+      <li>文字列のパスの形成</li>
+      <p>text_path()関数を実行して、文字の外殻からなるパスを形成します。</p>
+      <table width="75%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="30%" class="function_heading">void Cairo::Context::text_path(</th>
+          <td width="20%" class="function_cell">const std::string &</th>
+          <td width="10%" class="function_cell">utf8 <a style="font-weight:BOLD">)</a></td>
+          <td width="15%" class="function_cell">// 表示する文字列</td>
+        </tr>
+      </table>
+      <br style="clear:both">
+      <li>ストローク</li>
+      <p>stroke_preserve()関数を実行すると,ソースに形成されたパスがサーフェース(画面)に表示されます。</p>
+      <li>塗りつぶしの色</li>
+      <p>文字列のパスを塗りつぶす色、グラデーションをソースに設定します。</p>
+      <li>塗りつぶし</li>
+      <p>fill()関数を実行すると、サーフェース(画面)に形成されたパスの中に色、グラデーションが表示されます。</p>
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw ));
+}
+  
+void Drawing::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    double x = 50.0, y = 50.0;
+    Glib::ustring message_e = "Thank you for your time today.";
+    Glib::ustring message_j = "本日はありがとうございました。";
+    Glib::ustring font_name_e = "Times New Roman";
+    Glib::ustring font_name_j = "IPAゴシック";
+  
+   // background
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    cr->rectangle( 0.0, 0.0, width, height );
+    cr->fill();
+  
+   // base point
+    cr->set_source_rgba( 1.0, 0.0, 0.0, 1.0 );
+    // English
+    cr->arc( x, y, 5.0, 0.0, 2*M_PI );
+    // Japanese
+    cr->arc( x, y + 70.0, 5.0, 0.0, 2*M_PI );
+    cr->fill();
+  
+   // text
+    // <span class="emphasis">1.フォント,文字の傾斜,太字</span>
+    cr-><span class="highlight">select_font_face(</span> font_name_e, Cairo::ToyFontFace::Slant::<span class="emphasis">NORMAL</span>, Cairo::ToyFontFace::Weight::<span class="emphasis">NORMAL</span> <span class="highlight">)</span>;
+    // <span class="emphasis">2.フォントのサイズ</span>
+    double resolution = <span class="highlight">get_pango_context()->get_resolution()</span>;
+    cr-><span class="highlight">set_font_size(</span> 27.0 * resolution / 72.0 <span class="highlight">)</span>;   // 27.0ポイントの文字を表示
+    // <span class="emphasis">3.文字列の色</span>
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    // <span class="emphasis">4.文字列の表示位置</span>
+    cr->move_to( x, y );
+    // <span class="emphasis">5.文字列の表示</span>
+    cr-><span class="highlight">show_text(</span> message_e <span class="highlight">)</span>;
+    // <span class="emphasis">6.ストローク</span>
+    cr->stroke();
+  
+   // text_path
+    // <span class="emphasis">1.フォント,文字の傾斜,太字</span>
+    cr->select_font_face( font_name_j, Cairo::ToyFontFace::Slant::NORMAL, Cairo::ToyFontFace::Weight::NORMAL );
+    // <span class="emphasis">2.フォントのサイズ</span>
+    cr->set_font_size( 27.0 * resolution / 72.0 );
+    // <span class="emphasis">3.文字列の色</span>
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    // <span class="emphasis">4.文字列の表示位置</span>
+    cr->move_to( x, y + 70.0 );
+    // <span class="emphasis">5.文字列のパスの形成</span>
+    cr-><span class="highlight">text_path(</span> message_j <span class="highlight">)</span>;
+    // <span class="emphasis">6.ストローク</span>
+    cr->stroke_preserve();
+    // <span class="emphasis">7.塗りつぶしの色</span>
+    cr->set_source_rgba( 0.9, 0.95, 0.0, 1.0 );
+    // <span class="emphasis">8.塗りつぶし</span>
+    cr->fill();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Text" );
+    set_default_size( 600, 200 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.exsample" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}  
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-context-text.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-context-arc.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-context-textextents.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

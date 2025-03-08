@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>点線、一点鎖線(dash)</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">点線、一点鎖線(dash)</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">点線、一点鎖線を描きます。</p>
+    <h3>使い方</h3>
+      <ol class="paragraph">
+        <p>点線、鎖線の書き方の手順は以下の通りです。</p>
+        <li>点線のパターンの領域の確保</li>
+        <p>std:::vector&lt;double&gt;で点線のパターンの領域を確保します。領域の枠は点線なら２枠，一点鎖線なら４枠,二点鎖線なら６枠となります。</del></p>
+        <li>点線のパターンの設定</li>
+        <p>線あり(ink)、線無し(skip)のpixel数を交互に指定します。</p>
+        <li>パターンの登録</li>
+        <p>set_dash()関数を実行します。</p>
+        <table width="80%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Cairo::Context::set_dash(</th>
+            <td width="25%" class="function_cell">const std::vector&lt;double&gt;</th>
+            <td width="10%" class="function_cell">dashes</td>
+            <td width="15%" class="function_cell">// 点線のﾊﾟﾀｰﾝ</td>
+          </tr>
+          <tr>
+            <td width="30%" class="function_cell" rowspan="1"></td>
+            <td width="25%" class="function_cell">double</th>
+            <td width="10%" class="function_cell">offset <a style="font-weight:BOLD">)</a></td>
+            <td width="15%" class="function_cell">// 点線のｵﾌｾｯﾄ</td>
+          </tr>
+        </table>
+        <p style="clear:both">ｵﾌｾｯﾄを正にすると、点線の開始位置が左にずれます。負にすると点線の開始位置が右にずれます。</p>
+        <li>パスの形成</li>
+        <li>点線の色の指定</li>
+        <li>点線の太さの指定</li>
+        <li>描画</li>
+      </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {          
+   // background
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    cr->paint();
+  
+  // 点線
+   // <span class="emphasis">1.点線のパターンの領域の確保</span>
+    <span class="highlight">std::vector&lt;double&gt;</span>dash_pattern1(2);
+   // <span class="emphasis">2.点線のパターンの設定</span>
+    dash_pattern1[0] = 30.0;                  <span class="emphasis">// ink</span>
+    dash_pattern1[1] = 10.0;                  <span class="emphasis">// skip</span>
+   // <span class="emphasis">3.パターンの登録</span>
+    cr-><span class="highlight"></span>set_dash(</span> dash_pattern1, 0.0 <span class="highlight">)</span>;
+   // <span class="emphasis">4.パスの形成</span>
+    cr->move_to( 50.0, 20.0 );
+    cr->line_to( 270.0, 20.0 );
+   // <span class="emphasis">5.点線の色の指定</span>
+    cr->set_source_rgba( 1.0, 0.0, 0.0, 1.0 );
+   // <span class="emphasis">6.点線の太さの指定</span>
+    cr->set_line_width( 5.0 );
+   // <span class="emphasis">7.描画</span>
+    cr->stroke();
+  
+   // 一点鎖線
+    std::vector&lt;double&gt;dash_pattern2(4);
+    dash_pattern2[0] = 30.0;                 // ink
+    dash_pattern2[1] = 10.0;                 // skip
+    dash_pattern2[2] = 10.0;                 // ink
+    dash_pattern2[3] = 10.0;                 // skip
+    cr->set_dash( dash_pattern2, 0.0 );
+    cr->move_to( 50.0, 70.0 );
+    cr->line_to( 270.0, 70.0 );
+    cr->set_source_rgba( 0.0, 1.0, 0.0, 1.0 );
+    cr->stroke();
+  
+   // 一点鎖線+オフセット
+    std::vector&lt;double&gt;dash_pattern3(4);
+    dash_pattern3[0] = 30.0;                 // ink
+    dash_pattern3[1] = 10.0;                 // skip
+    dash_pattern3[2] = 10.0;                 // ink
+    dash_pattern3[3] = 10.0;                 // skip
+    cr->set_dash( dash_pattern3, -15.0 );
+    cr->move_to( 50.0, 120.0 );
+    cr->line_to( 270.0, 120.0 );
+    cr->set_source_rgba( 0.0, 1.0, 1.0, 1.0 );
+    cr->stroke();
+  
+   // 二点鎖線
+    std::vector&lt;double&gt;dash_pattern4(6);
+    dash_pattern4[0] = 30.0;                 // ink
+    dash_pattern4[1] = 10.0;                 // skip
+    dash_pattern4[2] = 10.0;                 // ink
+    dash_pattern4[3] = 10.0;                 // skip
+    dash_pattern4[4] = 10.0;                 // ink
+    dash_pattern4[5] = 10.0;                 // skip
+    cr->set_dash( dash_pattern4, 0.0 );
+    cr->move_to( 50.0, 170.0 );
+    cr->line_to( 270.0, 170.0 );
+    cr->set_source_rgba( 0.0, 0.0, 1.0, 1.0 );
+    cr->stroke();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "dash" );
+    set_default_size( 320, 240 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-context-dash.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-context-linejoin.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-context-rectangle.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

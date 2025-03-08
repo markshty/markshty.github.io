@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>文字列の範囲(TextExtents)</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">文字列の範囲(TextExtents)</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">グラフィック画面に表示する文字列の範囲の情報を取得します。</p>
+    <h3>使い方</h3>
+    <h4>構成要素</h4>
+    <p>
+      <img src="image/cairo-context-textextents-graph.png" alt="TextExtentsの要素" class="figure_L">
+    </p>
+    <div class="paragraph">
+      <h5>x_bearing</h5>
+      <p>文字列の表示位置のx座標からのオフセット</p>
+      <h5>y_bearing</h5>
+      <p>文字列の表示位置のx座標からのオフセット</p>
+      <h5>width</h5>
+      <p>文字列の幅</p>
+      <h5>height</h5>
+      <p>文字列の高さ</p>
+      <h5>x_advance</h5>
+      <p>続けて文字列を表示した場合のx座標のオフセット</p>
+      <h5>y_advance</h5>
+      <p>続けて文字列を表示した場合のy座標のオフセット</p>
+    </div>
+    <br>
+    <h4>手順</h4>
+    <p class="paragraph">TextExtentsの取得方法は次の通りです。</p>
+    <ol>
+      <li>フォント,文字の傾斜,太字</li>
+      <p>select_font_face()関数を実行して１フォントの種類,２フォントの斜体,３フォントを太字にするかどうかをを指定します。</p>      
+      <li>フォントのサイズ</li>
+      <p>set_font_size()関数を実行して文字列のサイズを指定します。</p>
+      <li>文字列をセット</li>
+      <p>TextExtentsを取得する文字列をセットします。</p>
+      <li>TextExtentsを取得する</li>
+      <p>get_text_extents()関数を実行してTextExtentsの内容を取得します。</p>
+      <table width="95%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="35%" class="function_heading">void Cairo::Context::get_text_extents(</th>
+          <td width="20%" class="function_cell">const std::string &</th>
+          <td width="10%" class="function_cell">utf8,</td>
+          <td width="30%" class="function_cell">// utf8でコーディングされた文字列</td>
+        </tr>
+        <tr>
+          <th width="35%" class="function_heading"></th>
+          <td width="20%" class="function_cell">TextExtents &</th>
+          <td width="10%" class="function_cell">extents <a style="font-weight:bold">)</a></td>
+          <td width="30%" class="function_cell">// フォントの斜体</td>
+        </tr>
+      </table>
+      <br style="clear:both">
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+  
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+    double x, y;
+    Cairo::TextExtents te;
+  
+    // <span class="emphasis">1.フォントの種類,傾斜,太字をセット</span>
+    cr->select_font_face( "Sans", Cairo::ToyFontFace::Slant::NORMAL, Cairo::ToyFontFace::Weight::NORMAL );
+    // <span class="emphasis">2.フォントのサイズを指定</span>
+    cr->set_font_size( 300.0 );
+    // <span class="emphasis">3.文字列をセット</span>
+    Glib::ustring utf8 = "G";
+    // <span class="emphasis">4.TextExtentsを取得する</span>
+    cr->get_text_extents( utf8, te );
+   
+    x = 62.0;
+    y = 229.0;
+  
+   // text_extents
+    std::cout &lt;&lt; "width : "  &lt;&lt; te.width &lt;&lt; std::endl;
+    std::cout &lt;&lt; "height : " &lt;&lt; te.height &lt;&lt; std::endl;
+    std::cout &lt;&lt; "x_bearing : " &lt;&lt; te.x_bearing &lt;&lt; std::endl;
+    std::cout &lt;&lt; "y_bearing : " &lt;&lt; te.y_bearing &lt;&lt; std::endl;
+    std::cout &lt;&lt; "x_advance : " &lt;&lt; te.x_advance &lt;&lt; std::endl;
+    std::cout &lt;&lt; "y_advance : " &lt;&lt; te.y_advance &lt;&lt; std::endl;
+  
+   // show text
+    cr->move_to( x, y );
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->show_text( utf8 );
+  
+   // bounding box
+    cr->set_source_rgba( 0.0, 0.0, 1.0, 1.0 );
+    cr->set_line_width( 0.5 );
+    cr->rectangle( x + te.x_bearing, y + te.y_bearing, te.width, te.height );
+    cr->stroke();
+  
+   // basic point
+    cr->set_source_rgba( 1, 0.2, 0.2, 1.0 );
+    cr->set_line_width( 5.0 );
+    cr->arc( x, y, 5.0, 0, 2.0 * M_PI );
+    cr->fill();
+     
+   // advance point
+    cr->set_source_rgba( 0.0, 1.0, 0.2, 0.95 );
+    cr->set_line_width( 6.0 );
+    cr->arc( x + te.x_advance, y + te.y_advance, 5.0, 0, 2.0 * M_PI );
+    cr->fill();
+
+    cr->stroke();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "text extents" );
+    set_default_size( 280, 320 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}  
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+
+    <div class="result-table">
+      <hr>
+      <table width="65%" border="0" cellspacong="1" bgcolor="#ffbcff" align="center">
+        <tr>
+          <th bgcolor="#ffbcff" colspan="2"><font color="#ffffff">TextExtents</font></th>
+        </tr>
+        <tr>
+          <td width="45%" class="table_heading">Console</td>
+          <td width="20%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="45%" class="terminal_cell">
+          $ width : 132<br>
+          height : 268<br>
+          x_bearing : 12<br>
+          y_bearing : -222<br>
+          x_advance : 150<br>
+          y_advance : 0
+          </td>
+          <td width="20%" class="table_cell"><img src="./image/cairo-context-textextents.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-context-text.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-context-textaligncenter.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

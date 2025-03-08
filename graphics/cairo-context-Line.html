@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>直線(Line)</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">直線(Line)</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">Line(線)を表示します。</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li>パスの開始位置</li>
+      <p>ソースに対してLineの開始位置の座標を指定します。</p> 
+      <table width="70%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="25%" class="function_heading">void Cairo::Context::move_to(</th>
+          <td width="5%" class="function_cell">double</th>
+          <td width="5%" class="function_cell">x,</td>
+          <td width="35%" class="function_cell">// パスの開始位置のx座標</td>
+        </tr>
+        <tr>
+          <td width="25%" class="function_cell"></td>
+          <td width="5%" class="function_cell">double</th>
+          <td width="5%" class="function_cell">y <a style="font-weight:BOLD">)</a></td>
+          <td width="35%" class="function_cell">// パスの開始位置のy座標</td>
+        </tr>
+      </table>
+      <p style="clear:both">※相対座標を使用する場合は、rel_move_to( dx, dy )を使用します。</p> 
+      <br>      
+      <li>パスの終了位置</li>
+      <p>ソースに対してLineの終了位置の座標はを指定します。</p>
+      <table width="65%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="25%" class="function_heading">void Cairo::Context::line_to(</th>
+          <td width="5%" class="function_cell">double</th>
+          <td width="5%" class="function_cell">x,</td>
+          <td width="30%" class="function_cell">// パスの終了位置のx座標</td>
+        </tr>
+        <tr>
+          <td width="25%" class="function_cell" rowspan="1"></td>
+          <td width="5%" class="function_cell">double</th>
+          <td width="5%" class="function_cell">y <a style="font-weight:BOLD">)</a></td>
+          <td width="30%" class="function_cell">// パスの終了位置のy座標</td>
+        </tr>
+      </table>
+      <p style="clear:both">※相対座標を使用する場合は、rel_line_to( dx, dy )を使用します。</p>
+      <br>
+      <li>線の太さ</li>
+      <p>線の太さを指定します。</p>
+      <table width="65%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+        <tr>
+          <th width="35%" class="function_heading">void Cairo::Context::set_line_width(</th>
+          <td width="5%" class="function_cell">double</th>
+          <td width="10%" class="function_cell">width <a style="font-weight:BOLD">)</a></td>
+          <td width="15%" class="function_cell">// 線の太さ</td>
+        </tr>
+      </table>
+      <p style="clear:both">※線の太さwidthのデフォルト値は2.0です。</p>
+      <br>
+      <li>線の色</li>
+      <p>線の色をset_source_rgba()関数で赤、緑、青、alpha値を指定します。ソースに対して色を指定します。</p>
+      
+      <br>
+      <li>パスの閉塞</li>
+      <p>パスの開始座標と終了座標を結びます。</p>
+      <p class="function" style="width:310px">void Cairo::Context::close_path()</p>
+      <br>
+      <li>線の描画</li>
+      <p>ソースの色等をパスに沿ってサーフェースに写しこみます。stroke()関数の実行後はパスは初期化されます。stroke()関数を実行後にパスを利用する場合は、stroke_preserve()関数を使用します。</p>
+      <p class="function" style="width:280px">void Cairo::Context::stroke()</p>
+      <br>
+      <li>塗りつぶし</li>
+      <p>ソースの色等をパスで囲まれた領域の内側に塗りつぶします。fill()関数の実行後はパスは初期化されます。fill()関数を実行後にパスを利用する場合は、fill_preserve()関数を使用します。</p>
+      <p class="function" style="width:280px">void Cairo::Context::fill()</p>
+    </ul>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+ 
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {          
+   // background
+    cr->set_source_rgba( 1.0, 1.0, 0.85, 1.0 );
+    cr->paint();
+   // figure A
+    cr->move_to(  80.0,  20.0 );
+    cr->line_to(  20.0, 180.0 );
+    cr->line_to( 140.0, 180.0 );
+    cr->close_path();
+    cr->set_source_rgba( 0.0, 1.0, 0.0, 1.0 );
+    cr->stroke_preserve();
+    cr->set_source_rgba( 0.2, 1.0, 0.1, 0.3 );
+    cr->fill();
+   // figure B
+    cr->move_to(      160.0, 90.0 );
+    cr->rel_move_to(    0.0,   90.0 );
+    cr->rel_line_to(  -60.0, -160.0 );
+    cr->rel_line_to(  120.0,   0.0 );
+    cr->close_path();
+    auto pattern = Cairo::LinearGradient::create( 0.0, 20.0, 0.0, 180.0 );
+    pattern->add_color_stop_rgba( 0.0, 1.0, 0.8, 0.1, 1.0 );
+    pattern->add_color_stop_rgba( 0.95, 1.0, 1.0, 1.0, 1.0 );
+    cr->set_source( pattern );
+    cr->fill();
+   // figure C
+    cr->move_to( 240.0, 20.0 );
+    cr->rel_line_to(  -60.0, 160.0 );
+    cr->rel_line_to(  120.0,   0.0 );
+    cr->close_path();
+    cr->set_source_rgba( 0.0, 0.0, 1.0, 0.3 );
+    cr->fill_preserve();
+    cr->set_line_width( 5.0 );
+    cr->set_source_rgba( 0.0, 0.5, 1.0, 1.0 );
+    cr->stroke();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Line" );
+    set_default_size( 320, 240 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果-->>
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-context-Line.png"></center>
+    <hr>
+    
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-source-imagepattern.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-context-linecap.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>
