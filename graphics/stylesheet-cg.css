@@ -26,8 +26,9 @@ h2 {
 
 h3 {
     margin-left:      100px;
-    padding-left:     20px;
-    width:            140px;
+    padding-left:     0px;
+    width:            200px;
+    text-align:       center;
     color:            #800080;
     background:       #ffffdb;
     border-radius:    7px 7px 7px 7px;
@@ -38,7 +39,7 @@ h3 {
 h4 {
     margin-left:      120px;
     padding-left:     0px;
-    width:            120px;
+    width:            140px;
     text-align:       center;
     color:            #9932cc;
     background:       #ffffff;
@@ -54,12 +55,6 @@ h5 {
     text-align:       right;
 }
 
-.paragraph {
-    width:            78%;
-    margin-left:      10%;
-    padding-left:     20px;    
-}
-
 .figure {
 	width:            250px;              /* 画像の表示サイズ(幅)   */
     height:           190px;              /* 画像の表示サイズ(高さ) */
@@ -68,31 +63,77 @@ h5 {
 }
 
 .figure_M {
-    margin-left:      100px;
-    padding:          15px 30px 15px 15px; /* パディング 上 右 下 左   */
 	width:            440px;              /* 画像の表示サイズ(幅)   */
     height:           250px;              /* 画像の表示サイズ(高さ) */
-	float:            left;               /* 画像を左寄せにする     */
+    margin:           0px 20px 20px 20px; /* マージン 上 右 下 左   */
+	float:            right;               /* 画像を左寄せにする     */
+}
+
+.figure_L {
+	width:            500px;              /* 画像の表示サイズ(幅)   */
+    height:           500px;              /* 画像の表示サイズ(高さ) */
+    margin:           10px 20px 20px 20px; /* マージン 上 右 下 左   */
+	float:            right;               /* 画像を左寄せにする     */
+}
+
+.function {
+    padding-left:     20px;  
+    font-weight:      bold;
+    width:            500px;
+    color:          #556b2f;
+    background:       #ffffff;        
+}
+
+.function_heading {
+    text-align:       center;
+    color:          #556b2f;
+    background:     #ffffff;  
+}
+
+.function_cell {
+    text-align:       left;
+    padding-left:     1%;
+    color:          #556b2f;
+    background:     #ffffff;     
+}
+
+.function_terminal {
+    text-align:       right;
+    padding-right:    1%;
+    color:          #556b2f;
 }
 
 .table_heading {
     text-align:       center;
     color:          #556b2f;
-    background:     #ffffff;    
+    background:     #ffffff;  
 }
 
 .table_cell {
     text-align:       left;
-    padding-left:     3%;
+    padding-left:     1%;
     color:          #556b2f;
-    background:     #ffffff;    
+    background:     #ffffff;     
 }
 
 .terminal_cell {
     text-align:       left;
-    padding-left:     1%;
+    padding-right:    1%;
     color:          #ffffff;
-    background:     #003300;
+    background:     #003300;  
+}
+
+.command_line {
+    margin-left:      2%;
+    padding:          1%;        
+    color:            #e4f124;      
+    background:       #000000;
+}
+
+.comment1 {
+    width:            50%;
+    margin:           1%;
+    float:            left;
 }
 
 .ex1 {
@@ -109,7 +150,9 @@ h5 {
 
 div#pagebody {
     width:auto;
-    margin:           10px;
+    margin-left:       10px;
+    margin-top:        10px;
+    margin-right:      10px;
     /*border:           solid 1px #2f4f4f;*/
     padding-left:     10px;
     padding-right:    10px;
@@ -128,12 +171,48 @@ div#pagebody {
 }
 
 .emphasis {
-    color:          #008000;
+    color:          #ff00ff;
     font-weight:      bold;
 }
 
+.paragraph {
+    width:            80%;
+    margin-left:      10%;
+    padding-left:     20px;    
+}
+
+ol {
+    width:            80%;
+    margin-left:      10%;
+    padding-left:     10px;
+    font-weight:      normal;
+}
+
+ol li {
+    font-weight:      bold;
+}
+
+ul {
+    width:            80%;
+    margin-left:      10%;
+    padding-left:     10px;
+    font-weight:      normal;
+    list-style-type:  none;
+}
+
+ul li {
+    clear:            both;
+    font-weight:      bold;
+    width:            140px;
+    text-align:       center;
+    color:            #9932cc;
+    background:       #ffffff;
+    border-radius:    10px 10px 10px 10px;
+    border:           solid 1px #9932cc;
+}
+
 hr{
-    clear:both;                     /*フロート配置をクリアする*/
+    clear:            both;         /*フロート配置をクリアする*/
     margin:           5px 0px 10px 100px;                /*マージン*/
     border:1px dotted #cccccc     /*内容の区切りをグレーの点線表示にする*/
 }
