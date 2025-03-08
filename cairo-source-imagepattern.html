@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ImageSurfaceをパターンとして使う</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">ImageSurfaceをパターンとして使う</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">サーフェースをパターンとして利用します。ImageSurfaceに画像データを読み込んだものをパターンとしてタイル状にwindowに表示します。</p>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>画像ファイルをImageSurfaceに読み込みます。</li>
+      <li>ImageSurfaceをSurfacePatternにセットします。</li>
+      <li>領域外のパターンの表示形式をセットします。</li>
+      <li>SurfacePatternをソースにセットします。</li>
+      <li>コンテキストでパスを描きます。</li>
+      <LI>ソースをサーフェースに写しこみます。</LI>
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyArea : public Gtk::DrawingArea
+{
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+private:
+    Glib::RefPtr&lt;Cairo::ImageSurface&gt; image;
+    Glib::RefPtr&lt;Cairo::Pattern&gt; pattern;
+};
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+    MyArea m_area;
+};
+  
+MyArea::MyArea()
+{
+    set_draw_func(sigc::mem_fun(*this, &MyArea::on_draw));
+}
+  
+void MyArea::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height)
+{
+   // <span class="emphasis">1.画像ファイルをImageSurfaceに読み込む</span>
+    image = <span class="highlight">Cairo::ImageSurface::create_from_png(</span> "tileD.png" <span class="highlight">)</span>;
+   // <span class="emphasis">2.ImageSurfaceをSurfacePatternにセット</span>
+    pattern = <span class="highlight">Cairo::SurfacePattern::create(</span> image <span class="highlight">)</span>;
+   // <span class="emphasis">3.領域外のパターンの表示形式をセット</span>
+    pattern-><span class="highlight">set_extend(</span> Cairo::Pattern::Extend::REPEAT <span class="highlight">)</span>;
+   // <span class="emphasis">4.SurfacePatternをソースにセット</span>
+    cr-><span class="highlight">set_source(</span> pattern <span class="highlight">)</span>;
+   // <span class="emphasis">5.コンテキストでパスを描く</span>
+    cr-><span class="highlight">rectangle(</span> 0.0, 0.0, width, height <span class="highlight">)</span>;
+   // <span class="emphasis">6.ソースをサーフェースに写しこむ</span>
+    cr-><span class="highlight">fill()</span>;
+}
+  
+MyWindow::MyWindow()
+{
+    set_title( "Surface - Surface" );
+    set_default_size( 320, 240 );    
+  
+    set_child( m_area );
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-source-imagepattern.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-source-image.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-context-Line.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

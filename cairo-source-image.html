@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ImageSurfaceをソースに使う</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">ImageSurfaceをソースに使う</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">サーフェースをソースとして利用します。ImageSurfaceに画像データを読み込んだものをソースとしてwindowに表示します。</p>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>画像ファイルをImageSurfaceに読み込みます。</li>
+      <li>ImageSurfaceをソースにセットします。</li>
+
+      <table width="100%" border="0" bgcolor="#ffffff" cellspacong="1" align="center">
+        <tr>
+          <th width="35%" class="function_heading">void Cairo::Context::set_source(</th>
+          <th width="25%" class="function_cell">const RefPtr&lt;Surface&gt;&</th>
+          <td width="9%" class="function_cell">surface,</td>
+          <td width="31%" class="function_cell">// ソースに使用されるサーフェース</td>
+        </tr>
+        <tr>
+          <td width="35%" class="function_cell" rowspan="2"></td>
+          <th width="25%" class="function_cell">double</th>
+          <td width="9%" class="function_cell">x,</td>
+          <td width="31%" class="function_cell">// 表示先のサーフェースのx座標</td>
+        </tr>
+        <tr>
+          <th width="25%" class="function_cell">double</th>
+          <td width="9%" class="function_cell">y <a style="font-weight:BOLD">)</a></td>
+          <td width="31%" class="function_cell">// 表示先のサーフェースのy座標</td>      
+        </tr>
+      </table>
+      <br>
+      <li>ソースをサーフェースに写しこみます。</li>
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyArea : public Gtk::DrawingArea
+{
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+private:
+    Glib::RefPtr&lt;Cairo::ImageSurface&gt; image;
+};
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default; 
+protected:
+    MyArea m_area;
+};
+  
+MyArea::MyArea()
+{
+    set_draw_func(sigc::mem_fun(*this, &MyArea::on_draw));    
+}
+  
+void MyArea::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height)
+{
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->paint();
+
+   // <span class="emphasis">1.画像ファイルをImageSurfaceに読み込む</span>
+    image = <span class="highlight">Cairo::ImageSurface::create_from_png(</span> "tileB.png" <span class="highlight">)</span>;
+    int x = ( width  - image->get_width() )/2;
+    int y = ( height - image->get_height() )/2;
+   // <span class="emphasis">2.ImageSurfaceをソースにセットする</span>
+    cr-><span class="highlight">set_source(</span> image, x , y <span class="highlight">)</span>;
+   // <span class="emphasis">3.ソースをサーフェースに写しこむ</span>
+    cr-><span class="highlight">paint()</span>;
+}
+  
+MyWindow::MyWindow()
+{
+    set_title( "Surface to Surface" );
+    set_default_size( 320, 240 );    
+  
+    set_child( m_area );
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-source-image.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-source-radialgradient.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-source-imagepattern.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>
