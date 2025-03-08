@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>pdfファイル</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">pdfファイル(PdfSurface)</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">　PdfSurfaceを使用して図形や画像データをpdfファイルに書き込むことができます。ただし、PdfSurfaceを画面に表示することはできません。</p>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>PdfSurfaceの領域の確保</li>
+      <p>create()関数を使って、PdfSurfaceの領域を確保します。</p>      
+      <table width="100%" border="0" bgcolor="#ffffff" cellspacong="1" align="center">
+        <tr>
+          <th width="51%" class="function_heading">static RefPtr&lt;PdfSurface&gt;Cairo::PdfSurface::create(</th>
+          <th width="11%" class="function_cell">std::string</th>
+          <td width="9%" class="function_cell">filename,</td>
+          <td width="29%" class="function_cell">// ｻｰﾌｪｰｽ保存時のファイル名</td>
+        </tr>
+        <tr>
+          <td width="51%" class="function_cell" rowspan="2"></td>
+          <th width="11%" class="function_cell">int</th>
+          <td width="9%" class="function_cell">width,</td>
+          <td width="29%" class="function_cell">// pdfファイルの横幅(単位:point)</td>
+        </tr>
+        <tr>
+          <th width="11%" class="function_cell">int</th>
+          <td width="9%" class="function_cell">height <a style="font-weight:BOLD">)</a></td>
+          <td width="29%" class="function_cell">// pdfファイルの高さ(単位:point)</td>      
+        </tr>
+      </table>
+      <br>
+      <li>Cairo::Contextの作成</li>
+      <p>領域確保したPdfSurfaceに対応するCairo::Contextを作成します。</p>
+      <br>
+      <li>線画の描画</li>
+      <p>上記のCairo::Contextを使って線画を描画します(パスを形成)。</p>
+      <br>
+      <li>デフォルトのソースへの転送</li>
+      <p>show_page()関数を実行すると、パスがPdfSurfaceを写しこまれます。</p>
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+int main(){
+   // 1.PdfSurfaceの領域の確保
+    Cairo::RefPtr&lt;Cairo::PdfSurface&gt; surface = <span class="highlight">Cairo::PdfSurface::create(</span> "test.pdf", 320, 240 <span class="highlight">)</span>;
+   // 2.Cairo::Contextの作成
+    Cairo::RefPtr&lt;Cairo::Context&gt; crx = <span class="highlight">Cairo::Context::create(</span> surface <span class="highlight">)</span>;
+   // 3.線画の描画
+    crx->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    crx->paint();
+  
+    crx->set_source_rgba( 0.2, 0.5, 1.0, 1.0);
+    crx->set_line_width( 0.5 );
+    crx->move_to(   0, 120 );
+    crx->line_to( 320, 120 );
+    crx->stroke();
+  
+    crx->set_source_rgba( 0.1, 0.7, 0.8, 1.0);
+    crx->move_to( 0, 240 );
+    crx->rel_line_to( 320, 0);
+    crx->rel_line_to( -120, -120 );
+    crx->rel_line_to( -80, 0 );
+    crx->close_path();
+    crx->fill();
+  
+    crx->set_source_rgba( 1.0, 1.0, 0.0, 1.0 );
+    crx->arc( 160, 60, 20, 0, 2*M_PI );
+    crx->fill();
+
+   // 4.画像の出力
+    crx-><span class="highlight">show_page()</span>;
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-surface-pdf.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-surface-image.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-surface-svg.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

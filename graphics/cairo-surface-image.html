@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>イメージ画像</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">イメージ画像(ImageSurface)</h1>
+    <p class="update">(update:2025/3/8)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">　ImageSurfaceは、図形や画像データを書き込む紙・キャンバスのような役割を持っています。本来、サーフェースを独自に宣言することなしに、on_draw()関数の引数となって現れるシステムのデフォルトのCairo::Contextを使用して線画や図形の描画を行うことができます。ここでは、独自にImageSurfaceを宣言して線画を表示します。</p>
+    <h3>使い方</h3>
+    <h4>画像の表示</h4>
+    <ol>
+      <li>ImageSurfaceの領域の確保</li>
+      <p>create()関数を使って、ImageSurfaceの領域を確保します。</p>
+      <table width="100%" border="0" bgcolor="#ffffff" cellspacong="1" align="center">
+        <tr>
+          <th width="52%" class="function_heading">static RefPtr&lt;ImageSurface&gt;Cairo::ImageSurface::create(</th>
+          <th width="11%" class="function_cell">Format</th>
+          <td width="9%" class="function_cell">format,</td>
+          <td width="29%" class="function_cell">// 生成されるサーフェースの書式</td>
+        </tr>
+        <tr>
+          <td width="52%" class="function_cell" rowspan="2"></td>
+          <th width="11" class="function_cell">int</th>
+          <td width="9%" class="function_cell">width,</td>
+          <td width="28%" class="function_cell">// サーフェースの幅(単位:pixel)</td>
+        </tr>
+        <tr>
+          <th width="11%" class="function_cell">int</th>
+          <td width="9%" class="function_cell">height <a style="font-weight:BOLD">)</a></td>
+          <td width="29%" class="function_cell">// サーフェースの高さ(単位:pixel)</td>      
+        </tr>
+      </table>
+      <br>
+      <table width="60%" border="0" cellspacong="1" bgcolor="#000000" align="center">
+        <tr>
+          <th class="table_heading" colspan="2">Cairo::Surface::Format</th>
+        </tr>
+        <tr>
+          <td width="10%" class="table_heading">書式</td>
+          <td width="50%" class="table_heading">内容</td>
+        </tr>
+        <tr>
+          <td width="10%" class="table_cell">ARGB32</td>
+          <td width="50%" class="table_cell">各々のピクセルは32bit値,アルファ値を持つRGB画像(Red, Green, Blue)となる</td>
+        </tr>
+        <tr>
+          <td width="10%" class="table_cell">RGB24</td>
+          <td width="50%" class="table_cell">各々のピクセルは32bit値,RGB画像(Red, Green, Blue),上位の8ビットは使用されていない</td>      
+        </tr>
+        <tr>
+          <td width="10%" class="table_cell">A8</td>
+          <td width="50%" class="table_cell">各々のピクセルは8bit値,アルファ値を持つグレースケール画像となる</td>
+        </tr>
+        <tr>
+          <td width="10%" class="table_cell">A1</td>
+          <td width="50%" class="table_cell">各々のピクセルは1bit値</td>
+        </tr>
+        <tr>
+          <td width="10%" class="table_cell">RGB16_565</td>
+          <td width="50%" class="table_cell">各々のピクセルは16bit値,上位5bitが赤,中位6bitがグリーン,下位5bitが青</td>
+        </tr>
+      </table>
+      <br>
+      <li>Cairo::Contextの作成</li>
+      <p>領域確保したImageSurfaceに対応するCairo::Contextを作成します。</p>
+      <br>
+      <li>線画の描画</li>
+      <p>上記のCairo::Contextを使ってImageSurfaceに線画を描画します。</p>
+      <li>デフォルトのソースへの転送</li>
+      <p>set_source()関数を使って、線画を描画したImageSurfaceをデフォルトのソースに送ります。</p>
+      <li>画面への表示</li>
+      <p>paint()関数を実行して、ソースをサーフェースに送り画面に表示します。</p>
+    </ol>
+    
+    <h4>画像の出力</h4>
+    <p class="paragraph">ImageSurfaceからpng形式の画像を直接出力することができます。</p>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyArea : public Gtk::DrawingArea
+{
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+private:
+    Cairo::RefPtr&lt;Cairo::ImageSurface&gt; m_board;
+protected:
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+    MyArea m_area;
+};
+  
+MyArea::MyArea()
+{
+   // 1.Imagesurfaceの領域の確保
+    m_board = <span class="highlight">Cairo::ImageSurface::create(</span> Cairo::Surface::Format::ARGB32, 320, 240 <span class="highlight">)</span>;
+   
+   // 2.Cairo::Contextの作成
+    Cairo::RefPtr&lt;Cairo::Context&gt; crx = <span class="highlight">Cairo::Context::create(</span> m_board <span class="highlight">)</span>;
+  
+   // 3.線画の描画
+    crx->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    crx->paint();
+  
+    crx->set_source_rgba( 0.2, 0.5, 1.0, 1.0 );
+    crx->set_line_width( 0.5 );
+    crx->move_to(   0, 120 );
+    crx->line_to( 320, 120 );
+    crx->stroke();
+  
+    crx->set_source_rgba( 0.0, 0.0, 1.0, 1.0 );
+    crx->move_to( 0, 240 );
+    crx->rel_line_to( 320, 0 );
+    crx->rel_line_to( -120, -120 );
+    crx->rel_line_to( -80, 0 );
+    crx->close_path();
+    crx->fill();
+  
+    crx->set_source_rgba( 1.0, 1.0, 0.0, 1.0 );
+    crx->arc( 160, 60, 20, 0, 2*M_PI );
+    crx->fill();
+  
+   // 画面の出力
+    m_board-><span class="highlight">write_to_png(</span> "test.png" <span class="highlight">)</span>;
+  
+    set_draw_func( sigc::mem_fun( *this, &MyArea::on_draw ));
+}
+  
+void MyArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+   // 4.デフォルトのソースへの転送
+    cr-><span class="highlight">set_source(</span> m_board, 0.0, 0.0 <span class="highlight">)</span>;
+   // 5.画面への表示
+    cr-><span class="highlight">paint()</span>;
+}
+  
+MyWindow::MyWindow()
+{
+    set_title( "ImageSurface" );
+    set_default_size( 320, 280 );
+  
+    set_child( m_area );
+}
+  
+int main( int argc, char *argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-surface-image.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-model-base.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-surface-pdf.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>
