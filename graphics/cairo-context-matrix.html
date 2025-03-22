@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>座標変換</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">座標変換</h1>
+    <p class="update">(update:2025/3/22)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <div class="paragraph">
+        <p>変換行列を用いて座標系を変換します。</p>
+      </div>
+    <h3>考え方</h3>
+      <ol class="paragraph">
+        <li>基本形</li>
+        <p>Cairoでは、二次元座標系を用いています。二次元座標系において、点(x, y)を点(x',y')に返還する数式は、<br>x' = ax + cy + x0<br>y' = bx + dy + y0<br>となります。<br>これを行列を用いて表すと、</p>
+        <p>
+          <img src="image/matrix-basic.png">
+        </p>
+        <p style="clear:both">となります。Cairo::Matrix::Matrix()で表現するときは次の通りです。</p>
+        <table width="90%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="25%" class="function_heading">void Cairo::Matrix::Matrix(</th>
+            <td width="10%" class="function_cell">double a,</th>
+            <td width="10%" class="function_cell">double b,</th>
+            <td width="10%" class="function_cell">double c,</th>
+            <td width="10%" class="function_cell">double d,</th>
+            <td width="10%" class="function_cell">double x0,</th>
+            <td width="10%" class="function_cell">double y0 <a style="font-weight:bold">)</a></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <br>
+        <li>平行移動</li>
+        <p>座標系をx軸方向にx0,y軸方向にy0平行移動します。translate(x0,y0)と同様です。</p>
+        <p>
+          <img src="image/matrix-translate.png">
+        </p>
+        <li>回転</li>
+        <p>座標系を時計回りにθラジアン回転させます。rotate(θ)と同様です。</p>
+        <p>
+          <img src="image/matrix-rotate.png">
+        </p>
+        <li>拡大・縮小</li>
+        <p>座標系をx軸方向にsx倍,y軸方向にsy倍します。scale(sx,sy)と同様です。</p>
+        <p>
+          <img src="image/matrix-scale.png">
+        </p>
+        <li>逆変換</li>
+        <p>変換行列の逆行列を求めます。</p>
+        <p class="function">void Cairo::Matrix::invert()</p>
+      </ol> 
+    <br>
+    
+    <h3>使い方</h3>
+      <div class="paragraph">
+        <p></p>
+        <p></p> 
+        <table width="55%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="25%" class="function_heading">void Cairo::Matrix::Matrix(</th>
+            <td width="5%" class="function_cell">double</th>
+            <td width="5%" class="function_cell">xx,</td>
+            <td width="20%" class="function_cell">// x軸方向の拡大係数</td>
+          </tr>
+          <tr>
+            <th width="25%" class="function_heading"></th>
+            <td width="5%" class="function_cell">double</th>
+            <td width="5%" class="function_cell">y0 <a style="font-weight:bold">)</a></td>
+            <td width="20%" class="function_cell">// y軸方向の拡大係数</td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+      </div>      
+    <br> 
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+    double x, y;
+  
+   // background
+    cr->set_source_rgba( 1.0, 0.8, 0.8, 0.8 );
+    cr->paint();
+    cr->translate( 50.0, 20.0 );
+  
+   // Base
+    cr->set_line_width( 1.0 );
+    cr->rectangle( 0.0, 0.0, 80.0, 30.0 );
+    cr->set_source_rgba( 1.0, 1.0, 0.0, 0.7 );
+    cr->fill();
+  
+    cr->save();
+  
+   // <span class="emphasis">平行移動</span> translate(140.0, 0.0)と同様
+    Cairo::Matrix matrix1( 1.0, 0.0, 0.0, 1.0, 140.0, 0.0 );
+    cr->transform( matrix1 );
+  
+    cr->rectangle( 0.0, 0.0, 80.0, 30.0 );
+    cr->set_source_rgba( 0.0, 0.0, 1.0, 0.9 );
+    cr->fill();
+  
+    cr->restore();
+    cr->save();
+  
+    double theta = 60 *M_PI / 180.0;
+  
+   // <span class="emphasis">回転</span> rotate( 60.0*M_PI/180.0 )と同様
+    Cairo::Matrix matrix2( cos(theta), sin(theta), -sin(theta), cos(theta), 0.0, 00.0 );
+    cr->transform( matrix2 );
+    cr->rectangle( 0.0, 0.0, 80.0, 30.0 );
+    cr->set_source_rgba( 0.0, 1.0, 0.0, 0.5 );
+    cr->fill();
+  
+    cr->restore();
+    cr->rectangle( 0.0, 100.0, 80.0, 30.0 );
+    cr->set_source_rgba( 1.0, 1.0, 0.0, 0.7 );
+    cr->fill();
+     
+   // <span class="emphasis">拡大・縮小</span> (せん断変形)
+    Cairo::Matrix matrix3( 2.0, 0.5, 0.0, 1.0, 0.0, 0.0 );
+    cr->transform( matrix3 );
+  
+    cr->rectangle( 0.0, 100.0, 80.0, 30.0 );
+    cr->set_source_rgba( 0.0, 1.0, 1.0, 0.5 );
+    cr->fill();
+  
+   // <span class="emphasis">逆変換</span>
+    matrix3.<span class="highlight">invert()</span>;     // 逆行列の計算
+    cr->transform( matrix3 );
+  
+    cr->rectangle( 0.0, 100.0, 80.0, 30.0 );
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->stroke();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "transformation matrix" );
+    set_default_size( 320, 240 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}  
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-context-matrix.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-context-normalize.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

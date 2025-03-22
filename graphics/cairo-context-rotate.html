@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>座標系の回転(rotate)</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">座標系の回転(rotate)</h1>
+    <p class="update">(update:2025/3/22)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <div class="paragraph">
+        <p>
+          <img src="image/xy-rotate.png" class="figure_M">
+        </p>
+        <p>座標系を平行移動します。</p>
+        <p>rotate()関数では、回転角θを弧度法(radian)で指定します。三時の方向を開始角度0radianとして時計回りに角度が進みます。</p>
+      </div>
+    <h3>使い方</h3>
+      <div class="paragraph">
+        <p>回転角θを指定して、rotate()関数を実行します。rotate()関数が実行された後に形成されるパスは、座標系が回転して描かれます。</p> 
+        <table width="70%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Cairo::Context::rotate(</th>
+            <td width="5%" class="function_cell">double</th>
+            <td width="10%" class="function_cell">radians <span style="font-weight:BOLD">)</span></td>
+            <td width="25%" class="function_cell">// 座標の回転角(radian)</td>
+          </tr>
+        </table>
+        <p style="clear:both">※上記以外に度数法で回転角を指定するrotate_degrees()関数があります。</p>
+      </div>      
+    <br> 
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+  
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {          
+    double xc = width * 0.5;
+    double yc = height * 0.5;
+    double radius = std::min( width, height ) * 0.45;
+    double x,y;
+    double angle;
+  
+    cr->translate( xc, yc );
+   // background
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->paint();
+  
+   // rotate & arc
+    cr->set_source_rgba( 1.0, 1.0, 0.0, 1.0 );
+  
+    for( int i = 0; i &lt; 12; i++ )  {
+        cr-><span class="highlight">rotate(</span> 30 * M_PI/180.0 <span class="highlight">)</span>;    <span class="emphasis">// ループの度に３０度ずつ時計回りに回転する。</span>
+        cr->arc( radius, 0, 5.0, 0.0, 2*M_PI );
+        cr->fill();
+    }
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "rotate" );
+    set_default_size( 320, 240 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}  
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-context-rotate.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-context-translate.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-context-scale.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

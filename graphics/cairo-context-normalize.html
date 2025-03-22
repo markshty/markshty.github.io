@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>座標系の標準化(scale)</title>
+    <link rel="stylesheet" href="stylesheet-cg.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">座標系の標準化(scale)</h1>
+    <p class="update">(update:2025/3/22)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <div class="paragraph">
+        <p>座標系を標準化します。</p>
+        <p>グラフィック画面に図形を描いていると、Gtk::DrawingAreaのWindowのサイズ（幅や高さ）にかかわらずに図形を描画したい場合があります。そのような場合に、Windowのサイズに応じてプログラムを修正するのではなく、Windowの幅や高さに対する割合を指定することにより同様の図形を描くことができます。</p>
+        <p>
+          <img src="image/xy-normalize.png">
+        </p>
+      </div>
+    <h3>使い方</h3>
+      <div class="paragraph">
+        <p>scale( width, hieght )を実行するとx軸とy軸の座標が 0.0 ～ 1.0 に標準化されます。</p>
+        <p>例えばx軸の座標を2倍に拡大すると、同じ位置に表示するためには、座標を２分の１にします。一般に座標軸をN倍に拡大すると、同じ位置に表示するためには座標をN分の１にします。すなわち、点(width, height)について、x座標をwidth倍、y座標をheight倍に拡大したときに同じ位置に表示するためには、(width/width,height/height) = (1.0, 1.0)となります。<Nav></Nav></p> 
+        <table width="55%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="25%" class="function_heading">void Cairo::Context::scale(</th>
+            <td width="5%" class="function_cell">double</th>
+            <td width="5%" class="function_cell">sx,</td>
+            <td width="20%" class="function_cell">// x軸方向の拡大係数</td>
+          </tr>
+          <tr>
+            <th width="25%" class="function_heading"></th>
+            <td width="5%" class="function_cell">double</th>
+            <td width="5%" class="function_cell">sy <a style="font-weight:bold">)</a></td>
+            <td width="20%" class="function_cell">// y軸方向の拡大係数</td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+      </div>      
+    <br> 
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+  
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+private:
+    double margin = 10.0;
+    double padding = 10.0;
+    Glib::ustring name_x ="x";
+    Glib::ustring name_y ="y";
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+   // background
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    cr->paint();
+  
+   // 座標を標準化
+    cr-><span class="highlight">scale( width, height )</span>;
+   // 描画
+    cr->set_line_width( 0.01 );             
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    for( int i = 0; i &lt; 10; i++ ) {
+        double x = i * 0.1;
+        cr->move_to( x, 0.0 );              // <span class="emphasis">Windowの幅・高さに対する比率を指定</span>
+        cr->line_to( x, 1.0 );              // Windowの幅・高さに対する比率を指定
+        cr->stroke();
+    }
+    for( int i = 0; i &lt; 10; i++ ) {
+        double y = i * 0.1;
+        cr->move_to( 0.0, y );
+        cr->line_to( 1.0, y );
+        cr->stroke();
+    }
+  
+    cr->rectangle( 0.6, 0.1, 0.3, 0.3 );    // Windowの幅・高さに対する比率を指定
+    cr->set_source_rgb( 1.0, 0.0, 0.0 );
+    cr->fill();
+      
+    cr->rectangle( 0.4, 0.7, 0.2, 0.2 );    // Windowの幅・高さに対する比率を指定
+    cr->set_source_rgb( 0.0, 0.0, 1.0 );
+    cr->fill();
+      
+    cr->rectangle( 0.2, 0.3, 0.1, 0.4 );
+    cr->set_source_rgb( 1.0, 1.0, 0.0 );
+    cr->fill();
+  
+    cr->rectangle( 0.1, 0.1, 0.1, 0.4 );
+    cr->set_source_rgb( 1.0, 1.0, 0.0 );
+    cr->fill();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "scale normalize" );
+    set_default_size( 320, 240 );
+    set_child( my_draw );
+}
+ 
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}  
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/cairo-context-normalize.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="cairo-context-reverse.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="cairo-context-matrix.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

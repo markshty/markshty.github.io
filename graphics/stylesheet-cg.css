@@ -76,6 +76,13 @@ h5 {
 	float:            right;               /* 画像を左寄せにする     */
 }
 
+.figure_LS {
+	width:            500px;              /* 画像の表示サイズ(幅)   */
+    height:           331px;              /* 画像の表示サイズ(高さ) */
+    margin:           10px 10px 20px 20px; /* マージン 上 右 下 左   */
+	float:            right;               /* 画像を左寄せにする     */
+}
+
 .function {
     padding-left:     20px;  
     font-weight:      bold;
