@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1 class="title">gtkmm4 introduction</h1>
-    <p class="update">(update:2025/3/22)</p>
+    <p class="update">(update:2025/3/30)</p>
     <p align="center">GtkmmはGUIのフレームワークです。</p>
     <h2 class="section">Basic</h2>
     <h3>Window</h3>
@@ -39,18 +39,6 @@
       <li><a href="./basic/image-read.html">画像ファイルの読み込み</a></li>
       <li><a href="./basic/image-display.html">画像ファイルの貼り付け</a></li>
     </ul>
-    <h3>Image file(Gdk::Pixbuf)</h3>
-    <ul>
-      <li><a href="./basic/pixbuf-read.html">画像ファイルの読み込み</a></li>
-      <li><a href="./basic/pixbuf-display-gui.html">画像データをグラフィック画面へ表示</a></li>
-      <li><a href="./basic/pixbuf-write.html">画像データの保存</a></li>
-      <li><a href="./basic/pixbuf-scale.html">画像データの拡大・縮小</a></li>
-      <li><a href="./basic/pixbuf-rotate.html">画像データの回転</a></li>   
-      <li><a href="./basic/pixbuf-composite.html">画像データの合成</a></li>
-      <li><a href="./basic/pixbuf-empty.html">空のpixbuf領域の作成</a></li>
-      <li><a href="./basic/pixbuf-picture.html">背景画像</a></li>
-      <li><a href="./basic/pixbuf-dma.html">画像データの直接操作</a></li>
-    </ul>
     <h3>Keyboard event</h3>
     <ul>
       <li><a href="./basic/keyboard-event-press.html">キーボードが押されたとき</a></li>
@@ -73,7 +61,7 @@
       <li><a href="./basic/timer-event-interval-start.html">インターバルタイマーの起動と停止</a></li>
     </ul>
     <hr>
-    <h2>Cairo Graphics</h2>
+    <h2 class="section">Cairo Graphics</h2>
     <h3>Cairo</h3>
     <ul>
       <li><a href="./graphics/cairo-model.html">Cairoについて</a></li>
@@ -115,6 +103,35 @@
       <li><a href="./graphics/cairo-context-reverse.html">座標系の鏡像(scale)</a></li>
       <li><a href="./graphics/cairo-context-normalize.html">座標系の標準化(scale)</a></li>
       <li><a href="./graphics/cairo-context-matrix.html">座標変換</a></li>
+    </ul>
+    <hr>
+    <h2 class="section">Gdk</h2>
+    <h3></h3>
+    <ul>
+      <li><a href="./gdk/gdk-pixbuf-draw.html">画像の表示</a></li>
+    </ul>
+    <h3>RGBA</h3>
+    <ul>
+      <li><a href="./gdk/gdk-rgba-1.html">色の指定(その１)</a></li>
+      <li><a href="./gdk/gdk-rgba-2.html">色の指定(その２)</a></li>
+      <li><a href="./gdk/gdk-rgba-3.html">色の指定(その３)</a></li>
+    </ul>
+    <h3>Pixbuf</h3>
+    <ul>
+      <li><a href="./gdk/pixbuf-read.html">画像ファイルの読み込み</a></li>
+      <li><a href="./gdk/pixbuf-display-gui.html">画像データをグラフィック画面へ表示</a></li>
+      <li><a href="./gdk/pixbuf-write.html">画像データの保存</a></li>
+      <li><a href="./gdk/pixbuf-scale.html">画像データの拡大・縮小</a></li>
+      <li><a href="./gdk/pixbuf-rotate.html">画像データの回転</a></li>   
+      <li><a href="./gdk/pixbuf-composite.html">画像データの合成</a></li>
+      <li><a href="./gdk/pixbuf-empty.html">空のpixbuf領域の作成</a></li>
+      <li><a href="./gdk/pixbuf-picture.html">背景画像</a></li>
+      <li><a href="./gdk/pixbuf-dma.html">画像データの直接操作</a></li>
+    </ul>
+    <h3>Rectangle</h3>
+    <ul>
+      <li><a href="./gdk/gdk-intersects.html">長方形と長方形の交差</a></li>
+      <li><a href="./gdk/gdk-contains_point.html">長方形と点の包含関係</a></li>
     </ul>
     <hr>
     <!-- 実行環境-->
