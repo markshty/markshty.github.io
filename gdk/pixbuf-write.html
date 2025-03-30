@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>画像データの保存</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">画像データの保存</h1>
+    <p class="update">(update:2025/3/30)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">Gdk::pixbufにセットされている画像データを画像ファイルとして書き出して保存します。</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li>保存時に使用できる画像の</span><span class="emphasis">ファイルフォーマット</span>は、<span class="emphasis">png  bmp  jpeg  tiff  ico</span></li>
+      <li>画像データを画像ファイルとして出力するためには、<span class="highlight">Gdk::Pixbuf::save("</span><span class="emphasis">画像ファイル名</span><span class="highlight">", "</span><span class="emphasis">ファイルフォーマット</span><span class="highlight">")</span>を使用します。</li>
+    </ul>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+  
+private:
+    Gtk::Image m_image;
+    Cairo::RefPtr&lt;Cairo::ImageSurface&gt; m_board;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title("画像データの保存(png)");
+    set_default_size( 320, 240 );
+  
+   // 画像を書き込むためのボード(Gtk::ImageSurface)を作成
+    m_board = Cairo::ImageSurface::create( Cairo::Surface::Format::ARGB32, 320, 240 );
+   // ボードに書き込むための筆記具(Cairo::Context)を準備する
+    Cairo::RefPtr&lt;Cairo::Context&gt; cr = Cairo::Context::create( m_board );
+   // 背景の描画(white)
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    cr->paint();
+   // 画像の描画
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->rectangle( 30, 0, 10, 240 );
+    cr->fill();
+    cr->rectangle( 0, 200, 320, 10 );
+    cr->fill();
+    cr->set_source_rgba( 1.0, 0.0, 0.0, 1.0 );
+    cr->arc( 180, 70, 20, 0, 2*M_PI );
+    cr->fill();
+  
+   // 画像データを保存するためのGdk::Pixbufの領域を確保する(幅320,高さ240)
+    Glib::RefPtr&lt;Gdk::Pixbuf&gt; pixbuf = Gdk::Pixbuf::create( m_board, 0, 0, 320, 240 );
+   // 画像データをファイ名[sample] フォーマット[pmg]で保存
+    pixbuf-><span class="highlight">save(</span> "sample", "png" <span class="highlight">)</span>;
+  
+    m_image.set(pixbuf); 
+    set_child(m_image);
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/pixbuf-write.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pixbuf-display-gui.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pixbuf-scale.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

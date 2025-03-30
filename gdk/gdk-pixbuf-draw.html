@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>画像の表示</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">画像の表示</h1>
+    <p class="update">(update:2025/3/30)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">画像を表示します。</p>
+    <h3>使い方</h3>
+    <h4>背景の着色</h4>
+    <ol class=paragraph>
+      <li>Gdk::Cairo::set_source_rgba()関数でソースに色を設定します。</li>
+        <table width="90%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="35%" class="function_heading">void Gdk::Cairo::set_source_rgba(</th>
+            <td width="30%" class="function_cell">const::Cairo::RefPtr&lt;::Cairo::Context&gt;& </td>
+            <td width="5%" class="function_cell">context,</td>
+            <td width="15%" class="function_cell">// cairo context</td>
+          </tr>
+          <tr>
+            <th width="35%" class="function_heading"></th>
+            <td width="30%" class="function_cell">const Gdk::RGBA &</th>
+            <td width="5%" class="function_cell">color <a style="font-weight:BOLD">)</a></td>
+            <td width="15%" class="function_cell">// ソースの色</td>
+          </tr>
+        </table> 
+        <br style="clear:both">
+      <li>paint()関数を実行します。</li>
+    </ol>
+    <br>
+    <h4>画像の表示</h4>
+    <ol class="paragraph">
+      <li>Gdk::Pixbufに画像ファイルを読み込みます。</li> 
+      <li>Gdk::Cairo::set_sourcr_pixbuf()関数で読み込んだ画像データをソースにセットします。</li> 
+        <table width="100%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="35%" class="function_heading">void Gdk::Cairo::set_source_pixbuf(</th>
+            <td width="35%" class="function_cell">const Cairo::RefPtr&lt;::Cairo::Context&gt;& </td>
+            <td width="5%" class="function_cell">context,</td>
+            <td width="25%" class="function_cell">// cairo context</td>
+          </tr>
+          <tr>
+            <th width="35%" class="function_heading" rowspan="3"></th>
+            <td width="35%" class="function_cell">const Glib::RefPtr&lt;const Gdk::Pixbuf&gt;& </th>
+            <td width="5%" class="function_cell">pixbuf,</td>
+            <td width="25%" class="function_cell">// 画像(Gdk::Pixbuf)</td>
+          </tr>
+          <tr>
+            <td width="35%" class="function_cell">double</th>
+            <td width="5%" class="function_cell">x=0,</td>
+            <td width="25%" class="function_cell">// 表示する位置のx座標</td>
+          </tr>
+          <tr>
+            <td width="35%" class="function_cell">double</th>
+            <td width="5%" class="function_cell">y=0 <a style="font-weight:BOLD">)</a></td>
+            <td width="25%" class="function_cell">// 表示する位置のy座標</td>
+          </tr>
+        </table> 
+        <br style="clear:both">
+      <li>paint()関数を実行します。</li>
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyArea : public Gtk::DrawingArea
+{
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+private:
+    Glib::RefPtr&lt;Gdk::Pixbuf&gt; image;
+};
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+  
+protected:
+    MyArea m_area;
+};
+  
+MyArea::MyArea()
+{
+    set_draw_func(sigc::mem_fun(*this, &MyArea::on_draw));
+}
+  
+void MyArea::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height)
+{
+   // <span class="emphasis">背景の着色</span>
+    // 1.ソースの色の設定
+    <span class="highlight">Gdk::Cairo::set_source_rgba(</span> cr, Gdk::RGBA( "#000000" )<span class="highlight">)</span>;
+    // 2.表示
+    cr->paint();                                                    
+  
+   // <span class="emphasis">画像の表示</span>
+    // 1.画像ファイルの読み込み
+    image = Gdk::Pixbuf::create_from_file( "airplane.png" );
+  
+    int x = ( width  - image->get_width() )/2;
+    int y = ( height - image->get_height() )/2;
+  
+    // 2.画像データをソースにセット
+    <span class="highlight">Gdk::Cairo::set_source_pixbuf(</span> cr, image, x , y <span class="highlight">)</span>;
+    // 3.表示
+    cr->paint();
+}
+  
+MyWindow::MyWindow()
+{
+    set_title("Draw Pixbuf");
+    set_default_size( 320, 240 );    
+  
+    set_child( m_area );
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/gdk-pixbuf-draw.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="../graphics/cairo-context-matrix.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="gdk-rgba-1.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

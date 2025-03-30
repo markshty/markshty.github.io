@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>画像データの回転</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">画像データの回転</h1>
+    <p class="update">(update:2025/3/30)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">画像データを回転させます。</p>
+    <h3>使い方</h3>
+    <ul class="paragraph">
+      <li>Gdk::pixbufにセットされている画像データを90度単位で回転させます。</li> 
+      <li>画像データを回転させるためには、<span class="highlight">Gdk::Pixbuf::rotate_simple( </span><span class="emphasis">Rotation angle</span> <span class="highlight">)</span>を使用します。</li>
+    </ul>
+    <table width="60%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+      <tr>
+        <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Rotation angle</font></th>
+      </tr>
+      <tr>
+        <td width="20%" class="table_heading">書式</td>
+        <td width="40%" class="table_heading">意味</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::Rotation::NONE</td>
+        <td width="40%" class="table_cell">回転しない</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::Rotation::COUNTERCLOCKWISE</td>
+        <td width="40%" class="table_cell">９０度回転</td>      
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::Rotation::UPSIDEDOWN</td>
+        <td width="40%" class="table_cell">１８０度回転</td>
+      </tr>
+      <tr>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::Rotation::CLOCKWISE</td>
+        <td width="40%" class="table_cell">２７０度回転</td>
+      </tr>
+    </table>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+  
+private:
+    Gtk::Image m_image;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "画像データの回転" );
+    set_default_size( 320, 240 );
+  
+    Glib::RefPtr&lt;Gdk::Pixbuf&gt; pixbuf = Gdk::Pixbuf::create_from_file( "./test.bmp" );
+   // 画像データを回転(90度単位)
+    pixbuf = pixbuf-><span class="highlight">rotate_simple(</span> Gdk::Pixbuf::Rotation::COUNTERCLOCKWISE <span class="highlight">)</span>;
+    m_image.set( pixbuf ); 
+    set_child( m_image );
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/pixbuf-rotate.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pixbuf-scale.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pixbuf-composite.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

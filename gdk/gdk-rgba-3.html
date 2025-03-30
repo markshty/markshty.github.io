@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>色の指定(その３)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">色の指定(その３)</h1>
+    <p class="update">(update:2025/3/30)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">Gdk::RGBAには様々な色の指定方法が整備されています。ここではいくつかの色の指定方法についてご紹介します。</p>
+    <h3>使い方</h3>
+    <div class="paragraph">
+      <p>Gdk::RGBA::set()関数を実行する際に引数として書式を表す文字列を与えます。</p>
+      <table width="65%" border="0" bgcolor="#ffffff" align="left">
+        <tr>
+          <th width="15%" class="function_heading">Gdk::RGBA::set(</th>
+          <td width="20%" class="function_cell">const Glib ustring &</td>
+          <td width="10%" class="function_cell">value <span style="font-weight:BOLD">)</span></td>
+          <td width="20%" class="function_cell">// 色を指定する書式</td>
+        </tr>
+      </table>
+      <p style="clear:both"></p>
+    </div>  
+
+    <h4>色を指定する書式</h3> 
+    <ol class="paragraph">
+      <li><span class="emphasis">色の標準名</span></li>
+      <p><a href="https://www.w3.org/wiki/CSS/Properties/color/keywords">CSS仕様</a>から採用された色の標準名</p>
+      <p>例. "cyan" "green" "gold"</p>
+      <li><span class="emphasis">16進数表示[rgb]</span></li>
+      <p>例. "#00ffff" "#008000" "#ffd700"</p>
+      <li><span class="emphasis">16進数表示[rgba]</span></li>
+      <p>例. "#00ffffa3" "#008000ff" "#ffd700ff"</p>
+      <li><span class="emphasis">rgb(r,g,b)</span></li>
+      <p>例. "rgb(0, 255, 255)" "rgb(0, 128, 0)" "rgb(255, 215, 0)"</p>
+      <li><span class="emphasis">rgba(r,g,b,a)</span></li>
+      <p>例. "rgba(0%, 100%, 100%, 1.0)" "rgba(0%, 50%, 0%, 1.0)" "rgba(100%, 84%, 0%, 1.0)"</p>
+      <p>※r,g,bは、0から255の整数、あるいは、パーセント表示(0%-100%)</p>
+      <li><span class="emphasis">hsl(h,s,l)</span></li>
+      <p>色相(h:0～360)、彩度(s:0%～100%)、輝度(l:0%～100%)を指定します。</p>
+      <p>例. "hsl(174, 72%, 56%)"</p>
+      <li><span class="emphasis">hsla(h,s,l,a)</span></li>
+      <p>色相(h:0～360)、彩度(s:0%～100%)、輝度(l:0%～100%),alpha(0～1.0)をセットします。</p>
+      <p>例. "hsla(74, 72%, 56%, 1.0)"</p> 
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+    double x, y;
+  
+   // background
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "black" ));
+    cr->paint();
+   // <span class="emphasis">色の標準名</span> (mediumblue)
+    Gdk::RGBA m_color;
+    cr->rectangle( 10.0, 10.0, width -20.0, 30.0 );
+    m_color.<span class="highighlight">set( "mediumblue" )</span>;
+    Gdk::Cairo::set_source_rgba( cr, m_color );
+    cr->fill();
+   // <span class="emphasis">16進数表示[rgb]</span> (royalblue)
+    cr->rectangle( 10.0, 50.0, width -20.0, 30.0 );
+    m_color.<span class="highlight">set( "#4169e1" )</span>;
+    Gdk::Cairo::set_source_rgba( cr, m_color );
+    cr->fill();
+   // <span class="emphasis">16進数表示[rgba]</span> (skyblue)
+    cr->rectangle( 10.0, 90.0, width -20.0, 30.0 );
+    m_color.<span class="highlight">set( "#4169e1A3" )</span>;
+    Gdk::Cairo::set_source_rgba( cr, m_color );
+    cr->fill();
+   // <span class="emphasis">rgb(r,g,b)</span> (stateblue)
+    cr->rectangle( 10.0, 130.0, width -20.0, 30.0 );
+    m_color.<span class="highlight">set( "rgb( 106, 90, 205 )" )</span>;
+    Gdk::Cairo::set_source_rgba( cr, m_color );
+    cr->fill();
+   // <span class="emphasis">rgb(r,g,b,a)</span> steelblue
+    cr->rectangle( 10.0, 170.0, width -20.0, 30.0 );
+    m_color.<span class="highlight">set( "rgba( 27%, 51%, 71%, 1.0 )" )</span>;
+    Gdk::Cairo::set_source_rgba( cr, m_color );
+    cr->fill();
+   // <span class="emphasis">hsl(h,s,l)</span> (turquoise)
+    cr->rectangle( 10.0, 210.0, width -20.0, 30.0 );
+    m_color.<span class="highlight">set( "hsl( 174, 72%, 56% )" )</span>;
+    Gdk::Cairo::set_source_rgba( cr, m_color );
+    cr->fill();
+   // <span class="emphasis">hsla(h,s,l,a)</span>
+    cr->rectangle( 10.0, 250.0, width -20.0, 30.0 );
+    m_color.<span class="highlight">set( "hsla( 74, 72%, 56%, 1.0 )" )</span>;
+    Gdk::Cairo::set_source_rgba( cr, m_color );
+    cr->fill();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;  
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Gdk::RGBA No.3" );
+    set_default_size( 450, 330 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/gdk-rgba-3.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="gdk-rgba-2.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pixbuf-read.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

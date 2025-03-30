@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>画像データの直接操作</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">画像データの直接操作</h1>
+    <p class="update">(update:2025/3/30)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">Gdk::pixbufにセットされている画像データに直接アクセスして画像を操作します。</p>
+    <h3>使い方</h3>
+    <p class="paragraph">Gdk::Pixbufのデータ構造は次の通りです。アルファ値を持たない場合はchannels=3となります。アルファ値を持つ場合はchannels=4となります。</p>  
+    <br>
+    <table width="70%" summary="Data Structure" align="center">
+      <tr>
+        <td width="35%" align="center" valign="top">channels=3</td>
+        <td width="35%" align="center" valign="top">channels=4</td>
+      </tr>
+      <tr>
+        <td width="35%" align="center" valign="top"><img src="./image/pixbuf-image3.png"></td>
+        <td width="35%" align="center" valign="top"><img src="./image/pixbuf-image4.png"></td>
+      </tr>
+    </table>  
+    <br>
+    <table width="70%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+      <tr>
+        <td width="10%" class="table_heading">返値</td>
+        <td width="20%" class="table_heading">命令式</td>
+        <td width="40%" class="table_heading">意味</td>
+      </tr>
+      <tr>
+        <td width="10%" class="table_cell">guint8*</td>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::get_pixels()</td>
+        <td width="40%" class="table_cell">画像データの領域の先頭のメモリアドレスを取得</td>
+      </tr>
+      <tr>
+        <td width="10%" class="table_cell">int</td>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::get_n_channels()</td>      
+        <td width="40%" class="table_cell">画像データのチャンネル数(RGB:3,RGBA:4)</td>
+      </tr>
+      <tr>
+        <td width="10%" class="table_cell">int</td>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::get_width()</td>
+        <td width="40%" class="table_cell">画像データの幅(pixel)</td>
+      </tr>
+      <tr>
+        <td width="10%" class="table_cell">int</td>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::get_height()</td>
+        <td width="40%" class="table_cell">画像データの高さ(pixel)</td>
+      </tr>
+      <tr>
+        <td width="10%" class="table_cell">int</td>
+        <td width="20%" class="table_cell">Gdk::Pixbuf::get_rowstide()</td>
+        <td width="40%" class="table_cell">1行分のメモリサイズ</td>
+      </tr>
+    </table>
+    <p class="paragraph">座標(x,y)のメモリへは pixels[ y * get_rowstride() + x * get_n_channnels() ] でアクセスできます。</p>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class MyDrawArea : public Gtk::DrawingArea {
+private:
+    Glib::RefPtr&lt; Gdk::Pixbuf &gt; m_pixbuf;
+public:
+    MyDrawArea();
+    virtual ~MyDrawArea() = default;
+protected:
+    virtual void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+  
+MyDrawArea::MyDrawArea() {
+    set_draw_func( sigc::mem_fun( *this, &MyDrawArea::on_draw ));
+   // 画像読み込み
+    try {
+        m_pixbuf = Gdk::Pixbuf::create_from_file( "bridge.jpeg" );
+    }
+    catch(...)
+    {
+        Glib::exception_handlers_invoke();
+        exit(1);
+    }
+}
+  
+void MyDrawArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height ) {
+   // 画像データの各種情報の取得
+    guint8* pixels = m_pixbuf-><span class="emphasis">get_pixels()</span>;
+    int channels   = m_pixbuf-><span class="emphasis">get_n_channels()</span>;
+    int w          = m_pixbuf-><span class="emphasis">get_width()</span>;
+    int h          = m_pixbuf-><span class="emphasis">get_height()</span>;
+    int stride     = m_pixbuf-><span class="emphasis">get_rowstride()</span>;
+  
+    std::cout &lt;&lt; "channels:" &lt;&lt; channels &lt;&lt; std::endl;
+    std::cout &lt;&lt; "width:"    &lt;&lt; w        &lt;&lt; std::endl;
+    std::cout &lt;&lt; "height:"   &lt;&lt; h        &lt;&lt; std::endl;
+    std::cout &lt;&lt; "stride:"   &lt;&lt; stride   &lt;&lt; std::endl;
+  
+   // R・G・Bのpixelを排他的論理和をとって反転
+    for( int row = 0; row &lt; h; row++ ) {
+        for( int col = 0; col &lt; w; col++ ) {
+            int offset = <span class="emphasis">row * stride + col * channels</span>; // 座標(col, row)のメモリアドレスを取得
+            pixels[ offset ]   ^= 0xff;                 // Red
+            pixels[ offset+1 ] ^= 0xff;                 // Green
+            pixels[ offset+2 ] ^= 0xff;                 // Blue
+        }
+    }
+  
+   // 描画
+    // Gdk::Pixbuf::scale_simple()を使ってウィンドウに画像サイズを合わせる
+    Gdk::Cairo::set_source_pixbuf( cr, m_pixbuf->scale_simple( width, height, Gdk::InterpType::NEAREST ), 0, 0 );
+    cr->paint();
+}
+  
+class MyWindow : public Gtk::Window
+{
+private:
+    MyDrawArea m_drawarea;
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+};
+  
+MyWindow::MyWindow() {
+    set_title( "Direct memory access" );
+    set_default_size( 640, 320 );
+  
+    set_child( m_drawarea );
+}
+    
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+} 
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/pixbuf-dma.png"></center>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pixbuf-picture.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="gdk-intersects.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
