@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1 class="title">Labelの中の文字列の装飾(下線・取り消し線)</h1>
-    <p class="update">(update:2025/2/1)</p>
+    <p class="update">(update:2025/4/6)</p>
     <hr>
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3> 
@@ -88,7 +88,7 @@ MyWindow::MyWindow()
     set_child( m_vbox );
   
    // underline(single,double), underline_color
-    m_label1.set_text( "&lt;span <span class="highlight">underline</span>='single' <span class="highlight">underline_color</span>='#0000cd'&gt;>Fortune&lt;/span&gt;> comes in &lt;span <span class="highlight">underline</span>='double'&gt;the merry gate.&lt;span&gt;" );
+    m_label1.set_text( "&lt;span <span class="highlight">underline</span>='single' <span class="highlight">underline_color</span>='#0000cd'&gt;>Fortune&lt;/span&gt;> comes in &lt;span <span class="highlight">underline</span>='double'&gt;the merry gate.&lt;/span&gt;" );
     m_label1.set_halign( Gtk::Align::CENTER );
     m_label1.set_use_markup( true );
     m_vbox.append( m_label1 );
