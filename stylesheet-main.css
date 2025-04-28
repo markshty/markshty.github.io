@@ -1,10 +1,10 @@
 @charset "utf-8";
 body {
-    font-size:         95%;                         /* フォントサイズを95%にする */
+    font-size:         18px;                         /* フォントサイズを18pxにする */
     font-family:       "ＭＳ ゴシック",sans-serif;   /* フォントの種類をゴシック系にする */
     margin:            20px;
     padding:           10px 20px 20px 5px;
-    line-height:       1.0;                         /* 行の高さを1.5倍にする */
+    line-height:       1.2;                         /* 行の高さを1.5倍にする */
     color:           #333333;
 }
 
