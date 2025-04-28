@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Labelの中の文字列の装飾</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Labelの中の文字列の装飾(Convenience Tags)</h1>
+    <p class="update">(update:2025/4/29)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">Labelの中の文字列に装飾を加えます（簡略化法）。</p>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>gtkmm4では、<a href="https://docs.gtk.org/Pango/pango_markup.html">Pango Markup syntax</a>を用いてwidgetの中のテキスト(文字列)に装飾を加えることができます。
+      <li>Convenience Tagsを使うとテキスト(文字列)に太字、斜体、下線などを加えることができます。</li>  
+      <li>具体的には、<span class="highlight">set_markup()</span>の引数として、表示するテキスト(文字列)を指定のタグ(Convenience Tags)で囲みます。</li>
+      <li>タグ(Convenience Tags)で囲まれた範囲の書式が変更されます。</li>
+    </ol>
+    <table width="50%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+      <tr>
+        <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Convenience Tags</font></th>
+      </tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;b&gt;～&lt;/b&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">Bold(太字)</font></td>
+      </tr>
+      <tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;big&gt;～&lt;/big&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">フォントを相対的に大きくする</font></td>
+      </tr>
+      <tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;i&gt;～&lt;/i&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">Italic(斜体)</font></td>
+      </tr>
+      <tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;s&gt;～&lt;/s&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">取り消し線</font></td>
+      </tr>
+      <tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;sub&gt;～&lt;/sub&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">添え字</font></td>
+      </tr>
+      <tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;sup&gt;～&lt;/sup&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">上付き文字</font></td>
+      </tr>
+      <tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;small&gt;～&lt;/small&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">フォントを相対的に小さくする</font></td>
+      </tr>
+      <tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;tt&gt;～&lt;/tt&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">モノスペースフォント</font></font></td>
+      </tr>
+      <tr>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">&lt;u&gt;～&lt;/u&gt;</font></td>
+        <td width="25%" bgcolor="#ffffff" align="center"><font color="556b2f">下線</font></td>
+      </tr>
+    </table>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+    Gtk::Box m_vbox;
+    Gtk::Label m_label1, m_label2, m_label3, m_label4, m_label5;
+    Gtk::Label m_label6, m_label7, m_label8, m_label9, m_label10;
+};
+  
+MyWindow::MyWindow()
+ : m_vbox( Gtk::Orientation::VERTICAL )
+{
+    set_title("Label(pango markup - Convenience Tags)");
+    m_vbox.set_margin( 15 );
+    m_vbox.set_spacing( 10 );
+    m_vbox.set_expand();
+    set_child( m_vbox );
+  
+   // Bold(太字)
+    m_label1.<span class="highlight">set_markup(</span> "Bold           &lt;b&gt;>The marathon will be held tomorrow&lt;/b&gt;" <span class="highlight">)</span>;
+    m_label1.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label1 ); 
+   // big
+    m_label2.<span class="highlight">set_markup(</span> "big            &lt;big&gt;The marathon will be held tomorrow&lt;/big&gt;" <span class="highlight">)</span>;
+    m_label2.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label2 ); 
+   // Italic(斜体)
+    m_label3.<span class="highlight">set_markup(</span> "Italic         &lt;i&gt;>The marathon will be held tomorrow&lt;/i&gt;" <span class="highlight">)</span>;
+    m_label3.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label3 );
+   // Strikethrough(取り消し線)
+    m_label4.<span class="highlight">set_markup(</span> "Strikethrough  &lt;s&gt;The marathon will be held tomorrow&lt;/s&gt;" <span class="highlight">)</span>;
+    m_label4.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label4 );
+   // Subscript(添字)
+    m_label5.<span class="highlight">set_markup(</span> "Subscript      &lt;sub&gt;The marathon will be held tomorrow&lt;/sub&gt;" <span class="highlight">)</span>;
+    m_label5.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label5 ); 
+   // Superscript(上付き文字)
+    m_label6.<span class="highlight">set_markup(</span> "Superscript    &lt;sup&gt;The marathon will be held tomorrow&lt;/sup&gt;" <span class="highlight">)</span>;
+    m_label6.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label6 ); 
+   // small
+    m_label7.<span class="highlight">set_markup(</span> "smaller        &lt;small&gt;The marathon will be held tomorrow&lt;/small&gt;" <span class="highlight">)</span>;
+    m_label7.set_halign( Gtk::Align::START);
+    m_vbox.append( m_label7 );
+   // Monospace Font
+    m_label8.<span class="highlight">set_markup(</span> "Monospace font &lt;tt&gt;The marathon will be held tomorrow&lt;/tt&gt;" <span class="highlight">)</span>;
+    m_label8.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label8 );
+   // underline(下線)
+    m_label9.<span class="highlight">set_markup(</span> "underline      &lt;u&gt;The marathon will be held tomorrow&lt;/u&gt;" <span class="highlight">)</span>;
+    m_label9.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label9 );
+   // normal
+    m_label10.set_markup("normal         The marathon will be held tomorrow" );
+    m_label10.set_halign( Gtk::Align::START );
+    m_vbox.append( m_label10 );
+}
+  
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/label-decoration-5convenience.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="label-decoration-4line.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pango-display.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

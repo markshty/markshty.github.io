@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>文字列の表示範囲(TextExtents)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">文字列の表示範囲(TextExtents)</h1>
+    <p class="update">(update:2025/4/29)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">Pangoでグラフィック画面(Gtk::DrawingArea)に表示される文字列の範囲を取得する方法を示します。</p>
+    <h3>使い方</h3>
+    <h4>get_pixel_ink_extents</h4>
+      <p class="paragraph">
+        <img src="image/pango-display-4ink.png" alt="ink_extentsの図" class="figure_L">
+      </p>
+      <ol class="paragraph">
+        <li>概要</li>
+          <p>ink_extentsは、文字列に接する長方形の範囲を表します。</p>
+          <p>※Pangoでは、描画位置として指定するx,y座標は、左上角となります（右図の<span style=color:#ff00ff>ピンク色</span>）</p>
+        <li>文字列の描画位置</li>
+          <p>[x座標]: int Pango::Rectamgle::get_x()</p>
+          <p>[y座標]: int Pango::Rectangle::get_y()</p>
+        <li>文字列が描画されるは範囲</li>
+          <p>[幅　] : int Pango::Rectangle::get_width()</p>
+          <p>[高さ] : int Pango::Rectangle::get_height()</p>
+        <li>関　数</li>
+          <table width="45%" border="0" bgcolor="#ffffff" align="left">
+            <tr>
+              <th width="15%" class="function_heading">Pango::Rectangle</th>
+              <td width="30%" class="function_cell">Pango::Layout::get_pixel_ink_extents()</td>
+            </tr>
+          </table>
+          <p style="clear:both"></p>
+      </ol>
+      
+    <h4>get_pixel_logical_extents</h4>
+      <p class="paragraph">
+        <img src="image/pango-display-4logical.png" alt="ink_extentsの図" class="figure_L">
+      </p> 
+      <ol class="paragraph">
+        <li>概要</li>
+          <p>logical extentsは、描画の基準点と文字列を包含する長方形の範囲を示します。</p>
+        <li>文字列の描画位置</li>
+          <p>[x座標]: int Pango::Rectamgle::get_x()</p>
+          <p>[y座標]: int Pango::Rectangle::get_y()</p>
+          <p>※logical extentsでは、両値はともに0になります。</p>
+        <li>文字列が描画されるは範囲</li>
+          <p>[幅　] : int Pango::Rectangle::get_width()</p>
+          <p>[高さ] : int Pango::Rectangle::get_height()</p>
+        <li>関　数</li>
+          <table width="45%" border="0" bgcolor="#ffffff" align="left">
+            <tr>
+              <th width="15%" class="function_heading">Pango::Rectangle</th>
+              <td width="30%" class="function_cell">Pango::Layout::get_pixel_logical()</td>
+            </tr>
+          </table>
+          <p style="clear:both"></p>
+      </ol>
+  </body>       
+  <br>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+    Pango::FontDescription font;
+  
+    font.set_family( "MonoSpace" );
+    font.set_weight( Pango::Weight::NORMAL );
+    font.set_style( Pango::Style::ITALIC );
+    font.set_size( 70 * Pango::SCALE );
+  
+    Glib::RefPtr&lt;Pango::Layout&gt; layout = create_pango_layout( "" );
+    layout->set_text( "Hello everyone!" );
+    layout->set_font_description( font );
+  
+    int tx = 30.0;
+    int ty = 30.0;
+  
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "black" ));
+    cr->paint();
+  
+    cr->move_to( tx, ty );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "white" ));
+    layout->show_in_cairo_context( cr );
+  
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "Fuchsia" ));
+    cr->arc( tx, ty, 5.0, 0.0, 2*M_PI );
+    cr->fill();
+  
+    std::cout &lt;&lt; "width  : " &lt;&lt; width  &lt;&lt; std::endl;
+    std::cout &lt;&lt; "height : " &lt;&lt; height &lt;&lt; std::endl;
+  
+    Pango::Rectangle a = layout-><span class="highlight">get_pixel_ink_extents()</span>;
+    cr->rectangle( tx + a.get_x(), ty + a.get_y(), a.get_width(), a.get_height() );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "Yellow" ));
+    cr->set_line_width( 1.0 );
+    cr->stroke();
+  
+    std::cout &lt;&lt; "ink_x : " &lt;&lt; a.get_x() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_y : " &lt;&lt; a.get_y() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_width  : " &lt;&lt; a.get_width() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_height : " &lt;&lt; a.get_height() &lt;&lt; std::endl;
+  
+    Pango::Rectangle b = layout-><span class="highlight">get_pixel_logical_extents()</span>;
+    cr->rectangle( tx + b.get_x(), ty + b.get_y(), b.get_width(), b.get_height() );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "lime" ));
+    cr->set_line_width( 1.0 );
+    cr->stroke();
+  
+    std::cout &lt;&lt; "logical_x : " &lt;&lt; b.get_x() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "logical_y : " &lt;&lt; b.get_y() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "logical_width  : " &lt;&lt; b.get_width() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "logical_height : " &lt;&lt; b.get_height() &lt;&lt; std::endl;
+      
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "Fuchsia" ));
+    cr->arc( tx, ty, 5.0, 0.0, 2*M_PI );
+    cr->fill();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Extents" );
+    set_default_size( 900, 240 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="result-table">
+      <hr>
+      <table width="95%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Text Align Center</font></th>
+        </tr>
+        <tr>
+          <td width="25%" class="table_heading">Console</td>
+          <td width="70%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="25%" class="terminal_cell">
+          width  : 900<br>
+          height : 203<br>
+          ink_x  : 6<br>
+          ink_y  : 28<br>
+          ink_width : 826<br>
+          ink_height : 95<br>
+          logical_x : 0<br>
+          logical_y : 0<br>
+          logical_width : 840<br>
+          logical_height : 128
+          </td>
+          <td width="70%" class="table_figure"><img src="./image/pango-display-4extents.png"></td>
+        </tr>
+      </table>
+    </div>
+
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pango-display-3universe.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pango-display-5textaligncenter.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

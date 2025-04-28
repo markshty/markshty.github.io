@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>文字列の縦書き(Vertical Writing)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">文字列の縦書き(Vertical Writing)</h1>
+    <p class="update">(update:2025/4/29)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">文字列を盾に描きます。サンプルプログラムでは、ink_extentsを用いて、文字列の「中心位置」がwindowの中央に描かれるように描画します。</p>
+    <h3>使い方</h3>
+    <p class="paragraph">文字列を縦書きで表示する方法は次の通りです。</p>
+    <ol>
+      <li>文字の向きの変更</li>
+        <p>set_gravity()関数を実行してフォントの種類を指定します。</p>      
+        <p>【関　数】</p>
+        <table width="55%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="30%" class="function_cell">Pango::FontDescription::set_gravity(</th>
+            <td width="5%" class="function_cell">Gravity</td>
+            <td width="5%" class="function_cell">gravity</td>
+            <td width="5%" class="function_cell"><span style="font-weight:bold">)</span></td>
+          </tr>
+        </table>
+        <br style="clear:both">
+        <p>【返　値】 :  無し</p>
+        <br>
+        <p>文字の向きの指定は次の通りです。</p>
+        <table width="30%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th class="table_heading" colspan="2">Pango::Gravity</th>
+          </tr>
+          <tr>
+            <td width="10%" class="table_heading">書式</td>
+            <td width="20%" class="table_heading">内容</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">SOUTH</td>
+            <td width="20%" class="table_cell">直立(default)</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">EAST</td>
+            <td width="20%" class="table_cell">文字は反時計回りに９０度回転</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">NORTH</td>
+            <td width="20%" class="table_cell">文字はさかさまに</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">WEST</td>
+            <td width="20%" class="table_cell">文字は時計回りに９０度回転</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">AUTO</td>
+            <td width="20%" class="table_cell">文字はcontext matrixによって向きが変わる</td>
+          </tr>
+        </table>
+        <br style="clear:both">
+        <br>
+      <li>平行移動</li>
+        <p>translate(translate, 0.0)を実行して、文字列をwindowの右側に寄せます。</p>      
+        <br>
+      <li>９０度時計回りに回転</li>
+        <p>rotate(0.5*M_RI)を実行して、座標系を９０度時計回りに回転させます。</p>
+        <br>     
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+const Glib::ustring text = "春夏秋冬";
+  
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+     
+    Glib::RefPtr&lt;Pango::Layout&gt; layout;
+    Pango::FontDescription font;
+    const int font_size = 40;
+    const int margin = 10;
+    int tx0, ty0, tx, ty;
+  
+   // 背景色
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "lightyellow" ));
+    cr->paint();
+   // 補助線
+    tx0 = 0.5 * width;
+    ty0 = 0.5 * height;
+    cr->move_to( tx0, 0.0 );
+    cr->rel_line_to( 0.0, height );
+    cr->move_to( 0.0, ty0 );
+    cr->rel_line_to( width, 0.0 );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "seagreen" ));
+    cr->stroke();
+  
+    layout = create_pango_layout( "" );
+    layout->set_text( text );
+  
+    font.set_family( "IPAゴシック" );
+    font.set_size( font_size * Pango::SCALE );
+   // <span class="emphasis">1.文字の向きの変更</span>
+    font.set_gravity( Pango::Gravity::EAST );
+    layout->set_font_description( font );
+   // <span class="emphasis">2.平行移動</span>
+    cr->translate( width, 0.0 );
+   // <span class="emphasis">3.９０度時計回りに回転</span>
+    cr->rotate( 0.5 * M_PI );
+   // 文字の外枠
+    Pango::Rectangle a = layout->get_pixel_ink_extents();
+    tx = height/2.0  - ( a.get_width()/2.0  + a.get_x());
+    ty = width/2.0   - ( a.get_height()/2.0 + a.get_y());
+    cr->rectangle( tx + a.get_x(), ty + a.get_y(), a.get_width(), a.get_height());
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "lime" ));
+    cr->stroke();
+   // 文字の表示
+    cr->move_to( tx, ty );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "black" ));
+    layout->show_in_cairo_context( cr );
+      
+    std::cout &lt;&lt; "width  : " &lt;&lt; width &lt;&lt; std::endl;
+    std::cout &lt;&lt; "height : " &lt;&lt; height &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_x  : " &lt;&lt; a.get_x() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_y  : " &lt;&lt; a.get_y() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_width  : " &lt;&lt; a.get_width() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_height : " &lt;&lt; a.get_height() &lt;&lt; std::endl;
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Vertical Writing" );
+    set_default_size( 124, 320 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+
+    <div class="result-table">
+      <hr>
+      <table width="30%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Text Align Center</font></th>
+        </tr>
+        <tr>
+          <td width="25%" class="table_heading">Console</td>
+          <td width="5%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="25%" class="terminal_cell">
+          $ width : 124<br>
+          height : 283<br> 
+          ink_x : 2<br>
+          ink_y : 2<br>
+          ink_width  : 208<br>
+          ink_height : 50
+          </td>
+          <td width="5%" class="table_figure"><center><img src="./image/pango-display-6verticalwriting.png"></center></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pango-display-5textaligncenter.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

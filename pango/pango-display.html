@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>文字列の表示</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">文字列の表示</h1>
+    <p class="update">(update:2025/4/29)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">グラフィック画面への文字列の表示の手順を示します。</p>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>フォントの書式設定</li>
+      <p>Pango::FontDescriptionを用いてフォントの書式を設定します。</p>
+      <ul>
+        <li>フォントの種類</li>
+          <p>システムにインストールされているフォントの中から画面に表示するフォント(family)を選んで指定します。</p>
+          <p>【関　数】</p>
+          <table width="65%" border="0" bgcolor="#ffffff" align="left">
+            <tr>
+              <th width="40%" class="function_heading">void Pango::FontDescription::set_family(</th>
+              <td width="15%" class="function_cell">Glib::ustring </td>
+              <td width="10%" class="function_cell">family <span style="font-weight:BOLD">)</span></td>
+            </tr>
+          </table>
+          <p style="clear:both"></p>
+          <p>【返　値】 : 無し</p>       
+          <br>
+        <li>フォントのサイズ</li>
+          <p>フォントのサイズ(size)を指定します。10ポイントの文字を表示する場合は、10 * Pango::SCALE と入力します。サンプルプログラムでは文字の大きさを20ポイントに指定しています。</p>
+          <p>【関　数】</p>
+          <table width="50%" border="0" bgcolor="#ffffff" align="left">
+            <tr>
+              <th width="35%" class="function_heading">void Pango::FontDescription::set_size(</th>
+              <td width="5%" class="function_cell">int</td>
+              <td width="10%" class="function_cell">size <span style="font-weight:BOLD">)</span></td>
+            </tr>
+          </table>
+          <p style="clear:both"></p>
+          <p>【返　値】 : 無し</p>
+          <br>
+      </ul>
+      <li>レイアウトの設定</li>
+        <ul>
+          <li>領域の確保</li>
+            <p>レイアウトを格納する領域を確保します。表示する文字列を空白("")にしておいて、set_text()関数で後から表示する文字列(text)をセットすることができます。</p>
+            <p>【関　数】</p>
+            <table width="90%" border="0" bgcolor="#ffffff" align="left">
+              <tr>
+                <th width="30%" class="function_heading">Glib::RefPtr&lt;Pango::Layout&gt;</th>
+                <th width="30%" class="function_heading">Gtk::Widget::create_pango_layout(</th>
+                <td width="20%" class="function_cell">const Glib::ustring &</td>
+                <td width="10%" class="function_cell">text <span style="font-weight:BOLD">)</span></td>
+              </tr>
+            </table>
+            <p style="clear:both"></p>
+            <p>【返　値】 :  Glib::RefPtr&lt;Pango::Layout&gt;</p>
+            <br>
+          <li>表示する文字列の設定</li>
+            <p>レイアウトを格納する領域を確保します。表示する文字列が空白にしておいて、set_text()関数で後から表示する文字列(text)をセットすることができます。</p>
+            <p>【関　数】</p>
+            <table width="55%" border="0" bgcolor="#ffffff" align="left">
+              <tr>
+                <th width="5%" class="function_heading">void</th>
+                <th width="20%" class="function_heading">Pango:Layout::set_text(</th>
+                <td width="20%" class="function_cell">const Glib::ustring &</td>
+                <td width="10%" class="function_cell">text <span style="font-weight:BOLD">)</span></td>
+              </tr>
+            </table>
+            <p style="clear:both"></p>
+            <p>【返　値】 :  無し</p>
+            <br>
+          <li>フォント等の書式の反映</li>
+            <p>レイアウトにフォントの種類やサイズ、強調などのフォントの書式を反映します。/p>
+            <p>【関　数】</p>
+            <table width="75%" border="0" bgcolor="#ffffff" align="left">
+              <tr>
+                <th width="5%" class="function_heading">void</th>
+                <th width="30%" class="function_heading">Pango:Layout::set_font_description(</th>
+                <td width="25%" class="function_cell">const FontDescription &</td>
+                <td width="10%" class="function_cell">desc <span style="font-weight:BOLD">)</span></td>
+              </tr>
+            </table>
+            <p style="clear:both"></p>
+            <p>【返　値】 :  無し</p>
+            <br>
+          </ul>
+
+      <li>文字列の色の指定</li>
+        <p>表示する文字列の色を指定します。</p>
+      <li>表示位置の指定</li>
+        <p>move_to(x,y)関数を使って、文字列を表示する位置の座標を指定します。</p>
+      <li>画面への表示</li>
+        <p>文字列のレイアウトをサーフェースに映します。</p>
+        <p>【関　数】</p>
+        <table width="85%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="30%" class="function_heading">Pango:Layout::show_in_cairo_context(</th>
+            <td width="40%" class="function_cell">const Cairo::RefPtr&lt;Cairo::Context&gt; &</td>
+            <td width="10%" class="function_cell">context <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 :  無し</p>
+        <br>
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+  
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+    int t_width, t_height;
+  
+  // 背景色の指定
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "coral" ));
+    cr->paint();
+  
+  // <span class="emphasis">1.フォントの書式設定</span>
+    <span class="highlight">Pango::FontDescription</span> font;
+    font.<span class="highlight">set_family(</span> "VL Pゴシック" <span class="highlight">)</span>;
+    font.<span class="highlight">set_size(</span> 20 * <span class="emphasis">Pango::SCALE</span> <span class="highlight">)</span>;
+
+  // <span class="emphasis">2.レイアウトの設定</span>
+   // 2.1 <span class="emphasis">領域の確保</span>  
+    auto layout = <span class="highlight">create_pango_layout( "" )</span>;
+   // 2.2 <span class="emphasis">文字列の設定</span>
+    layout-><span class="highlight">set_text(</span> "Good morning!" <span class="highlight">)</span>;
+   // 2.3 <span class="emphasis">フォントの書式の反映</span>
+    layout-><span class="highlight">set_font_description(</span> font <span class="highlight">)</span>;
+
+  // <span class="emphasis">3.文字列の色の指定</span>
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "yellow" ));
+   
+  // <span class="emphasis">4.表示位置の指定</span>
+    layout->get_pixel_size( t_width, t_height );
+    cr-><span class="highlight">move_to(</span>( width - t_width ) / 2.0, ( height - t_height ) / 2.0 <span class="highlight">)</span>;
+   
+  // <span class="emphasis">5.画面への表示</span>
+    layout-><span class="highlight">show_in_cairo_context(</span> cr <span class="highlight">)</span>;
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Pango" );
+    set_default_size( 320, 240 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/pango-display.png"></center>
+    <hr>
+    
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="label-decoration-5convenience.html">Preview</td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pango-display-1font.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#ffbcff"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

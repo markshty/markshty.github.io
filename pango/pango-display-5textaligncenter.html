@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>文字列の配置(Text Align Center)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">文字列の配置(Text Align Center)</h1>
+    <p class="update">(update:2025/4/29)</p>   
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">グラフィック画面の中央に文字列を表示します。ここでは、ink_extentsを用いて、文字列の「中心位置」が指定の座標に描かれるように描画します。</p>
+    <h3>使い方</h3>
+    <p class="paragraph">文字列の表示方法は次の通りです。</p>
+    <ol>
+      <li>フォントの種類</li>
+        <p>set_family()関数を実行してフォントの種類を指定します。</p>      
+        <p>【関　数】</p>
+        <table width="70%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="30%" class="function_cell">Pango::FontDescription::set_family(</th>
+            <td width="25%" class="function_cell">const Glib::ustring &</td>
+            <td width="5%" class="function_cell">family</td>
+            <td width="5%" class="function_cell"><span style="font-weight:bold">)</span></td>
+          </tr>
+        </table>
+        <br style="clear:both">
+        <p>【返　値】 :  無し</p>
+        <br>
+      <li>フォントの太字</li>
+        <p>set_weight()関数を実行してフォントを太字にするかどうかをを指定します。</p>      
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="30%" class="function_cell">Pango::FontDescription::set_weight(</th>
+            <td width="5%" class="function_cell">Weight</td>
+            <td width="5%" class="function_cell">weight</td>
+            <td width="5%" class="function_cell"><span style="font-weight:bold">)</span></td>
+          </tr>
+        </table>
+        <br style="clear:both">
+        <p>【返　値】 :  無し</p>
+        <br>
+      <li>フォントの傾斜</li>
+        <p>set_style()関数を実行してフォントの斜体にするかどうかをを指定します。</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_cell">Pango::FontDescription::set_style(</th>
+            <td width="5%" class="function_cell">Style</td>
+            <td width="5%" class="function_cell">style</td>
+            <td width="5%" class="function_cell"><span style="font-weight:bold">)</span></td>
+          </tr>
+        </table>
+        <br style="clear:both">
+        <p>【返　値】 :  無し</p>
+        <br>     
+      <li>フォントのサイズを指定</li>
+        <p>set_size()関数を実行して文字列のサイズを指定します。</p>
+        <p>10ポイントの文字を表示する場合は、10 * Pango::SCALE と入力します。</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_cell">Pango::FontDescription::set_size(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="5%" class="function_cell">size</td>
+            <td width="5%" class="function_cell"><span style="font-weight:bold">)</span></td>
+          </tr>
+        </table>
+        <br style="clear:both">
+        <p>【返　値】 :  無し</p>
+        <br>
+      <li>文字列の領域をセット</li>
+        <p>create_pango_layout()関数を実行して文字列の領域を確保します。"文字列"として表示したい文字列を直接指定することも可能です。</p>
+        <p>レイアウトを格納する領域を確保します。表示する文字列を空白("")にしておいて、set_text()関数で後から表示する文字列(text)をセットすることができます。</p>
+        <p>【関　数】</p>
+        <table width="90%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">Glib::RefPtr&lt;Pango::Layout&gt;</th>
+            <th width="30%" class="function_heading">Gtk::Widget::create_pango_layout(</th>
+            <td width="20%" class="function_cell">const Glib::ustring &</td>
+            <td width="10%" class="function_cell">text <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 :  Glib::RefPtr&lt;Pango::Layout&gt;</p>
+        <br>
+      <li>文字列のセット</li>
+        <p>set_text()関数を実行して画面に表示する文字列をセットします。</p>
+        <p>【関　数】</p>
+        <table width="65%" border="0" bgcolor="#ffffff" cellspacong="1" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="20%" class="function_cell">Pango::Layout::set_text(</th>
+            <td width="25%" class="function_cell">const Glib::ustring &</td>
+            <td width="5%" class="function_cell">text</td>
+            <td width="5%" class="function_cell"><span style="font-weight:bold">)</span></td>
+          </tr>
+        </table>
+        <br style="clear:both">
+        <p>【返　値】 :  無し</p>
+        <br>
+      <li>書式のセット</li>
+        <p>レイアウトにフォントの種類やサイズ、強調などのフォントの書式を反映します。/p>
+          <p>【関　数】</p>
+          <table width="75%" border="0" bgcolor="#ffffff" align="left">
+            <tr>
+              <th width="5%" class="function_heading">void</th>
+              <th width="30%" class="function_heading">Pango:Layout::set_font_description(</th>
+              <td width="25%" class="function_cell">const FontDescription &</td>
+              <td width="10%" class="function_cell">desc <span style="font-weight:BOLD">)</span></td>
+            </tr>
+          </table>
+          <p style="clear:both"></p>
+          <p>【返　値】 :  無し</p>
+          <br>
+      <li>extentsの取得</li>
+        <p>ここでは、ink_extentsの範囲を取得します。</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="15%" class="function_heading">Pango::Rectangle</th>
+            <td width="30%" class="function_cell">Pango::Layout::get_pixel_ink_extents()</td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 :  Pango::Rectangle</p>
+        <br>
+
+      <li>文字列を表示したい座標をセット</li>
+        <p>Windowの中央を表示位置としてセットします。</p>
+      <li>文字列を実際に表示する座標の計算</li>
+      <li>文字列を表示する位置に移動</li>
+        <p>move_to(x,y)関数を使って、文字列を表示する位置の座標を指定します。</p>
+      <li>文字列を表示する色の指定</li>
+        <p>表示する文字列の色を指定します。</p>
+      <li>文字列の表示</li>
+        <p>文字列のレイアウトをサーフェースに映します。</p>
+        <p>【関　数】</p>
+        <table width="85%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="30%" class="function_heading">Pango:Layout::show_in_cairo_context(</th>
+            <td width="40%" class="function_cell">const Cairo::RefPtr&lt;Cairo::Context&gt; &</td>
+            <td width="10%" class="function_cell">context <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 :  無し</p>
+        <br>
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+    Pango::FontDescription font;
+  
+   // 背景色
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "black" ));
+    cr->paint();
+   // <span class="emphasis">1.フォントの種類</span>
+    font.set_family( "MonoSpace" );
+   // <span class="emphasis">2.フォントの太字</span>
+    font.set_weight( Pango::Weight::NORMAL );
+   // <span class="emphasis">3.フォントの傾斜</span>
+    font.set_style( Pango::Style::ITALIC );
+   // <span class="emphasis">4.フォントのサイズを指定</span>
+    font.set_size( 80 * Pango::SCALE );
+   // <span class="emphasis">5.フォントの領域の確保</span>
+    Glib::RefPtr&lt;Pango::Layout&gt; layout = create_pango_layout( "" );
+   // <span class="emphasis">6.文字列のセット</span>
+    layout->set_text( "Charge!" );
+   // <span class="emphasis">7.書式のセット</span>
+    layout->set_font_description( font );
+   // <span class="emphasis">8.extentsの取得</span>
+    Pango::Rectangle a = layout->get_pixel_ink_extents();
+  
+   // <span class="emphasis">9.文字列を表示したい座標をセット</span>
+    int x0 = width / 2.0;
+    int y0 = height / 2.0;
+   // <span class="emphasis">10.文字列を実際に表示する座標の計算</span>
+    int tx = x0 - ( a.get_width() / 2.0 + a.get_x());
+    int ty = y0 - ( a.get_height() / 2.0 + a.get_y());
+  
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "Orange" ));
+    cr->rectangle( tx + a.get_x(), ty + a.get_y(), a.get_width(), a.get_height() );
+    cr->stroke();
+    std::cout &lt;&lt; "tx : " &lt;&lt; tx &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ty : " &lt;&lt; ty &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_x : " &lt;&lt; a.get_x() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_y : " &lt;&lt; a.get_y() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_width  : " &lt;&lt; a.get_width() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ink_height : " &lt;&lt; a.get_height() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "lbearing : " &lt;&lt; a.get_lbearing() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "rbearing : " &lt;&lt; a.get_rbearing() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "ascent : " &lt;&lt; a.get_ascent() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "descent : " &lt;&lt; a.get_descent() &lt;&lt; std::endl;
+  
+   // <span class="emphasis">11.文字列を表示する位置に移動</span>
+    cr->move_to( tx, ty );
+   // <span class="emphasis">12.文字列を表示する色の指定</span>
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "white" ));
+   // <span class="emphasis">13.文字列の表示</span>
+    layout->show_in_cairo_context( cr );
+  
+   // 座標軸
+    cr->move_to( 0.0, height/2.0 );
+    cr->rel_line_to( width, 0.0 );
+    cr->move_to( width/2.0, 0.0 );
+    cr->rel_line_to( 0.0, height );
+    cr->set_line_width( 1.5 );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "Yellow" ));
+    cr->stroke();
+   // 基準点
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "Fuchsia" ));
+    cr->arc( tx, ty, 5.0, 0.0, 2*M_PI );
+    cr->fill();
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Text Align Center" );
+    set_default_size( 500, 240 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果-->
+    <h2 class="ex3">実行結果</h2>
+
+    <div class="result-table">
+      <hr>
+      <table width="70%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Text Align Center</font></th>
+        </tr>
+        <tr>
+          <td width="45%" class="table_heading">Console</td>
+          <td width="25%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="45%" class="terminal_cell">
+          $ tx : 28<br>
+          ty : 14<br> 
+          ink_x : 6<br>
+          ink_y : 32<br>
+          ink_width  : 432<br>
+          ink_height : 109<br>
+          lbearing : 6<br>
+          rbearing : 438<br>
+          ascent : -32<br>
+          descent : 141
+          </td>
+          <td width="25%" class="table_figure"><img src="./image/pango-display-5textaligncenter.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pango-display-4extents.html">Preveius</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+    </body>
+</html>

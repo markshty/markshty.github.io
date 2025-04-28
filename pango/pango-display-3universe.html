@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>多国語表記</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">多国語表記</h1>
+    <p class="update">(update:2025/4/29)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">グラフィック画面(Gtk::DrawingArea)に文字列を多国語で表示します。</p>
+    <h3>使い方</h3>
+    <div class="paragraph">
+      <p>アルファベットを以外の文字を使用する外国語については、set_markup()関数に対して、表現したい文字列をunicodeに置き換えてセットすることにより、多国語表示が可能となります。</p>
+      <p>例．日本語：「朝」 ⇒ 韓国語：「아침」 ⇒ (unicode): &amp#50500;&amp#52840;</p>
+      <p>【関　数】</p>
+      <table width="55%" border="0" bgcolor="#ffffff" align="left">
+        <tr>
+          <th width="5%" class="function_heading">void</th>
+          <th width="25%" class="function_heading">Pango::Layout::set_markup(</th>
+          <td width="15%" class="function_cell">Glib::ustring &</td>
+          <td width="10%" class="function_cell">markup <span style="font-weight:BOLD">)</span></td>
+        </tr>
+      </table>
+      <p style="clear:both"></p>
+      <p>【返　値】 : 無し</p>
+    </div>
+  </body>       
+  <br>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+const Glib::ustring text =
+      "日本語  : われ思うゆえにわれあり\n"
+      "ﾗﾃﾝ語   : cogito, ergo sum\n"
+      "英　語  : I think therefore I am\n"
+      "韓国語  : &amp#45236;&amp#44032; &amp#49373;&amp#44033;&amp#54616;&amp#44592; &amp#46412;&amp#47928;&amp#50640;\n"
+      "タイ語  : &amp#3593;&amp#3633;&amp#3609;&amp#3588;&amp#3636;&amp#3604; &amp#3604;&amp#3633;"
+                "&amp#3591;&amp#3609;&amp#3633;&amp#3657;&amp#3609;&amp#3593;&amp#3633;&amp#3609;"
+                "&amp#3592;&amp#3638;&amp#3591;&amp#3648;&amp#3611;&amp#3655;&amp#3609;\n"
+  
+      "ｱﾗﾋﾞｱ語 : &amp#1571;&amp#1606;&amp#1575;&amp#1571;&amp#1601;&amp#1603;&amp#1585;&amp#1548; "
+               "&amp#1573;&amp#1584;&amp#1606; &amp#1571;&amp#1606;&amp#1575; &amp#1605;&amp#1608;&amp#1580;&amp#1608;&amp#1583;\n"
+      "ﾋﾝﾄﾞｳｰ語:&amp#2350;&amp#2369;&amp#2333;&amp#2375; &amp#2354;&amp#2327;&amp#2340;&amp#2366; "
+               "&amp#2361;&amp#2376; &amp#2311;&amp#2360;&amp#2354;&amp#2367;&amp#2319; "
+               "&amp#2350;&amp#2376;&amp#2306;&amp#2361;&amp#2370;&amp#2305;\n";
+  
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+     
+    Glib::RefPtr&lt;Pango::Layout&gt; layout;
+    Pango::FontDescription font;
+    const int font_size = 16;
+    const int margin = 10;
+  
+    cr->set_source_rgb( 1.0, 1.0, 1.0 );
+    cr->paint();
+  
+    layout = create_pango_layout( "" );
+    layout->set_width(  Pango::SCALE * ( width  - margin * 2 ));
+    layout->set_height( Pango::SCALE * ( height - margin * 2 ));
+    layout->set_indent( Pango::SCALE * font_size );
+    layout->set_line_spacing( 2.0 );
+    layout->set_alignment( Pango::Alignment::LEFT );
+    layout->set_justify( TRUE );
+    layout-><span class="highlight">set_markup(</span> text <span class="highlight">)</span>;
+  
+    font.set_family( "Sans Serif" );
+    font.set_size( font_size * Pango::SCALE );
+    layout->set_font_description( font );
+  
+    cr->move_to( margin, margin );
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    layout->show_in_cairo_context( cr );
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Pango Multilingal display" );
+    set_default_size( 450, 380 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/pango-display-3universe.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pango-display-2layout.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pango-display-4extents.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>文字列のレイアウト</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">文字列のレイアウト</h1>
+    <p class="update">(update:2025/4/19)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">グラフィック画面(Gtk::DrawingArea)に文字列を表示する際のレイアウトを設定します。</p>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>幅の設定</li>
+        <p>文字列の描画領域の幅を設定します。Pango::Layoutでは、設定する数値を1/Pango::SCALEピクセル単位で指定します。</p>
+        <p>例．文字列を表示する幅を300ピクセルとする場合 : 300 * Pango::SCALE</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="20%" class="function_heading">Pango::Layout::set_width(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="15%" class="function_cell">width <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        
+      <li>高さの設定</li>
+        <p>文字列の描画領域の高さを設定します。</p>
+        <p>例．文字列を表示する高さを240ピクセルとする場合 : 240 * Pango::SCALE</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="20%" class="function_heading">Pango::Layout::set_width(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="15%" class="function_cell">width <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        
+      <li>インデントの設定</li>
+        <p>文字列の先頭のインデントの量を設定します。</p>
+        <p>例．文字のサイズを14ピクセルとする : 14 * Pango::SCALE</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="20%" class="function_heading">Pango::Layout::set_indent(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="15%" class="function_cell">indent <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>行間の設定</li>
+        <p>文字列を表示する行が複数に至る場合の行間を文字列の先頭の段下げを量を設定します。factorのデフォルトは0.0です。</p>
+        <p>次行の高さをheight2とした場合に、factorが0でなければ基準線２＝基準線１ + factor * height2となります。factorのデフォルト値は0.0です。1とすると行間が０になります。2にすると1行あいたようになります。サンプルプログラムでは、fctorを1.5とすることにより、行間を0.5行分空けています。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Pango::Layout::set_line_spacing(</th>
+            <td width="5%" class="function_cell">float</td>
+            <td width="15%" class="function_cell">factor <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>文字列の幅寄せの設定</li>
+        <p>文字列の幅寄せを設定します。       
+        <p>【関　数】</p>
+        <table width="55%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Pango::Layout::set_alignment(</th>
+            <td width="10%" class="function_cell">Alignment</td>
+            <td width="15%" class="function_cell">alignment <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        <table width="40%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th class="table_heading" colspan="2">Pango::Alignment</th>
+          </tr>
+          <tr>
+            <td width="15%" class="table_heading">書式</td>
+            <td width="30%" class="table_heading">内容</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell">LEFT</td>
+            <td width="30%" class="table_cell">右寄せ</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell">CENTER</td>
+            <td width="30%" class="table_cell">中央</td>      
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell">RIGHT</td>
+            <td width="30%" class="table_cell">左寄せ</td>
+          </tr>
+        </table>
+        <br style="clear:both">       
+        <br>
+
+      <li>文字列の均等割り付け</li>
+        <p>文字列を行一杯に均等割り付けを行うかどうかを指定します。  
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="20%" class="function_heading">Pango::Layout::set_justify(</th>
+            <td width="5%" class="function_cell">bool</td>
+            <td width="20%" class="function_cell">justify=true <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>文字列の設定</li>
+        <p>マークアップされた文字列を設定します。</p>
+        <p>Pangommでは、<a href="https://docs.gtk.org/Pango/pango_markup.html">Pango Markup syntax</a>を用いてテキスト(文字列)に装飾を加えることができます。</p>
+        <p>【関　数】</p>
+        <table width="65%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Pango::Layout::set_markup(</th>
+            <td width="25%" class="function_cell">const Glib::ustring &</td>
+            <td width="10%" class="function_cell">markup <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+    </ol>
+    <br>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+const Glib::ustring text =
+      "山路を登りながらこう考えた。\n"
+      "&lt;span underline_color='#0000ff'&gt;&lt;u&gt;智に働けば角が立つ。"
+      "情に棹させば流される。意地を通せば窮屈だ。"
+      "とかくに人の世は住みにくい。&lt;/u&gt;&lt;/span&gt;\n"
+      "住みにくさが高じると、安い所へ引き越したくなる。"
+      "どこへ越しても住みにくいと悟った時、詩が生まれて画ができる。\n"
+      "人の世を作ったものは神でもなければ鬼でもない。"
+      "やはり向う三軒両隣にちらちらするただの人である。"
+      "ただの人が作った人の世が住みにくいからとて、越す国はあるまい。"
+      "あれば人でなしの国へ行くばかりだ。"
+      "人でなしの国は人の世よりもなお住みにくかろう。\n"
+      "（&lt;i&gt;夏目漱石&lt;/i&gt;・「&lt;b&gt;草枕&lt;/b&gt;」より）\n";
+  
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+     
+    Glib::RefPtr&lt;Pango::Layout&gt; layout;
+    Pango::FontDescription font;
+    const int font_size = 14;
+    const int margin = 10;
+  
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 1.0 );
+    cr->paint();
+  
+    layout = create_pango_layout( "" );
+    layout-><span class="highlight">set_width(</span>  Pango::SCALE * ( width  - margin * 2 )<span class="highlight">)</span>;
+    layout-><span class="highlight">set_height(</span> Pango::SCALE * ( height - margin * 2 )<span class="highlight">)</span>;
+    layout-><span class="highlight">set_indent(</span> Pango::SCALE * font_size <span class="highlight">)</span>;
+    layout-><span class="highlight">set_line_spacing(</span> 1.5 <span class="highlight">)</span>;
+    layout-><span class="highlight">set_alignment(</span> Pango::Alignment::LEFT <span class="highlight">)</span>;
+    layout-><span class="highlight">set_justify(</span> TRUE <span class="highlight">)</span>;
+    layout-><span class="highlight">set_markup(</span> text <span class="highlight">)</span>;
+  
+    font.set_family( "Sans Serif" );
+    font.set_size( font_size * Pango::SCALE );
+    layout->set_font_description( font );
+  
+    cr->move_to( margin, margin );
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    layout->show_in_cairo_context( cr );
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Pango layout Sample" );
+    set_default_size( 545, 380 );
+    set_child( my_draw );
+}
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}  
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/pango-display-2layout.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="pango-display-1font.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="pango-display-3universe.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
