@@ -1,6 +1,6 @@
 @charset "utf-8";
 body {
-    font-size:        95%;      /* フォントサイズを95%にする */
+    font-size:        1.0rem;      /* フォントサイズを95%にする */
     font-family:      "ＭＳ ゴシック",sans-serif;    /* フォントの種類をゴシック系にする */
     padding:          10px 20px 20px 5px;  
     line-height:      1.5;
