@@ -1,6 +1,6 @@
 @charset "utf-8";
 body {
-    font-size:        95%;      /* フォントサイズを95%にする */
+    font-size:        1.0rem;
     font-family:      "ＭＳ ゴシック",sans-serif;    /* フォントの種類をゴシック系にする */
     padding:          10px 20px 20px 5px;  
     line-height:      1.5;
@@ -18,6 +18,7 @@ h1 {
 
 h2 {
     padding:          0.25em;   /* 上下　左右の余白 */
+    text-align:       center;
     color:            #494949;
     background:       #fffaf4;
     border-left:      solid 3px #7db4e6;
@@ -26,32 +27,60 @@ h2 {
 
 h3 {
     margin-left:      100px;
-    padding-left:     20px;
-    width:            80px;
+    padding:          0.3em;
+    width:            110px;
+    text-align:       center;
     color:            #008000;
     background:       #ffffdb;
     border-radius:    7px 7px 7px 7px;
-    border-bottom:    solid 2px #2e8b67;
-    border-left:      solid 1px #2e8b67;
+    border:           solid 1px #2e8b67;
 }
 
 h4 {
-    margin-left:      100px;
-    padding-left:     10px;
-    width:            250px;
+    margin-left:      120px;
+    text-align:       center;
+    padding:          0.25em;
     color:            #006e54;
-    background:       #ffffff;
+    background:       #ffffdb;
+    border-bottom:    dotted 2px #2e8b67;
+    border-top:       dotted 2px #2e8b67;
 }
 
 .update {
     text-align:       right;
 }
 
+.figure_L {
+    margin-left:      100px;
+    padding-right:     10px; 
+	width:            450px;              /* 画像の表示サイズ(幅)   */
+	margin:           0px 10px 10px 10px; /* マージン 上 右 下 左   */
+	float:            right;              /* 画像を左寄せにする     */
+}
+
+.figure_L2 {
+    margin-left:       50px;
+    padding-right:     10px; 
+	width:            800px;              /* 画像の表示サイズ(幅)   */
+	margin:           0px 10px 10px 10px; /* マージン 上 右 下 左   */
+	/*float:            right;*/              /* 画像を左寄せにする     */
+}
+
 .paragraph {
     width:              78%;
     margin-left:        10%;
-    padding-left:       20px;
+    padding-left:      20px;
+    text-indent:       1rem;
     background-color: #dbffdb;;    
+}
+
+ol {
+    width:            80%;
+}
+
+ol li {
+    color:            #0f5c0f;
+    font-weight:      bold;
 }
 
 .table_heading {
@@ -74,6 +103,13 @@ h4 {
     background:       #003300;
 }
 
+.command_line {
+    margin-left:      2%;
+    padding:          1%;        
+    color:            #e4f124;      
+    background:       #000000;
+}
+
 .ex1 {
     width:            75px;    
 }
@@ -84,6 +120,14 @@ h4 {
 
 .ex3 {
     width:            100px;
+}
+
+.ex4 {
+    width:            120px;
+}
+
+.ex5 {
+    width:            180px;
 }
 
 div#pagebody {
