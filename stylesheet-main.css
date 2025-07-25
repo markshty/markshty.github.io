@@ -1,6 +1,6 @@
 @charset "utf-8";
 body {
-    font-size:         1.2rem;                         /* フォントサイズを18pxにする */
+    font-size:         1.2rem;                      /* フォントサイズを18pxにする */
     font-family:       "ＭＳ ゴシック",sans-serif;   /* フォントの種類をゴシック系にする */
     margin:            20px;
     padding:           10px 20px 20px 5px;
@@ -27,14 +27,56 @@ h2 {
 
 h3 {
     color:           #0000ff;
+    border:            solid 2px #0000ff;
     padding-left:      15px;    
 }
 
+h4 {
+    color:           #0000ff;
+    padding-left:     1.0em;
+}
+
+
 hr{
-    clear:both;                     /*フロート配置をクリアする*/
-    /*width:680px;*/                    /*幅の指定*/
-    margin:10px 0px;                /*マージン*/
-    border:1px dotted #cccccc     /*内容の区切りをグレーの点線表示にする*/
+    clear:both;                                     /*フロート配置をクリアする*/
+    margin:10px 0px;                                /*マージン*/
+    border:1px dotted #cccccc                     /*内容の区切りをグレーの点線表示にする*/
+}
+
+.ex1 {
+    width:             100px;
+}
+
+.ex2 {
+    width:             120px;
+}
+
+.ex3 {
+    width:             160px;
+}
+
+.ex4 {
+    width:             200px;
+}
+
+.ex5 {
+    width:             240px;
+}
+
+.ex6 {
+    width:             280px;
+}
+
+.ex7 {
+    width:             320px;
+}
+
+.ex8 {
+    width:             360px;
+}
+
+.ex9 {
+    width:             400px;
 }
 
 .update {
@@ -49,9 +91,9 @@ hr{
 
 /*=== フッター ===*/
 div#footer {
-    clear:              both;               /*回り込みを解除する*/
-    height:             40px;               /*高さの指定*/
-    padding:            10ps 0px 0px 0px;   /*パディング*/
+    clear:              both;                       /*回り込みを解除する*/
+    height:             40px;                       /*高さの指定*/
+    padding:            10px 0px 0px 0px;           /*パディング*/
     font-size:          medium;
-    text-align:         center;             /*センタリング*/
+    text-align:         center;                     /*センタリング*/
 }
