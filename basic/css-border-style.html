@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 線の種類(border-style)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 線の種類(border-style)</h1>
+    <p class="update">(update:2025/7/25)
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">borderプロパティは、ウイジットの周囲に枠線の外観を指定するためのプロパティです。具体的には枠線の線種（実線、点線、二重線）を指定します。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+        border-styleプロパティの書式を次に示します。
+        <table width="45%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th width="10%" class="table_heading">書　式</th>
+            <th width="30%" class="table_heading">内　容</th>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">none</td>
+            <td width="30%" class="table_cell">枠線を表示しない（デフォルト）</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">dotted</td>
+            <td width="30%" class="table_cell">点線</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">dashed</td>
+            <td width="30%" class="table_cell">破線</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">solid</td>
+            <td width="30%" class="table_cell">実線</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">double</td>
+            <td width="30%" class="table_cell">二重線</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">groove</td>
+            <td width="30%" class="table_cell">三次元の溝のような線</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">ridge</td>
+            <td width="30%" class="table_cell">三次元の盛り上がった線</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">inset</td>
+            <td width="30%" class="table_cell">三次元の押し込まれたような線</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">outset</td>
+            <td width="30%" class="table_cell">三次元の浮き上がりのような線</td>
+          </tr>
+        </table>
+        <p>そのほか、border-top-style, border-right-style, border-bottom-style, border-left-styleのように、上下左右のボーダーを個別に指定することも可能です。</p>
+      </div>      
+      <br>
+      
+    <!-- Sample C++ Program -->
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Label m_label[9];
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Box m_Vbox[3], m_Hbox;
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    const char *text[] = { "none", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset" };
+
+    set_title( "Css border-style" );
+    set_child( m_Hbox );
+
+    for ( int i = 0; i &lt; 3; i++ ) {
+        m_Vbox[i].set_spacing( 10 );
+        m_Vbox[i].set_orientation( Gtk::Orientation::VERTICAL );
+        m_Vbox[i].set_name( "m-box" );
+        for ( int j = 0; j &lt; 3; j++ ) {
+            int k = i * 3 + j;
+            auto s = Glib::ustring::compose( "m-%1", text[k] );
+            m_label[k].set_size_request( 150, 50 );
+            m_label[k].set_text( text[k] );
+            m_label[k].set_name( s );
+            m_Vbox[i].append( m_label[k] );
+        }
+        m_Hbox.append( m_Vbox[i] );
+    }
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+      <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <h2 class="ex1">Css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+}
+
+#m-box {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">margin</span>:           <span style="color:fuchsia">10px</span>;
+    <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>;
+}
+
+#m-none {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">none</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+
+#m-dotted {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">dotted</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+
+#m-dashed {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">dashed</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+
+#m-solid {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+
+#m-double {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">double</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+
+#m-groove {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">groove</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+
+#m-ridge {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">ridge</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+
+#m-inset {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">inset</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+
+#m-outset {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">outset</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
+}
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+      <div class="paragraph">
+        <img src="../basic/images/css-border-style.png">  
+      </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-border.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-color.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

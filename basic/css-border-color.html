@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 枠線の色(border-color)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 枠線の色(border-color)</h1>
+    <p class="update">(update:2025/7/25)
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">border-colorプロパティは、ウイジットの枠線の色を指定するためのプロパティです。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+    <h4 class="ex4">色の書式</h4>
+      <div class="paragraph">
+      border-colorプロパティでは、次のように様々な書式で枠線の色を指定することができます。
+      <ol>
+        <li>色の名前</li>
+          <p>例．yellow, aqua, lime</p>
+        <li>16進数</li>
+          <p>例．#C0C0C0(silver), #800080(purple), #ff8c00(drakorange)</p>
+        <li>RGB値</li>
+          <p>例．rgb(128, 128, 0) olive, rgb(0, 128, 128) teal, rgb(255,255,255) white</p>
+        <li>HSL値</li>
+          <p>例．hsl(0, 100%, 50%) 赤, hsl(120, 100%, 50%) 緑, hsl(240, 100%, 50%) 青</p>
+      </ol>
+
+      <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+        <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+        <br>
+          
+      <h5 class="ex4">stylesheet</h5>
+        <a class="stylesheet" href="#StyleSheet1">style1.css</a>
+        <br>
+
+      <h5 class="ex3">実行結果</h5>
+        <p><img src="images/css-border-color_A.png"></p>
+        <br >
+      </div>
+
+    <h4 class="ex4">値の個数</h4>
+      <div class="paragraph">  
+      また、指定する値の個数によって指定する場所が異なります。
+      <ol>
+        <li>１つの値</li>
+          <p>ひとつの色を指定すると、上下左右すべての枠線(border)に同じ色が適用されます。</p>
+          <p>例．border-color: yellow;</p>
+        <li>２つの値</li>
+          <p>ふたつの色を指定すると、最初の色が上下に、次の色が左右に適用されます。</p>
+          <p>例．border-color: yellow blue;</p>
+        <li>３つの値</li>
+          <p>三っつの色を指定すると、最初の色が上、二番目の色が左右に、三番目の色が下に適用されます。</p>
+          <p>例．border-color: yellow blue lime;</p>
+        <li>４つの値</li>
+          <p>四つの色を指定すると、上・右・下・左の順に指定されます。</p>
+          <p>例．border-color: yellow blue lime purple;</p>
+      </ol>
+      <p>そのほか、border-top-color, border-right-color, border-bottom-color, border-left-colorのように、上下左右の枠線の色を個別に指定することも可能です。</p>      
+      
+      <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+        <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+        <br>
+          
+      <h5 class="ex4">stylesheet</h5>
+        <a class="stylesheet" href="#StyleSheet2">style2.css</a>
+        <br>
+
+      <h5 class="ex3">実行結果</h5>
+        <p><img src="images/css-border-color_B.png"></p>
+        <br >
+      </div>
+    <br>
+      
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram" />
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Label m_label1, m_label2, m_label3, m_label4;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Box m_box;
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css border-color" );
+    set_child( m_box );
+    m_box.set_spacing( 15 );
+    m_box.set_name( "m-box" );
+
+    m_label1.set_size_request( 150, 150 );
+    m_label1.set_text( "LabelA" );
+    m_label1.set_name( "m-label_A" );
+    m_box.append( m_label1 );
+
+    m_label2.set_size_request( 150, 150 );
+    m_label2.set_text( "LabelB" );
+    m_label2.set_name( "m-label_B" );
+    m_box.append( m_label2 );
+
+    m_label3.set_size_request( 150, 150 );
+    m_label3.set_text( "LabelC" );
+    m_label3.set_name( "m-label_C" );
+    m_box.append( m_label3 );
+
+    m_label4.set_size_request( 150, 150 );
+    m_label4.set_text( "LabelD" );
+    m_label4.set_name( "m-label_D" );
+    m_box.append( m_label4 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+      <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <a id="StyleSheet1" />
+    <h2 class="ex41">style1.css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
+}
+
+#m-box {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
+    <span style="color:lime">margin</span>:           <span style="color:fuchsia">10px</span>;
+    <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>; 
+}
+
+#m-label_A {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">aqua</span>;
+}
+
+#m-label_B {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">#800080</span>;
+}
+
+#m-label_C {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">rgb(0, 128, 128)</span>;
+}
+
+#m-label_D {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
+    <span style="color:lime">border-radius</span>:    <span style="color:fuchsia">hsl(240, 100%, 50% )</span>;
+}
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <a id="StyleSheet2" />
+    <h2 class="ex41">style2.css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
+}
+
+#m-box {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
+    <span style="color:lime">margin</span>:           <span style="color:fuchsia">10px</span>;
+    <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>; 
+}
+
+#m-label_A {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">yellow</span>;
+}
+
+#m-label_B {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">yellow blue</span>;
+}
+
+#m-label_C {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">yellow blue lime</span>;
+}
+
+#m-label_D {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
+    <span style="color:lime">border-radius</span>:    <span style="color:fuchsia">yellow blue lime purple</span>;
+}
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-border-radius.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-gradient-linear.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

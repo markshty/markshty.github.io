@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 線形グラデーション</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 線形グラデーション</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">グラデーションは、2色以上の色が連続的に変化することでWindowの背景やウィジットに様々な色彩の効果を加えることができます。グラデーションの種類は線形グラデーション、放射形グラデーション、扇形グラデーション、反復形グラデーションの４つがあります。ここでは、まず、線形グラデーションについて記します。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <ol class="paragraph">
+        <li>基本形</li>
+          <p>グラデーションでは、基本的に2色以上の色を指定することが必要です。これらは「<span class="emphasis">color stops</span>」と呼ばれており、日本語では「色経由点」あるいは「色の中間点」と訳すことがあります。デフォルトでは、上から下に向かって色が変化します。</p>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">blue</span>, <span style="color:fuchsia">black</span><span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+          
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear1.png"></p>
+          <br >
+      
+        <li>グラデーションの方向</li>         
+          <p>線形グラデーションでは、デフォルトでは上から下に向かって色が変化します。色が変化する方向を上下左右に指定することができます。</p>
+          
+          <table width="50%" border="0" cellspacong="1" bgcolor="#32cd32">
+          　<tr>
+            　<th width="10%" class="table_heading">書　式</th>
+            　<th width="10%" class="table_heading">方　向</th>
+              <th width="10%" class="table_heading">書　式</th>
+            　<th width="10%" class="table_heading">方　向</th>
+          　</tr>
+          　<tr>
+            　<td width="10%" class="table_cell">to top</td>
+            　<td width="10%" class="table_cell">下から上へ</td>
+          　　<td width="10%" class="table_cell">to right</td>
+            　<td width="10%" class="table_cell">左から右へ</td>      
+          　</tr>
+          　<tr>
+            　<td width="10%" class="table_cell">to bottom</td>
+            　<td width="10%" class="table_cell">上から下へ</td>
+          　　<td width="10%" class="table_cell">to left</td>
+            　<td width="10%" class="table_cell">右から左へ</td>
+          　</tr>
+        　</table>
+          <br>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">to right</span>, blue, black <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear2.png"></p> 
+          <br >
+      
+        <li>対角線上のグラデーション</li>         
+          <p>色が変化する方向を角から角に指定することができます。</p>
+          
+          <table width="50%" border="0" cellspacong="1" bgcolor="#32cd32">
+            <tr>
+              <th width="15%" class="table_heading">書　式</th>
+              <th width="10%" class="table_heading">方　向</th>
+              <th width="15%" class="table_heading">書　式</th>
+              <th width="10%" class="table_heading">方　向</th>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">to top right</td>
+              <td width="10%" class="table_cell">右上角へ</td>
+              <td width="15%" class="table_cell">to bottom right</td>
+              <td width="10%" class="table_cell">右下角へ</td>      
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">to bottom left</td>
+              <td width="10%" class="table_cell">左下角へ</td>
+              <td width="15%" class="table_cell">to top left</td>
+              <td width="10%" class="table_cell">左上角へ</td>
+            </tr>
+          </table>
+          <br>
+
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">to bottom right</span>, blue, yellow <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear3.png"></p>
+          <br>
+
+        <li>角度の指定</li>          
+          <p>グラデーションに任意の角度を指定することができます。</p>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">65deg</span>, blue, yellow <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear4A.png"></p>
+          <br>
+
+          <p>角度を指定する場合、0degは下から上に向かうグラデーションとなります。90degは左から右へのグラデーションを生成し、プラスの角度を指定すると時計回りに回転し、マイナスの角度を指定すると反時計回りに回転します。</p>          
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>          
+          <a class="sampleprogram" href="#SampleProgram2">test2.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label1 {
+    <span style="color:lime">font-size</span>: 50px;
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">0deg</span>, blue, white <span style="color:aqua">)</span>;
+}
+
+#m-label2 {
+    <span style="color:lime">font-size</span>: 50px;
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">90deg</span>, blue, white <span style="color:aqua">)</span>;
+}
+
+#m-label3 {
+    <span style="color:lime">font-size</span>: 50px;
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">180deg</span>, blue, white <span style="color:aqua">)</span>;
+}
+
+#m-label4 {
+    <span style="color:lime">font-size</span>: 50px;
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">-90deg</span>, blue, white <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear4B.png"></p>
+          <br>
+        
+        <li>三色以上の使用</li>          
+          <p>CSSでは、三色以上の色を同時に使用することができます。デフォルトの設定では、各色は均等に配分されて表示されます。</p>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> <span style="color:fuchsia">blue</span>, <span style="color:fuchsia">yellow</span>, <span style="color:fuchsia">green</span>,  <span style="color:fuchsia">orange</span> <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+          
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear5.png"></p>
+          <br>
+
+        <li>色経由点(color stops)の配置</li>         
+          <p>color stopsの配置は、任意の位置を指定することができます。指定する値としては、パーセント値を使用するか、放射・線形グラデーションの場合は、具体的な長さを指定します。</p>
+          <p>color stopsをパーセント値で指定する場合は、0%が開始点を表し、100％が終了点を表します。color stopsを指定しない場合は、その値はシステムによって自動的に計算され、最初のcolor stopsは 0% となり、最後のcolor stopsは、 100% となり、他のcolor stopsは、両側のcolor stopsの中間の位置となります。</p>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>          
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span> to left, blue <span style="color:fuchsia">25px</span>, yellow <span style="color:fuchsia">75%</span>, green</span> <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear6.png"></p> 
+          <br>
+      
+        <li>不連続線の生成</li>
+          <p>二つ以上のcolor stopsが同じ位置である場合、その位置で宣言された最初と最後の色の間で明確な線になります。</p>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>         
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span>
+        to bottom right,
+        SeaGreen <span style="color:fuchsia">50%</span>,
+        orange   <span style="color:fuchsia">50%</span>
+    <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear7.png"></p> 
+          <br>  
+        
+        <li>色の帯と縞の生成</li>          
+          <p>グラデーションの中に単色で遷移しない色の領域を含めるためには、異なる位置に同じ色を持つ二つの連続したcolor stopsをセットします。</p>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>          
+          <a class="sampleprogram" href="#SampleProgram3">test3.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label1 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span>
+        to top,
+        SpringGreen <span style="color:fuchsia">20%</span>,
+        red    <span style="color:fuchsia">30%</span>,
+        red    <span style="color:fuchsia">45%</span>,
+        Aqua   <span style="color:fuchsia">55%</span>,
+        Aqua   <span style="color:fuchsia">70%</span>,
+        orange <span style="color:fuchsia">80%</span>
+    <span style="color:aqua">)</span>;
+}
+
+#m-label2 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">linear-gradient(</span>
+        to top,
+        SpringGreen <span style="color:fuchsia">25%</span>,
+        red    <span style="color:fuchsia">25%</span>,
+        red    <span style="color:fuchsia">50%</span>,
+        Aqua   <span style="color:fuchsia">50%</span>,
+        Aqua   <span style="color:fuchsia">75%</span>,
+        orange <span style="color:fuchsia">75%</span>
+    <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-linear9.png"></p>
+          <br>          
+      </ol>
+      <br>
+    
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1" />
+    <h2 class="ex21">サンプル プログラム１</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css linear-gradient" );
+    set_default_size( 320, 240 );
+    
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <hr>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram2" />
+    <h2 class="ex21">サンプル プログラム２</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box   m_box;
+    Gtk::Label m_label1, m_label2, m_label3, m_label4;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+ : m_box( Gtk::Orientation::VERTICAL )
+{
+    set_title( "Css linear-gradient" );
+    set_child( m_box );
+    m_box.set_margin( 20 );
+    m_box.set_spacing( 20 );
+
+    m_label1.set_size_request( 150, 150 );
+    m_label1.set_text( "0度" );
+    m_label1.set_name( "m-label1" );
+    m_box.append( m_label1 );
+
+    m_label2.set_size_request( 150, 150 );
+    m_label2.set_text( "90度" );
+    m_label2.set_name( "m-label2" );
+    m_box.append( m_label2 );
+
+    m_label3.set_size_request( 150, 150 );
+    m_label3.set_text( "180度" );
+    m_label3.set_name( "m-label3" );
+    m_box.append( m_label3 );
+
+    m_label4.set_size_request( 150, 150 );
+    m_label4.set_text( "-90度" );
+    m_label4.set_name( "m-label4" );
+    m_box.append( m_label4 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <hr>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram3" />
+    <h2 class="ex21">サンプル プログラム３</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box   m_box;
+    Gtk::Label m_label1, m_label2;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css linear-gradient" );
+    //set_default_size( 320, 240 );
+    set_child( m_box );
+    m_box.set_margin( 20 );
+    m_box.set_spacing( 20 );
+
+    m_label1.set_size_request( 150, 150 );
+    m_label1.set_name( "m-label1" );
+    m_box.append( m_label1 );
+
+    m_label2.set_size_request( 150, 150 );
+    m_label2.set_name( "m-label2" );
+    m_box.append( m_label2 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-color.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-gradient-radial.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

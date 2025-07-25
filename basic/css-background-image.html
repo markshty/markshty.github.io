@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 背景画像(background-image)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 背景画像(background-image)</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">background-imageプロパティは、ウイジットの背景の画像を指定するためのプロパティです。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      <p>background-imageプロパティでは、以下の書式でウイジットの色を指定することができます。</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="25%" class="function_heading">background-image: url(</th>
+            <td width="20%" class="function_cell">"画像ファイルのurl"</td>
+            <td width="5%" class="function_cell"><span style="font-weight:BOLD">);</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+      <p>画像ファイルのurlは、絶対パス( 例．https://test.jp/picture.png )や相対パス( 例．picture.png )で指定することができます。</p>       
+      </div>
+      <br>
+
+    <!-- Sample C++ Program -->
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css background-image" );
+    set_default_size( 320, 200 );
+    
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+      <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <h2 class="ex4">Css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:cyan">url(</span> <span style="color:fuchsia">"flower.JPG"</span> <span style="color:cyan">)</span>;
+    <span style="color:lime">background-size</span>: <span style="color:fuchsia">cover</span>;
+}
+          </code></pre>
+        </div>
+      </div>
+      <br>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+      <div class="paragraph">
+        <img src="../basic/images/css-background-image.png">
+      </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-background-color.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

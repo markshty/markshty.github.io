@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS フォント (font-size)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS フォント (font-size)</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <br>
+    
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">font-sizeプロパティはウィジットに文字列を表示する際にフォントの大きさを指定します。</p>
+    <h3>使い方</h3>
+      <div class="paragraph">    
+        <p>font-sizetプロパティでは、数値とキーワードを指定することができます。</p>
+        <table width="95%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th width="10%" class="table_heading">指定方法</th>
+            <th width="10%" class="table_heading">指定内容</th>
+            <th width="75%" class="table_heading">意　　味</th>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell" rowspan="5">数値</td>
+            <td width="10%" class="table_cell">px</td>
+            <td width="75%" class="table_cell">画面の1ピクセルを1pxとする単位。<br>絶対的な単位であり、指定した大きさが画面に表示される。<br>実際に画面に表示される文字の大きさは72dpi、96dpiなどの画面の解像度によって異なる。</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">%</td>
+            <td width="75%" class="table_cell">現在使用しているフォントのサイズを１００％として、表示する文字の大きさを％値で指定する。<br>相対的な単位であり、使用するフォントによって、表示される文字の大きさは変化する。</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">em</td>
+            <td width="75%" class="table_cell">現在使用しているフォントの大きさ（高さ）を１とする単位。<br>フォントの大きさを指定していないと 1em = 16px となる。</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">ex</td>
+            <td width="75%" class="table_cell">現在使用しているフォントの小文字の「x」の高さを1としたときの相対的な文字の大きさの単位。</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">rem</td>
+            <td width="75%" class="table_cell">システムのルート要素のフォントの大きさを１とした相対的な単位。</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell" rowspan="7">ｷｰﾜｰﾄﾞ</td>
+            <td width="10%" class="table_cell">xx-large</td>
+            <td width="75%" class="table_cell">スケーリング係数 2/1 : (文字の大きさ) 16px × 2/1 ⇒ 32px</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">x-large</td>
+            <td width="75%" class="table_cell">スケーリング係数 3/2 : (文字の大きさ) 16px × 3/2 ⇒ 24px</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">large</td>
+            <td width="75%" class="table_cell">スケーリング係数 6/5 : (文字の大きさ) 16px × 6/5 ⇒ 19px</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">medium</td>
+            <td width="75%" class="table_cell">デフォルト値。フォントの大きさが指定されていない場合は 16px となる。<br>スケーリング係数 1/1 : (文字の大きさ) 16px × 1 ⇒ 16px</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">small</td>
+            <td width="75%" class="table_cell">スケーリング係数 8/9 : (文字の大きさ) 16px × 8/9 ⇒ 14px</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">x-small</td>
+            <td width="75%" class="table_cell">スケーリング係数 3/4 : (文字の大きさ) 16px × 3/4 ⇒ 12px</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">xx-small</td>
+            <td width="75%" class="table_cell">スケーリング係数 3/5 : (文字の大きさ) 16px × 3/5 ⇒ 10px</td>
+          </tr>
+        </table>      
+        <br>    
+      </div>
+      <br>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">数値で指定する場合</h2>
+    <h3 class="ex2">サンプル プログラム</h3>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Box m_Hbox, m_Vbox[8];
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    std::vecto&lt;Glib::ustring&gt; f_size{ "none", "px", "percent", "em", "ex", "rem" };
+
+    set_title( "Css font-size" );
+    set_child( m_Hbox );
+    m_Hbox.set_margin( 25 );
+    m_Hbox.set_spacing( 20 );
+   
+    for( int i = 0; i &lt; f_size.size(); i++ ) {
+        m_Hbox.append( m_Vbox[i] );
+        m_Vbox[i].set_orientation( Gtk::Orientation::VERTICAL );
+        m_Vbox[i].set_spacing( 10 );
+
+        auto plabel = Gtk::make_managed&lt;Gtk::Label&gt;( "春夏秋冬" );
+        plabel->set_name( f_size[i] );
+        m_Vbox[i].append( *plabel );
+
+        auto qlabel = Gtk::make_managed&lt;Gtk::Label&gt;( f_size[i] );
+        qlabel->add_css_class( "m-range" );
+        m_Vbox[i].append( *qlabel );
+    }
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <h3>CSS</h3>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+window {
+    background-color: rgba( 0, 0, 0, 1.0 );
+}
+
+#none {
+    color:            white;
+    font-family:      "IPA P明朝", serif;
+}
+
+#px {
+    color:            white;
+    font-family:      "IPA P明朝", serif;
+    font-size:        16<span class="highlight">px</span>;
+}
+
+#percent {
+    color :           white;
+    font-family:      "IPA P明朝", serif;
+    font-size:        100<span class="highlight">%</span>;
+}
+
+#em {
+    color:            white;
+    font-family:      "IPA P明朝", serif;
+    font-size:        1.0<span class="highlight">em</span>;
+}
+
+#ex {
+    color:            white;
+    font-family:      "IPA P明朝", serif;
+    font-size:        2.0<span class="highlight">ex</span>;
+}
+
+#rem {
+    color:            white;
+    font-family:      "IPA P明朝", serif;
+    font-size:        1.0<span class="highlight">rem</span>;
+}
+
+.m-range {
+    color:            white;
+    font-family:      monospace;
+}
+    </code></pre>
+    </div>
+
+    <!-- 実行結果 -->
+    <h3 class="ex3">実行結果</h3>
+    <center><img src="./images/css-font-font_size1.png"></center>
+    <hr>
+
+    <h2 class="ex7">キーワードで指定する場合</h2>
+<h3 class="ex2">サンプル プログラム</h3>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Grid m_grid;
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    std::vector&lt;Glib::ustring&gt; absolute_size{ "xx-large", "x-large", "large", "medium", "small", "x-small", "xx-small" };
+
+    set_title( "Css font-size" );
+    set_child( m_grid );
+    m_grid.set_margin( 25 );
+    m_grid.set_row_spacing( 20 );
+    m_grid.set_column_spacing( 20 );
+
+    for( int i = 0; i &lt; absolute_size.size(); i++ ) {
+        auto plabel = Gtk::make_managed&lt;Gtk::Label&gt;( absolute_size[i] );
+        plabel->add_css_class( "m-range" );
+        m_grid.attach( *plabel, 0, i, 1, 1 );
+
+        auto qlabel = Gtk::make_managed&lt;Gtk::Label&gt;( "春夏秋冬" );
+        qlabel->set_name( absolute_size[i] );
+        m_grid.attach( *qlabel, 1, i, 1, 1 );
+    }
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <h3>CSS</h3>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+window {
+    background-color: rgba( 0, 0, 0, 1.0 );
+}
+
+#xx-large {
+    color:            white;
+    font-size:        <span class="highlight">xx-large</span>;
+}
+
+#x-large {
+    color :           white;
+    font-size:        <span class="highlight">x-large</span>;
+}
+
+#large {
+    color:            white;
+    font-size:        <span class="highlight">large</span>;
+}
+
+#medium {
+    color:            white;
+    font-size:        <span class="highlight">medium</span>;
+}
+
+#small {
+    color:            white;
+    font-size:        <span class="highlight">small</span>;
+}
+
+#x-small {
+    color:            white;
+    font-size:        <span class="highlight">x-small</span>;
+}
+
+#xx-small {
+    color:            white;
+    font-size:        <span class="highlight">xx-small</span>;
+}
+
+.m-range {
+    color:            white;
+    font-size:        15px;
+}
+    </code></pre>
+    </div>
+
+    <!-- 実行結果 -->
+    <h3 class="ex3">実行結果</h3>
+    <center><img src="./images/css-font-font_size2.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-font-font_style.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="keyboard-event-press.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

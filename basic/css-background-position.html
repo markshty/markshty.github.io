@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 画像の表示位置(background-position)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 画像の表示位置(background-position)</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">background-positionプロパティは、ウイジットの背景となる画像の表示位置を指定するためのプロパティです。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      background-positionプロパティでは、次のような書式でウイジットの背景となる画像の表示位置を指定することができます。background-imageプロパティで設定された画像を、ウイジットのどの位置に表示するかを決定します。背景の画像は、デフォルトでは上端・左端に揃えられます。
+      <ol>
+        <li>数値(px)</li>
+          <p>背景となる画像についてウイジットの左端からの距離や上端からの距離をピクセル(px)で指定します。</p>
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+            <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+            <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">url(</span> <span style="color:fuchsia">"flower.JPG"</span> <span style="color:aqua">)</span>;
+    <span style="color:lime">background-repeat</span>: <span style="color:fuchsia">no-repeat</span>;
+    <span style="color:lime">background-position</span>: <span style="color:fuchsia">50px 50px</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-background-position1.png"></p>
+          <br>
+
+        <li>%値</li>
+          <p>背景となる画像の左端・上端からの位置を指定するのではなく、画像内の位置とウイジット内の位置を揃えるものです。例えば、background-position; 60% 45% ;にすると、画像内の左端から60％・上端から45％にある場所が、ウイジット内の左端から60％・上端から45％の場所と重なるように表示されることになります。</p>
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+            <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+            <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">url(</span> <span style="color:fuchsia">"flower.JPG"</span> <span style="color:aqua">)</span>;
+    <span style="color:lime">background-repeat</span>: <span style="color:fuchsia">no-repeat</span>;
+    <span style="color:lime">background-position</span>: <span style="color:fuchsia">50% 50%</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-background-position2.png"></p>
+          <br>
+
+        <li>キーワード</li>
+          <p>背景の画像の位置をキーワードを用いて指定します。</p>
+          <table width="45%" border="0" cellspacong="1" bgcolor="#000000">
+            <tr>
+              <th width="10%" class="table_heading">書　式</th>
+              <th width="30%" class="table_heading">内　容</th>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">top</td>
+              <td width="30%" class="table_cell">上端にそろえる</td>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">botoom</td>
+              <td width="30%" class="table_cell">下端にそろえる</td>      
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">left</td>
+              <td width="30%" class="table_cell">左端にそろえる</td>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">right</td>
+              <td width="30%" class="table_cell">右端にそろえる</td>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">center</td>
+              <td width="30%" class="table_cell">ウイジットの中央にそろえる</td>
+            </tr>
+          </table>
+          
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+            <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+            <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">url(</span> <span style="color:fuchsia">"flower.JPG"</span> <span style="color:aqua">)</span>;
+    <span style="color:lime">background-repeat</span>: <span style="color:fuchsia">no-repeat</span>;
+    <span style="color:lime">background-position</span>: <span style="color:fuchsia">center bottom</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-background-position3.png"></p>
+          <br>
+      </ol>
+      </div>
+      <br>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram" />
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Label m_label[8];
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Box m_box;
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css background-position" );
+    set_default_size( 320, 240 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+      <br>
+
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-background-repeat.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-border.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

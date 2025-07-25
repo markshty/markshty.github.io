@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 扇形グラデーション</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 扇形グラデーション</h1>
+    <p class="update">(update:2025/7/25)
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">扇形グラデーションは、中心点の周りを時計回りに回転しながら色が変化する像を作成します。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <ol class="paragraph">
+        <li>基本</li>
+          <p>扇形グラデーションの基本は、二色の指定です。中心のデフォルトは at center(ウィジットの中心)です。グラデーションの開始位置は12時の方向となります。</p>
+          
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+/* 円 */
+#m-label {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">conic-gradient(</span> <span style="color:fuchsia">red</span>, <span style="color:fuchsia">orange</span>, <span style="color:fuchsia">yellow</span>, <span style="color:fuchsia">green</span>, <span style="color:fuchsia">blue</span> <span style="color:aqua">)</span>;
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">50% 50%</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-conic1.png"></p>
+          <br >
+      
+        <li>中心の位置</li>
+          <p>グラデーションの中心位置を指定します。デフォルトは at center となります。グラデーションの中心はウィジットの中以外に外側にも指定することができます。次表に中心位置の指定方法を列挙します。</p>
+          <table width="60%" border="0" cellspacong="1" bgcolor="#32cd32">
+            <tr>
+              <th width="15%" class="table_heading">書　式</th>
+              <th width="40%" class="table_heading">内　容</th>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at top</td>
+              <td width="40%" class="table_cell">領域の上辺が中心となる</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at top right</td>
+              <td width="40%" class="table_cell">領域の右上角が中心となる</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at right</td>
+              <td width="40%" class="table_cell">領域の右辺が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at bottom right</td>
+              <td width="40%" class="table_cell">領域の右下角が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at bottom</td>
+              <td width="40%" class="table_cell">領域の下辺が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at bottom left</td>
+              <td width="40%" class="table_cell">領域の左下角が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at left</td>
+              <td width="40%" class="table_cell">領域の左辺が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at top left</td>
+              <td width="40%" class="table_cell">領域の左上角が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at center</td>
+              <td width="40%" class="table_cell">領域の中央が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at 任意の数値＋単位</td>
+              <td width="40%" class="table_cell">中心の座標を単位付きの数値で指定。基準は領域の左上角。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at ％値</td>
+              <td width="40%" class="table_cell">中心の座標を％値で指定。値は、領域の幅と高さに対する割合</td>
+            </tr>
+          </table>
+          <br>
+          
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">conic-gradient(</span>
+        <span style="color:fuchsia">at 0% 40%</span>,
+        red 10%,
+        yellow 30%,
+        #1e80ff 50%
+    <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-conic2.png"></p>
+          <br >
+      
+        <li>角度</li>          
+          <p>グラデーションの角度を指定します。 from のあとに角度を記入します。デフォルトは 12時の方向となります。角度の単位は、<span class="emphasis">度</span>(<span style="color:fuchsia">deg</span>)、<span class="emphasis">グラード</span>(<span style="color:fuchsia">grad</span>)、<span class="emphasis">ラジアン</span>(<span style="color:fuchsia">rad</span>)、<span class="emphasis">回転数</span>(<span style="color:fuchsia">turn</span>)が使用できます。(１つの円としては、360deg、400grad、2πrad、1回転(turn)です。)</p>
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">conic-gradient(</span>
+        <span style="color:fuchsia">from      45deg</span>,
+        green,
+        orange    50%,
+        gold      85%,
+        blue
+    <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-conic3.png"></p>
+          <br>
+      
+        <li>色経由点(color stops)の配置</li>
+          <p>扇形グラデーションの色経由点(color stops)は、角度を表します。角度の単位は、<span class="emphasis">度</span>(<span style="color:fuchsia">deg</span>)、<span class="emphasis">グラード</span>(<span style="color:fuchsia">grad</span>)、<span class="emphasis">ラジアン</span>(<span style="color:fuchsia">rad</span>)、<span class="emphasis">回転数</span>(<span style="color:fuchsia">turn</span>)が使用できます。色経由点は昇順に並べなければなりません。もし、後に指定される色経由点の数値が小さい場合は、その後の色経由点によって上書きされ、不連続の色の変化を生じます。</p>
+          
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>          
+          <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">conic-gradient(</span>
+        red       <span style="color:fuchsia">0deg</span>,
+        orange   <span style="color:fuchsia">60deg</span>,
+        yellow  <span style="color:fuchsia">120deg</span>,
+        green   <span style="color:fuchsia">180deg</span>,
+        blue    <span style="color:fuchsia">240deg</span>,
+        indigo  <span style="color:fuchsia">300deg</span>,
+        purple  <span style="color:fuchsia">360deg</span>     
+    <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-conic4.png"></p> 
+          <br>
+
+        <li>円グラフ</li>
+          <p>円グラフを表現するためには、隣接する色が同じ色経由点値を持つ、複数の色経由点を指定します。</p>
+          
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>          
+          <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">conic-gradient(</span>
+        blue <span style="color:fuchsia">120deg</span>,
+        yellow <span style="color:fuchsia">120deg 240deg</span>,
+        lime   <span style="color:fuchsia">240deg</span>
+    <span style="color:aqua">)</span>;
+    <span style="color:lime">border-radius</span>: 50%;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-conic5.png"></p> 
+          <br>
+
+        <li>色相環</li>
+          <p>色相環は、色相を円環状に配置したもので、色の関係性を視覚的にわかりやすく表現したものです。hsv色相環モデルでは、色を<span class="emphasis">色相</span>(Hue)、<span class="emphasis">彩度</span>(Saturation)、<span class="emphasis">明度</span>(Value)の三つの要素で表現しています。色相環は、光の波長の違いによって知覚される色の変化を連続的に円環状に配置したものです。色相環を用いることで、補色(反対側の色)や類似色(隣り合った色)など色の関係性を把握しやすくなります。色相は、<span style="color:fuchsia">0～360度</span>で指定します。彩度は色の鮮やかさ・濃さ
+            を表し、<span style="color:fuchsia">0%～100%</span>で指定します。明度は色の明るさ・暗さを表し、<span style="color:fuchsia">0%～100%</span>で指定します。</p>
+          <p></p>
+          
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>          
+          <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">conic-gradient(</span>
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia">360</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia">315</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia">270</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia">225</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia">180</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia">135</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia"> 90</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia"> 45</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+        <span style="color:aqua">hsl(</span> <span style="color:fuchsia">  0</span>, <span style="color:fuchsia">100%</span>, <span style="color:fuchsia">50%</span> <span style="color:aqua">)</span>,
+ 
+    <span style="color:aqua">)</span>;
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">50%</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-conic6.png"></p> 
+          <br>
+
+        <li>市松模様</li>
+          <p>市松模様は正方形を市松状に配置したものです。</p>
+          
+          <h5 class="ex41">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>          
+          <a class="sampleprogram" href="#SampleProgram">test.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">conic-gradient(</span>
+        <span style="color:fuchsia">#fff 0.25</span>turn,
+        <span style="color:fuchsia">#000 0.25</span>turn <span style="color:fuchsia">0.5</span>turn,
+        <span style="color:fuchsia">#fff 0.5</span>turn <span style="color:fuchsia">0.75</span>turn,
+        <span style="color:fuchsia">#000 0.75</span>turn, 
+    <span style="color:aqua">)</span>;
+    <span style="color:lime">border</span>: <span style="color:fuchsia">1px solid</span>;
+    <span style="color:lime">background-size</span>: <span style="color:fuchsia">25% 25%</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-conic7.png"></p> 
+          <br>
+      </ol>
+      
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram" />
+    <h2 class="ex21">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box   m_box;
+    Gtk::Label m_label;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css radial-gradient" );
+    set_child( m_box );
+    m_box.set_margin( 10 );
+
+    m_label.set_size_request( 220, 220 );
+    m_label.set_name( "m-label" );
+    m_box.append( m_label );
+
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-gradient-radial.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-gradient-repeat.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

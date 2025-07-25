@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS レイアウト</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS レイアウト</h1>
+    <p class="update">(update:2025/7/25)
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">ウイジットの基本的なレイアウトについてご紹介します。次図「CSS Box model」に示すように表示すべきラベルや図などのウイジットをcontentとして、contentの周囲にpadding、border、marginが配置されています。</p>
+      <p><center><img src="images/css-boxmodel.png"></center></p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+        <h5 class="ex1">margin</h5>
+          <ol>
+            <li>役割</li>
+              <p class="emphasis2">要素の外側の余白</p>
+              <p>marginプロパティは、は、ウイジットの外側の余白を指定するプロパティです。要素と他の要素との間に余白を設定し、要素間の間隔を調整するために使用されます。marginは、要素の外側にスペースを追加し、要素の表示を調整するために非常に重要です。</p>                
+            <li>指定方法</li>
+              <p class="emphasis2">値の指定</p>
+              <p>marginの値は、ピクセル(px)、ポイント(pt)、em、ex、rem、パーセント(%)、またはautoで指定できます。autoを指定すると、ブラウザが自動的に余白を計算してくれます。</p>
+              <p class="emphasis2">値の一括指定</p>
+              <p>marginは、まとめて指定することも可能です。例えば、`margin: 10px 20px 30px 40px;`と記述すると、上から時計回りに、それぞれ10px、20px、30px、40pxの余白を指定したことになります。</p>
+              <p class="emphasis2">値の個別指定</p>
+              <p>marginは、ウイジットの上下左右それぞれに異なる余白を設定できます。例えば、margin-topで上側の余白、margin-bottomで下側の余白、margin-leftで左側の余白、margin-rightで右側の余白を指定できます。</p>        
+              <p class="emphasis2">paddingとの違い</p>
+              <p>marginはウイジットの外側の余白を指定するのに対し、paddingはウイジットの内側の余白を指定します。paddingはウイジットの背景色を内側の余白にも適用しますが、marginはウイジットの背景色を適用しません。</p>
+          </ol>
+
+        <h5 class="ex1">border</h5>
+          <ol>
+            <li>役割</li>
+            <p>borderプロパティは、は、ウイジットの周りに枠線を追加するためのプロパティです。枠線の太さ、種類、色などが指定できます。ウイジットを強調したり、レイアウトを調整する際に使用します。</p>
+            <li>基本的な使い方</li>
+              <p class="emphasis2">線の太さ(border-width)</p>
+              <p>線の太さを指定します。 ( 例．8px、thin、medium、thick )</p>
+              <p class="emphasis2">線の種類(border-style)</p>
+              <p>線の種類を指定します。 ( 例．solid(実践)、dashed(破線)、dotted(点線)、double(二重線) )</p>
+              <p class="emphasis2">線の色(border-color)</p>
+              <p>線の色を指定します。 ( 例．Violet、#00ff00(Lime)、rgb(ff, ff, 00)(Yellow) )</p>
+              <p class="emphasis2">値の個別指定</p>
+              <p>border-top, border-right, border-bottom, border-leftを用いて、上下左右それぞれの枠線を個別に指定します。</p>
+              <p class="emphasis2">線の角の丸め(border-radius)</p>
+              <p>線の角を丸くします。 ( 例．border-radius: 50% 50%; 円 )</p>
+          </ol>
+
+        <h5 class="ex1">padding</h5>
+          <ol>
+            <li>役割</li>
+              <p class="emphasis2"></p>
+              <p>paddingプロパティは、ウイジットの内側の余白を指定するために使用されます。ウイジットの内容と境界線（ボーダー）の間にスペースを作成し、ウイジットの見栄えを調整するために利用されます。</p>
+            <li>指定方法</li>
+              <p class="emphasis2">値の指定</p>
+              <p>余白の大きさは、ピクセル (px)、ポイント(pt)、em、ex、rem、パーセント (%)、またはautoで指定できます。autoを指定すると、ブラウザが自動的に余白を計算してくれます。</p>
+              <p class="emphasis2">値の一括指定</p>
+              <p>padding: 上 右 下 左; のように、上下左右の余白をまとめて指定できます。例えば、padding: 10px 20px 10px 20px; は、上10px、右20px、下10px、左20px の余白を指定します。</p>
+              <p class="emphasis2">値の個別指定</p>
+              <p>paddingは、コンテンツの上下左右それぞれに異なる余白を設定できます。例えば、padding-topで上側の余白、padding-bottomで下側の余白、padding-leftで左側の余白、paddingで右側の余白を指定できます。</p>
+              <p class="emphasis2">marginとの違い</p>
+              <p>padding は要素の内側、margin は要素の外側の余白を指定します。margin は要素同士の間隔を調整するために使われます。</p>
+          </ol>
+      </div>      
+      <br >
+      
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram" />
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Label m_label1, m_label2, m_label3;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Box m_box;
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+ : m_box(  Gtk::Orientation::VERTICAL )
+{
+    set_title( "Css" );
+    set_default_size( 320, 240 );
+    set_child( m_box );
+    m_box.set_spacing( 15 );
+    m_box.set_name( "m-box" );
+
+    m_label1.set_text( "Label 1" );
+    m_label1.set_name( "m-label_A" );
+    m_box.append( m_label1 );
+
+    m_label2.set_text( "Label 2" );
+    m_label2.set_name( "m-label_B" );
+    m_box.append( m_label2 );
+
+    m_label3.set_text( "Label 3" );
+    m_label3.set_name( "m-label_C" );
+    m_box.append( m_label3 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+      <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <h2 class="ex1">Css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">Cyan</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">#0000cd</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px;</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">padding</span>:          <span style="color:fuchsia">5px</span>;
+}
+
+#m-box {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">CornSilk</span>;
+    <span style="color:lime">margin</span>:           <span style="color:fuchsia">15px</span>;
+    <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>;
+    <span style="color:lime">border</span>:           <span style="color:fuchsia">dotted red 2px</span>; 
+}
+
+#m-label_A {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">DarkGreen</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">7px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">ridge</span>;
+}
+
+#m-label_B {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">DarkGreen</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">7px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">groove</span>;
+}
+
+#m-label_C {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">DarkGreen</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">7px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">outset</span>;
+}
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="../basic/images/css-layout.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-color.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

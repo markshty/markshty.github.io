@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 線の太さ(border-width)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 線の太さ(border-width)</h1>
+    <p class="update">(update:2025/7/25)
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">border-widthプロパティは、枠線の太さを指定するためのプロパティです。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+        border-widthプロパティでは、次のように様々な書式の数値を指定することできます。
+        <table width="45%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th width="10%" class="table_heading">書　式</th>
+            <th width="30%" class="table_heading">内　容</th>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">px</td>
+            <td width="30%" class="table_cell">1pxは1ピクセルです。</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">pt</td>
+            <td width="30%" class="table_cell">1ptは1/72インチ</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">em</td>
+            <td width="30%" class="table_cell">現在使用しているフォントの大きさ（高さ）を１とする単位。</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">rem</td>
+            <td width="30%" class="table_cell">システムのルート要素のフォントの大きさを１とした相対的な単位。</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">ex</td>
+            <td width="30%" class="table_cell">現在使用しているフォントの小文字の「x」の高さを1としたときの相対的な文字の大きさの単位。</td>
+          </tr>
+        </table>
+        <p>そのほか、border-top-width, border-right-width, border-bottom-width, border-left-widthのように、上下左右の枠線の太さを個別に指定することも可能です。</p>
+      </div>      
+      <br>
+      
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram" />
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Label m_label1, m_label2, m_label3, m_label4, m_label5;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Box m_box;
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+ : m_box(  Gtk::Orientation::VERTICAL )
+{
+    set_title( "Css border-width" );
+    // set_default_size( 320, 240 );
+    set_child( m_box );
+    m_box.set_spacing( 15 );
+    m_box.set_name( "m-box" );
+
+    m_label1.set_text( "px" );
+    m_label1.set_name( "m-label_A" );
+    m_box.append( m_label1 );
+
+    m_label2.set_text( "pt" );
+    m_label2.set_name( "m-label_B" );
+    m_box.append( m_label2 );
+
+    m_label3.set_text( "em" );
+    m_label3.set_name( "m-label_C" );
+    m_box.append( m_label3 );
+
+    m_label4.set_text( "rem" );
+    m_label4.set_name( "m-label_D" );
+    m_box.append( m_label4 );
+
+    m_label5.set_text( "ex" );
+    m_label5.set_name( "m-label_E" );
+    m_box.append( m_label5 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+      <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <h2 class="ex1">Css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
+}
+
+#m-box {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
+    <span style="color:lime">margin</span>:           <span style="color:fuchsia">10px</span>;
+    <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>; 
+}
+
+#m-label_A {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">3px</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
+}
+
+#m-label_B {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">2.25pt</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
+}
+
+#m-label_C {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">0.12em</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
+}
+
+#m-label_D {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">0.12rem</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
+}
+
+#m-label_E {
+    <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
+    <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
+    <span style="color:lime">border-width</span>:     <span style="color:fuchsia">0.2ex</span>;
+    <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
+}
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+      <div class="paragraph">
+        <img src="../basic/images/css-border-width.png">
+      </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-border-style.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-border-radius.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

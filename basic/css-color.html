@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 色</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 色</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">ウィジットの色の指定方法について記しています。</p>
+      <br>
+
+    <h3 class="ex5">色の指定方法</h3>
+    <h4 class="ex4">RGBモデル</h4>
+      <p class="paragraph">RGBモデルでは、<span style="color:red">Red(赤)</span>、<span style="color:Green">Green(緑)</span>、<span style="color:Blue">Blue(青)</span>の光の三原色を合成することによって、様々な色を表現することができます。PCのディスプレイで色を表現するときには、三つの色を合成して使用する方法で、混ぜるほど明るい色になるため加法混色とも呼ばれています。表現できる色の数は、赤・緑・青のそれぞれの色の強さを０～２５５で変化させることができるので256×256×256＝16,777,216通りの色を表現することができます。以下にRGBモデルでの色の指定方法を記します。</p>
+      <ol class="paragraph">
+        <li>カラーネーム</li>
+          <p>CSSファイルにカラーネームを直接指定することで色を指定することができます。カラーネームとしては、W3Cの勧告で<a href="https://www.w3.org/TR/css-color-3/#html4">基本的な色のキーワード</a>と<a href="https://www.w3.org/TR/css-color-3/#svg-color">拡張カラーキーワード</a>が定められています。なお、ASCIIコードでは、大文字と小文字を区別しません。</p>
+          <p>例．h3 { color:<span class="highlight">beige</span>;  background-color:<span class="highlight">black</span>; }</p>     
+          <br>
+      
+        <li>16進数 rgb</li>
+          <p>各々のカラーネームには、対応する数値が定められています。１６進数の数値で色を指定する場合は次の例に示すように<span class="highlight">＃＋１６進数</span>の形式で表記します。</p>
+          <p>例．h2 { color:<span class="highlight">#800080</span>; background-color:<span class="highlight">#32cd32</span>; }</p>
+          <br>    
+      
+        <li>RGB color(10進数)</li>
+          <p>色の指定を１０進数で行う場合は、<span class="highlight">０～２５５</span>の範囲の数値を指定します。０より小さな数値を指定した場合は０となり、２５５を超える数値を指定した場合は２５５となります。</p>
+          <p>例．h2 { color:<span class="highlight">rgb(0, 255, 0)</span>; background-color:<span class="highlight">rgb(0, 0, 255)</span> }</p>      
+          <br>
+
+        <li>RGB color(パーセント)</li>
+          <p>色の指定をパーセント表記で行う場合は、<span class="highlight">０～１００%</span>の範囲のパーセント値を指定します。０より小さな数値を指定した場合は０となり、１００を超える数値を指定した場合は１００となります。</p>
+          <p>例．h2 { color:<span class="highlight">rgb(0, 100%, 0)</span>; background-color:<span class="highlight">rgb(0, 0, 100%)</span> }</p>
+          <br>
+
+        <li>RGBA color(10進数)</li>
+          <p>上記のRGBカラーモデル(10進数)にアルファ値を拡張したものです。色の不透明度を指定することができます。アルファ値としては<span class="highlight">０～１．０</span>を指定します。０は透明、１．０は不透明となります。</p>
+          <p>例．h1 { color:<span class="highlight">rgba(255, 128, 0, 0.5)</span>; background-color:<span class="highlight">rgba(0, 255, 128, 1.0)</span> }</p>       
+          <br>
+
+        <li>RGBA color(パーセント)</li>
+          <p>上記のRGBカラーモデル(パーセント)にアルファ値を拡張したものです。色の不透明度を指定することができます。アルファ値としては<span class="highlight">０～１．０</span>を指定します。０は透明、１．０は不透明となります。</p>
+          <p>例．h1 { color:<span class="highlight">rgba(100%, 50%, 0%, 0.5)</span>; background-color:<span class="highlight">rgba(0, 100%, 50%, 1.0)</span> }</p>       
+          <br>
+      </ol>
+
+    <h4 class="ex4">hslモデル</h4>
+      <p class="paragraph">hslモデルは、色を表現する方法一つです。<span class="emphasis">色相(Hue)</span>、<span class="emphasis">彩度(Saturation)</span>、<span class="emphasis">輝度(Lightness)</span>の三つの要素で色を表しています。色相が主となる表現方法であり、人間の視覚に近い色の表現方法です。</p>
+      <p class="paragraph">
+        <img src="images/css-color2.png" alt="色相環の図" class="figure_L0">
+      </p>
+      <div class="paragraph">
+        <p class="emphasis">色相(Hue)</p>
+        <p>色の波長や色味を示すもので、<span class="highlight">０～３６０度</span>の範囲で設定します。赤が０度、緑が１２０度、青が２４０度となり、環状に配置（色相環）された色相の角度で色を表します。</p>
+        <p class="emphasis">彩度(Saturation)</p>
+        <p>色の濃さや鮮やかさを表すもので、<span class="highlight">０～１００％</span>の範囲で設定します。数値が高いほど色は濃くなり、低いほどグレーに近づきます。</p>
+        <p class="emphasis">輝度(Lightness)</p>
+        <p>色の明るさを表し、<span class="highlight">０～１００％</span>の範囲で設定します。数値が高いほど明るくなり、低いほど暗くなります。輝度０％は黒、輝度100％は白、輝度５０％は標準になります。</p>
+      </div>
+      <ol class="paragraph">
+        <li>hsl color</li>
+          <p>hslカラーモデルの表記の形式は、Hue:<span class="highlight">0～360</span> Saturation:<span class="highlight">0～100%</span> Lightness:<span class="highlight">0～100%</span>となります。</p>
+          <p>例．h2 { color:hsl( 120, 100%, 50%) }</p>
+          <br>
+
+        <li>hsla color</li>
+          <p>hslカラーモデルにアルファ値を拡張したものです。色の不透明度を指定することができます。アルファ値としては<span class="highlight">０～１．０</span>を指定します。０は透明、１．０は不透明となります。</p>
+          <p>例．h2 { color:hsla( 240, 100%, 50%, 1.0) }</p>       
+          <br>
+      </ol>
+      <p style="clear:both"></p>
+      <br>
+    
+    <!-- Sample C++ Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Label m_label1, m_label2, m_label3;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Box m_box;
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+ : m_box(  Gtk::Orientation::VERTICAL )
+{
+    set_title( "Css color" );
+    set_default_size( 320, 240 );
+    set_child( m_box );
+    m_box.set_margin( 25 );
+    m_box.set_spacing( 20 );
+    
+    m_label1.set_text( "Sun" );
+    m_label1.set_name( "m-label_A" );
+    m_box.append( m_label1 );
+
+    m_label2.set_text( "Earth" );
+    m_label2.set_name( "m-label_B" );
+    m_box.append( m_label2 );
+
+    m_label3.set_text( "Saturn" );
+    m_label3.set_name( "m-label_C" );
+    m_box.append( m_label3 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+
+    <br>
+    <!-- Sample Cascading Style Sheet -->
+    <h2 class="ex1">Css</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+
+window {
+    background-color: aquamarine;
+}
+
+#m-label_A {
+    background-color: rgba( 253, 245, 230, 0.7 );  /* oldlace     */
+    color:            rgb( 34, 139, 34 );          /* foresgreen  */
+    font-size:        30px;
+}
+
+#m-label_B {
+    background-color: #f5f5dc;                     /* beige       */
+    color:            rgba( 100%, 50%, 0%, 0.8 ) ; /* darkorange  */
+    font-size:        30px;
+}
+
+#m-label_C {
+    background-color: hsl( 120, 100%, 50% );       /* lime        */
+    color:            hsla( 240, 100%, 50%, 0.5 ); /* solid blue  */
+    font-size:        30px;
+}
+    </code></pre>
+    </div>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="../basic/images/css-color.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-layout.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-font-font_family.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

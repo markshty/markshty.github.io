@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS 放射形グラデーション</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS 放射形グラデーション</h1>
+    <p class="update">(update:2025/7/25)
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">放射形グラデーションは、ウィジットの中心から放射状に広がるグラデーションです。2色以上の色が連続的に変化することでWindowの背景やウィジットに様々な色彩の効果を加えることができます。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <ol class="paragraph">
+        <li>形状</li>
+          <p>放射形グラデーションの形状は、正円(circle)と楕円(ellipse)の2種類です。デフォルトは正円です。</p>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+/* 円 */
+#m-label1 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span> <span style="color:fuchsia">circle</span>, yellow 0%, blue 100%<span style="color:aqua">)</span>;
+}
+
+/* 楕円 */
+#m-label2 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span> <span style="color:fuchsia">ellipse</span> 60% 40%, yellow 0%, blue 100%<span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-radial1.png"></p>
+          <br >
+      
+        <li>サイズ</li>
+          <p>放射形グラデーションでは、グラデーションのサイズを指定することができます。</p>
+          <table width="60%" border="0" cellspacong="1" bgcolor="#32cd32">
+            <tr>
+              <th width="15%" class="table_heading">書　式</th>
+              <th width="40%" class="table_heading">内　容</th>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">closest-side</td>
+              <td width="40%" class="table_cell">円の中心から領域の最も近い辺に内接</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">farthest-side</td>
+              <td width="40%" class="table_cell">円の中心から領域の最も遠い辺に内接</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">closest-corner</td>
+              <td width="40%" class="table_cell">円の中心から領域の最も近い頂点に接する</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">farthest-corner</td>
+              <td width="40%" class="table_cell">円の中心から領域の最も遠い頂点に接する</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">任意の数値＋単位</td>
+              <td width="40%" class="table_cell">水平・垂直方向の半径を半角スペースで区切って、単位付きの数値で指定</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">％値</td>
+              <td width="40%" class="table_cell">水平・垂直方向の半径を半角スペースで区切って、％値で指定。値は、ウィジットの幅と高さに対する割合</td>
+            </tr>
+          </table>
+          <p>※円は、数値でのみ半径を指定することができます。
+          <p>※楕円のみの場合は、長さまたは％値を使って楕円のサイズを指定することができます。</p>
+          </p>
+          <br>
+          
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          <a class="sampleprogram" href="#SampleProgram2">test2.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+/* 楕円 closest-side */
+#m-label1 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
+        ellipse <span style="color:fuchsia">closest-side</span>,
+        tomato,
+        gold    10%,
+        #00fa9a 50%,
+        Bisque 
+    <span style="color:aqua">)</span>;
+}
+
+/* 楕円 fathest-corner */ 
+#m-label2 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
+        ellipse <span style="color:fuchsia">farthest-corner</span> at 90% 90%,
+        tomato,
+        gold    10%,
+        #00fa9a 50%,
+        Bisque
+    <span style="color:aqua">)</span>;
+}
+
+/* 円 closest-side */
+#m-label3 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
+        circle <span style="color:fuchsia">closest-side</span> at 25% 75%,
+        tomato,
+        gold    10%,
+        #00fa9a 50%,
+        Bisque 
+    <span style="color:aqua">)</span>;
+}
+
+/* 楕円 半径を<span style="color:fuchsia">％値</span>または<span style="color:fuchsia">長さ</span> */
+#m-label4 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
+        ellipse <span style="color:fuchsia">50% 50px</span>,    /* 水平方向の半径 垂直飛行の半径 */
+        tomato,
+        gold    10%,
+        #00fa9a 50%,
+        Bisque
+    <span style="color:aqua">)</span>;
+}
+
+/* 円 半径を<span style="color:fuchsia">実数</span> */
+#m-label5 {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
+        circle <span style="color:fuchsia">50px</span>,         /* 半径 */
+        tomato,
+        gold    10%,
+        #00fa9a 50%,
+        Bisque
+    <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-radial2.png"></p>
+          <br >
+      
+        <li>中心の位置</li>          
+          <p>グラデーションの中心位置を指定します。デフォルトは at center となります。</p>
+          <table width="60%" border="0" cellspacong="1" bgcolor="#32cd32">
+            <tr>
+              <th width="15%" class="table_heading">書　式</th>
+              <th width="40%" class="table_heading">内　容</th>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at top</td>
+              <td width="40%" class="table_cell">領域の上辺が中心となる</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at top right</td>
+              <td width="40%" class="table_cell">領域の右上角が中心となる</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at right</td>
+              <td width="40%" class="table_cell">領域の右辺が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at bottom right</td>
+              <td width="40%" class="table_cell">領域の右下角が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at bottom</td>
+              <td width="40%" class="table_cell">領域の下辺が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at bottom left</td>
+              <td width="40%" class="table_cell">領域の左下角が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at left</td>
+              <td width="40%" class="table_cell">領域の左辺が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at top left</td>
+              <td width="40%" class="table_cell">領域の左上角が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">at center</td>
+              <td width="40%" class="table_cell">領域の中央が中心となる。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">任意の数値＋単位</td>
+              <td width="40%" class="table_cell">中心の座標を単位付きの数値で指定。基準は領域の左上角。</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">％値</td>
+              <td width="40%" class="table_cell">中心の座標を％値で指定。値は、領域の幅と高さに対する割合</td>
+            </tr>
+          </table>
+          <br>
+
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>
+          <a class="sampleprogram" href="#SampleProgram3">test3.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+window {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
+        circle <span style="color:fuchsia">at 0% 50%</span>,
+        tomato    10px,
+        gold      30%,
+        #00fa9a   50%,
+        Bisque
+    );
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-radial3.png"></p>
+          <br>
+      
+        <li>色経由点(color stops)の配置</li>
+          <p>color stopsの配置は、任意の位置を指定することができます。指定する値としては、パーセント値を使用するか、放射・線形グラデーションの場合は、具体的な長さを指定します。</p>
+          <p>color stopsをパーセント値で指定する場合は、0%が開始点を表し、100％が終了点を表します。color stopsを指定しない場合は、その値はシステムによって自動的に計算され、最初のcolor stopsは 0% となり、最後のcolor stopsは、 100% となり、他のcolor stopsは、両側のcolor stopsの中間の位置となります。</p>
+          
+          <h5 class="ex41" href="#SampleProgram3">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ</h5>          
+          <a class="sampleprogram" href="#SampleProgram3">test3.cpp</a> 
+          <br>
+          
+          <h5 class="ex4">style.css</h5>
+          <div class="css-example">
+            <pre><code>
+#m-label {
+    <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
+        circle 110px,
+        tomato,
+        gold    10%,
+        #00fa9a 50%,
+        Bisque 
+    <span style="color:aqua">)</span>;
+}
+            </code></pre>
+          </div>
+
+          <h5 class="ex3">実行結果</h5>
+          <p><img src="images/css-gradient-radial4.png"></p> 
+          <br>
+      </ol>
+      
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム１</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box   m_box;
+    Gtk::Label m_label1, m_label2;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css radial-gradient" );
+    set_child( m_box );
+    m_box.set_margin( 20 );
+    m_box.set_spacing( 20 );
+
+    m_label1.set_size_request( 150, 150 );
+    m_label1.set_name( "m-label1" );
+    m_box.append( m_label1 );
+
+    m_label2.set_size_request( 150, 150 );
+    m_label2.set_name( "m-label2" );
+    m_box.append( m_label2 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <hr>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram2" />
+    <h2 class="ex21">サンプル プログラム２</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box   m_box;
+    Gtk::Label m_label1, m_label2, m_label3, m_label4, m_label5;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+ : m_box( Gtk::Orientation::VERTICAL )
+{
+    set_title( "css radial-gradient" );
+    set_child( m_box );
+    m_box.set_margin( 10 );
+    m_box.set_spacing( 10 );
+
+    m_label1.set_size_request( 125, 125 );
+    m_label1.set_text( "Label1" );
+    m_label1.set_name( "m-label1" );
+    m_box.append( m_label1 );
+
+    m_label2.set_size_request( 125, 125 );
+    m_label2.set_text( "Label2" );
+    m_label2.set_name( "m-label2" );
+    m_box.append( m_label2 );
+
+    m_label3.set_size_request( 125, 125 );
+    m_label3.set_text( "Label3" );
+    m_label3.set_name( "m-label3" );
+    m_box.append( m_label3 );
+
+    m_label4.set_size_request( 125, 125 );
+    m_label4.set_text( "Label4" );
+    m_label4.set_name( "m-label4" );
+    m_box.append( m_label4 );
+
+    m_label5.set_size_request( 125, 125 );
+    m_label5.set_text( "Label5" );
+    m_label5.set_name( "m-label5" );
+    m_box.append( m_label5 );
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <hr>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram3" />
+    <h2 class="ex21">サンプル プログラム３</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box   m_box;
+    Gtk::Label m_label;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css radial-gradient" );
+    set_child( m_box );
+    m_box.set_margin( 10 );
+
+    m_label.set_size_request( 220, 220 );
+    m_label.set_name( "m-label" );
+    m_box.append( m_label );
+
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-gradient-linear.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-gradient-conic.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

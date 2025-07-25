@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS フォント (font-weight)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS フォント (font-weight)</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <br>
+    
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">font-weightプロパティは、ウィジットに文字列を表示する際にフォントの太さを指定します。</p>
+    <h3>使い方</h3>
+      <div class="paragraph">    
+        <p>font-weightプロパティには、キーワードと数値を指定することができます。</p>
+        <table width="55%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th width="10%" class="table_heading">指定方法</th>
+            <th width="10%" class="table_heading">指定内容</th>
+            <th width="30%" class="table_heading">意　　味</th>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell" rowspan="9">数値</td>
+            <td width="10%" class="table_cell">100</td>
+            <td width="30%" class="table_cell">Thin</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">200</td>
+            <td width="30%" class="table_cell">Extra Light(Ultra Light)</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">300</td>
+            <td width="30%" class="table_cell">Light</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">400</td>
+            <td width="30%" class="table_cell">Normal</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">500</td>
+            <td width="30%" class="table_cell">Medium</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">600</td>
+            <td width="30%" class="table_cell">Semi Bold(Demi Bold)</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">700</td>
+            <td width="30%" class="table_cell">Bold</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">800</td>
+            <td width="30%" class="table_cell">Extra Bold(Ultra Bold)</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">900</td>
+            <td width="30%" class="table_cell">Black(Heavy)</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell" rowspan="4">キーワード</td>
+            <td width="10%" class="table_cell">normal</td>
+            <td width="30%" class="table_cell">数値400と同様</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">bold</td>
+            <td width="30%" class="table_cell">数値700と同様</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">bolder</td>
+            <td width="30%" class="table_cell">現在より太い</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">lighter</td>
+            <td width="30%" class="table_cell">現在より細い</td>
+          </tr>
+        </table>      
+        <br>
+
+        <p>また、'bolder'および'lighter'の継承される値との関係は次表のとおりとなります。</p>
+        <table width="35%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <td width="15%" class="table_heading">継承される値</td>
+            <td width="10%" class="table_heading">bolder</td>
+            <td width="10%" class="table_heading">lighter</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">100</td>
+            <td width="10%" class="table_cell2">400</td>
+            <td width="10%" class="table_cell2">100</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">200</td>
+            <td width="10%" class="table_cell2">400</td>
+            <td width="10%" class="table_cell2">100</td>      
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">300</td>
+            <td width="10%" class="table_cell2">400</td>
+            <td width="10%" class="table_cell2">100</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">400</td>
+            <td width="10%" class="table_cell2">700</td>
+            <td width="10%" class="table_cell2">100</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">500</td>
+            <td width="10%" class="table_cell2">700</td>
+            <td width="10%" class="table_cell2">100</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">600</td>
+            <td width="10%" class="table_cell2">900</td>
+            <td width="10%" class="table_cell2">400</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">700</td>
+            <td width="10%" class="table_cell2">900</td>
+            <td width="10%" class="table_cell2">400</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">800</td>
+            <td width="10%" class="table_cell2">900</td>
+            <td width="10%" class="table_cell2">700</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell2">900</td>
+            <td width="10%" class="table_cell2">900</td>
+            <td width="10%" class="table_cell2">700</td>
+          </tr>
+        </table>  
+      </div>
+      <br>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/cssprovider.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+protected:
+   // signal handler:
+    static void on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err );
+   // child widgets:
+    Gtk::Box m_Hbox, m_Vbox[9];
+    Glib::RefPtr&lt;Gtk::CssProvider&gt; m_refCssProvider;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Css font font-weight" );
+    set_child( m_Hbox );
+    m_Hbox.set_margin( 15 );
+    m_Hbox.set_spacing( 15 );
+    
+    for( int i = 0; i &lt; 9; i++ ) {
+        m_Hbox.append( m_Vbox[i] );
+        m_Vbox[i].set_orientation( Gtk::Orientation::VERTICAL );
+
+        auto plabel = Gtk::make_managed&lt;Gtk::Label&gt;( "R" );
+        auto s = Glib::ustring::compose( "m-label%1", i + 1 );
+        plabel->set_name( s );
+        m_Vbox[i].append( *plabel );
+
+        auto t = Glib::ustring::compose( "%1", ( i + 1 ) * 100 );
+        auto qlabel = Gtk::make_managed&lt;Gtk::Label&gt;( t );
+        qlabel->add_css_class( "m-range" );
+        m_Vbox[i].append( *qlabel );
+    }
+
+
+   // Load extra CSS file
+    m_refCssProvider = Gtk::CssProvider::create();   
+    Gtk::StyleContext::add_provider_for_display( get_display(), m_refCssProvider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    m_refCssProvider->signal_parsing_error().connect(
+        []( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+        { on_parsing_error( sec, err ); }
+    );   
+    m_refCssProvider->load_from_path( "style.css" );
+}
+
+void MyWindow::on_parsing_error( const Glib::RefPtr&lt;const Gtk::CssSection&gt;& sec, const Glib::Error& err )
+{
+    Gtk::CssLocation s_location, e_location;
+
+    std::cerr &lt;&lt; "on_parsing_error(): " &lt;&lt; err.what() &lt;&lt; std::endl;
+    if ( sec ) {
+        Glib::RefPtr&lt;const Gio::File&gt; file = sec->get_file();
+        if ( file ) {
+            std::cerr &lt;&lt; "  URI = " &lt;&lt; file->get_uri() &lt;&lt; std::endl;
+        }
+
+        s_location = sec->get_start_location();
+        e_location = sec->get_end_location();
+        std::cerr &lt;&lt; "  start : " &lt;&lt; s_location.get_lines()+1
+                  &lt;&lt; ", end   : " &lt;&lt; e_location.get_lines()+1 &lt;&lt; std::endl;
+        std::cerr &lt;&lt; "  s_pos : " &lt;&lt; s_location.get_line_chars()
+                  &lt;&lt; ", e_pos : " &lt;&lt; e_location.get_line_chars() &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+
+    <!-- Sample Cascading Style Sheet -->
+    <h2 class="ex1">Css</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+window {
+    background-color: rgba( 0, 0, 0, 1.0 );
+}
+
+#m-label1 {
+    color:            white;
+    font-weight:      100;
+    font-size:        40px;
+}
+
+#m-label2 {
+    color:            white;
+    font-weight:      200;
+    font-size:        40px;
+}
+
+#m-label3 {
+    color:            white;
+    font-weight:      300;
+    font-size:        40px;
+}
+
+#m-label4 {
+    color:            white;
+    font-weight:      400;
+    font-size:        40px;
+}
+
+#m-label5 {
+    color:            white;
+    font-weight:      500;
+    font-size:        40px;
+}
+
+#m-label6 {
+    color:            white;
+    font-weight:      600;
+    font-size:        40px;
+}
+
+#m-label7 {
+    color :           white;
+    font-weight:      700;
+    font-size:        40px;
+}
+
+#m-label8 {
+    color:            white;
+    font-weight:      800;
+    font-size:        40px;
+}
+
+#m-label9 {
+    color:            white;
+    font-weight:      900;
+    font-size:        40px;
+}
+
+.m-range {
+    color:            white;
+    font-size:        30px;
+}
+    </code></pre>
+    </div>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/css-font-font_weight.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-font-font_family.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css-font-font_style.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS フォント</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CSS フォント</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3> 
+    <p class="paragraph">ウィジットに文字列を表示する際、フォントの種類、大きさなどを指定します。</p>
+    <h3>使い方</h3>
+    <h4 class="ex4">font-family</h4>
+      <p class="paragraph">フォントの種類を指定します。</p>
+      <ol class="paragraph">
+    
+        <li>font-style</li>
+        <p>フォントの傾斜のスタイルを指定します。</p>
+        <table width="40%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th class="table_heading" colspan="2">Pango::Style</th>
+          </tr>
+          <tr>
+            <td width="15%" class="table_heading">書式</td>
+            <td width="30%" class="table_heading">内容</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell">NORMAL</td>
+            <td width="30%" class="table_cell">直立</td>
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell">ITALIC</td>
+            <td width="30%" class="table_cell">フォントはイタリック体で傾斜</td>      
+          </tr>
+          <tr>
+            <td width="15%" class="table_cell">OBLIQUE</td>
+            <td width="30%" class="table_cell">フォントはロマン体で傾斜</td>
+          </tr>
+        </table>
+        <br style="clear:both">
+        <p>【関　数】</p>
+        <table width="55%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="35%" class="function_heading">Pango::Fontdescription::set_style(</th>
+            <td width="5%" class="function_cell">Style</td>
+            <td width="10%" class="function_cell">style <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        <li>font-size</li>
+        <p>フォントのサイズを指定します。10ポイントで表示したい場合は、10 × Pango::SCALE の値を引数として指定します。</p>
+        <p>DTPソフトでは、1ポイント＝1/72インチと定義されることが一般的です。DPI(dot/inch)が96の場合、10ポイント×96/72⇒13.3ピクセルとなり、10ポイントの文字が13.3ピクセルとして表示されます。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="30%" class="function_heading">Pango::Fontdescription::set_size(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">size <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+      </ol>
+
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+  
+class Drawing : public Gtk::DrawingArea {
+public:
+    Drawing();
+    virtual ~Drawing() = default;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+  
+Drawing::Drawing()
+{
+    set_draw_func( sigc::mem_fun( *this, &Drawing::on_draw));
+}
+  
+void Drawing::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height) {
+    <span class="highlight">Pango::FontDescription</span> font;
+    Glib::RefPtr&lt;Pango::Layout&gt; layout;
+    int text_width;
+    int text_height;
+  
+    font.<span class="highlight">set_family(</span> "VL Pゴシック" <span class="highlight">)</span>;
+    font.<span class="highlight">set_size(</span> 20 * Pango::SCALE <span class="highlight">)</span>;
+  
+    layout = create_pango_layout( "" );
+    layout->set_text( "Good morning!" );
+    layout->set_font_description( font );
+  
+    layout->get_pixel_size( text_width, text_height );
+    cr->move_to(( width - text_width )/2, ( height / 3.0 - text_height ) / 2.0 );
+   // Normal
+    layout->show_in_cairo_context( cr );
+
+   // Weight::HEAVY
+    font.<span class="highlight">set_weight(</span> Pango::Weight::HEAVY <span class="highlight">)</span>;
+    font.<span class="highlight">set_style(</span> Pango::Style::NORMAL <span class="highlight">)</span>;
+    layout->set_font_description( font );
+    cr->rel_move_to(  0.0, text_height * 2.0 );
+    layout->show_in_cairo_context( cr );
+
+   // Style::ITALIC
+    font.set_weight( Pango::Weight::NORMAL );
+    font.set_style( Pango::Style::ITALIC );
+    layout->set_font_description( font );
+    cr->rel_move_to(  0.0, text_height * 2.0 );
+    layout->show_in_cairo_context( cr );
+}
+  
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+protected:
+    Drawing my_draw;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Pango FontDescription" );
+    set_default_size( 320, 240 );
+    set_child( my_draw );
+}  
+  
+int main(int argc, char* argv[]) {
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="css-color.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
