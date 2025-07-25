@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::Box</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::Box</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+    <p class="paragraph">Gtk::Boxは、multi-item containerです。Gtk::Boxの中に縦あるいは横向きに複数のウィジットを格納することができます。</p>
+    <br>
+    <h3>レイアウト</h3>
+      <p class="paragraph">Gtk::Boxのレイアウトを次に示します。箱状に水平あるいは鉛直方向に子ウィジットを配置します。</p>
+    <h3>使い方</h3>
+      <p class="paragraph">
+        <img src="images/container-box-layout.png" class="figure_L">
+      </p>
+    <ol class="paragraph">
+      <li>Gtk::Boxの宣言</li>
+        <p>Gtk::Boxのwidgetの宣言を行います。</p>     
+        <br>
+      
+      <li>子ウィジットの追加</li>
+        <p>Gtk::Boxに子ウィジットを追加します。</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="25%" class="function_heading">void Gtk::Box::append(</th>
+            <td width="10%" class="function_cell">Gtk::Widget</td>
+            <td width="10%" class="function_cell">widget <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <!-- <p style="clear:both"></p> -->
+        <br>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>マージンの指定</li>
+        <p>Gtk::Boxの周囲にマージンを指定します。指定する数値はpixel単位です。set_margin()では、4辺の周囲に同じマージンをセットします。</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Widget::set_margin(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">margin <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>
+        <p>※マージンを指定する方法は、この他に各辺ごとにマージンをセットすることができます。<br>set_margin_top():上端、set_margin_start():左端、set_margin_end():右端、set_margin_bottom():下端</p>       
+        <br>
+
+      <li>スペースの指定</li>
+        <p>Gtk::Boxが格納する子ウィジットの間隔を指定します。指定する数値はpixel単位です。</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Box::set_spacing(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">spacing <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>Gtk::Boxを親ウィジットの子ウィジットとして指定</li>
+        <p>Gtk::Boxを子Widgetとして親Widgetにセットします。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Window::set_child(</th>
+            <td width="10%" class="function_cell">Widget &</td>
+            <td width="10%" class="function_cell">child <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        
+      <li>Gtk::Box内の子ウィジットの配置</li>
+        <p>Gtk::Boxの子Widgetの配置をとして親Widgetにセットします。デフォルトは水平方向です。</p>
+        <p>【関　数】</p>
+        <table width="55%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Box::set_orientation(</th>
+            <td width="10%" class="function_cell">Orientation</td>
+            <td width="15%" class="function_cell">orientation <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        <table width="40%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th class="table_heading" colspan="2">Gtk::Orientation</th>
+          </tr>
+          <tr>
+            <td width="10%" class="table_heading">書式</td>
+            <td width="30%" class="table_heading">内容</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">HORIZONTAL</td>
+            <td width="30%" class="table_cell">子ウィジットを水平方向に配置</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">VERTICAL</td>
+            <td width="30%" class="table_cell">子ウィジットを鉛直方向に配置</td>      
+          </tr>
+        </table>
+        <br style="clear:both">       
+        <br>
+      
+      <li>Gtk::Box内の子ウィジットの幅を揃える</li>
+        <p>Gtk::Boxに格納する子ウィジットの幅を均等に揃えます。</p>
+        <p>【関　数】</p>
+        <table width="55%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Box::set_homogeneous(</th>
+            <td width="5%" class="function_cell">bool</td>
+            <td width="20%" class="function_cell">homogeneous=true <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+    </ol>
+    
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window {
+private:
+    Gtk::Button m_button_A, m_button_B, m_button_C;
+   // <span class="emphasis">1.宣言</span>
+    Gtk::Box m_box;
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+   // Signal handlers:
+    void on_button_clicked( const Glib::ustring& data );
+};
+
+MyWindow::MyWindow()
+ : m_box( Gtk::Orientation::VERTICAL )
+{
+    set_title( "Box" );
+    
+    m_button_A.set_label( "VERTICAL" );
+    m_button_A.signal_clicked().connect( sigc::bind(
+            sigc::mem_fun( *this, &MyWindow::on_button_clicked), "A" ));
+   // <span class="emphasis">2.子ウィジットの追加</span>
+    m_box.<span class="highlight">append(</span> m_button_A <span class="highlight">)</span>;
+
+    m_button_B.set_label( "HORIZONTAL" );
+    m_button_B.signal_clicked().connect( sigc::bind(
+            sigc::mem_fun( *this, &MyWindow::on_button_clicked), "B" ));
+    m_box.append( m_button_B );
+    
+    m_button_C.set_label( " - homogeneous - " );
+    m_button_C.signal_clicked().connect( sigc::bind(
+            sigc::mem_fun( *this, &MyWindow::on_button_clicked), "C" ));
+    m_box.append( m_button_C );
+
+   // <span class="emphasis">3.マージンの指定</span>
+    m_box.<span class="highlight">set_margin(</span> 15 <span class="highlight">)</span>;
+   // <span class="emphasis">4.スペースの指定</span>
+    m_box.<span class="highlight">set_spacing(</span> 30 <span class="highlight">)</span>;
+    m_box.set_halign( Gtk::Align::CENTER );
+   // <span class="emphasis">5.親ウィジットの子ウィジットとして指定</span>
+    <span class="highlight">set_child(</span> m_box <span class="highlight">)</span>;
+}
+
+void MyWindow::on_button_clicked( const Glib::ustring& data )
+{
+    if ( data == "A" ) {
+         // <span class="emphasis">6.Gtk::Boxの配置を垂直に</span>
+          m_box.<span class="highlight">set_orientation(</span> Gtk::Orientation::VERTICAL <span class="highlight">)</span>;
+          m_box.set_homogeneous( false );
+    }
+    else if( data == "B" ) {
+          m_box.set_orientation( Gtk::Orientation::HORIZONTAL );
+          m_box.set_homogeneous( false );
+    }
+    else if( data == "C" ) {
+         // <span class="emphasis">7.子ウィジットの幅を均等に揃える</span>
+          m_box.<span class="highlight">set_homogeneous( true )</span>;
+    }
+}
+
+int main(int argc, char *argv[]) 
+{
+    auto app = Gtk::Application::create( "gtkmm4.examples" );
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="result-table">
+      <br>
+      <table width="75%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Gtk::ScrolledWindow</font></th>
+        </tr>
+        <tr>
+          <td width="25%" class="table_heading">1.起動時</td>
+          <td width="25%" class="table_heading">2.HORIZONTALをクリック</td>
+          <td width="25%" class="table_heading">3.-homogeneous-をクリック</td>
+        </tr>
+        <tr>
+          <td width="25%" class="table_figure"><img src="../basic/images/container-box1.png"></td>
+          <td width="25%" class="table_figure"><img src="../basic/images/container-box2.png"></td>
+          <td width="25%" class="table_figure"><img src="../basic/images/container-box3.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="container-scrolledwindow.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="container-grid.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

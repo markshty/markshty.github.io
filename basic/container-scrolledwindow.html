@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::ScrolledWindow</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::ScrolledWindow</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+    <ul class="paragraph">
+      <li>ScrolledWindowは、表示内容が上下・左右にスクロールすることのできるWindowです。</li>
+      <li>ScrolledWindow自体は、single-item containerであるため、単一のウィジットを格納することしかできません。複数のウィジットを格納する場合は、Gtk::Boxなどのmulti-item containerを経由して格納する必要があります。</li>
+      <li>スクロールバーは、通常は表示されていませんがマウスを近づけると表示されます。</li>
+    </ul>
+    <br>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>Gtk::ScrolledWindowの宣言</li>
+        <p>Gtk::ScrolledWindowのwidgetの宣言を行います。</p>     
+        <br>
+
+      <li>Gtk::ScrolledWindowを親ウィジットの子ウィジットとして指定</li>
+        <p>Gtk::ScrolledWindowを子Widgetとして親Widgetにセットします。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Gtk::Window::set_child(</th>
+            <td width="10%" class="function_cell">Widget &</td>
+            <td width="10%" class="function_cell">child <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        
+      <li>スクロールバーの表示のタイプ</li>
+        <p>スクロールバーが表示されるパターンをセットします。</p>
+        <p>【関　数】</p>
+        <table width="95%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="40%" class="function_heading">void Gtk::ScrolledWindow::set_policy(</th>
+            <td width="5%" class="function_cell">PolicyType</td>
+            <td width="20%" class="function_cell">hscrollbar_policy,</span></td>
+            <td width="30%" class="function_cell">// 水平方向のｽｸﾛ-ﾙﾊﾞｰの配置形式</td>
+          </tr>
+          <tr>
+            <th width="40%" class="function_cell" rowspan="1"></th>
+            <td width="5%" class="function_cell">PolicyType</td>
+            <td width="20%" class="function_cell">vscrollbar_policy <span style="font-weight:BOLD">)</span></td>
+            <td width="30%" class="function_cell">// 水直方向のｽｸﾛ-ﾙﾊﾞｰの配置形式</td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        <table width="70%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th class="table_heading" colspan="2">Gtk::PolicyType</th>
+          </tr>
+          <tr>
+            <td width="10" class="table_heading">書式</td>
+            <td width="60%" class="table_heading">内容</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">ALWAYS</td>
+            <td width="60%" class="table_cell">スクロールバーが常に表示される</td>
+          </tr>
+          <tr>
+            <td width="10" class="table_cell">AUTOMATIC</td>
+            <td width="60%" class="table_cell">スクロールバーは、表示エリアがWindowより大きい場合に表示される</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">NEVER</td>
+            <td width="60%" class="table_cell">スクロールバーは決して表示されない</td>
+          </tr>
+        </table>
+        <br style="clear:both">       
+        <br>
+
+      <li>スクロールバーの表示位置</li>
+        <p>スクロールバーの表示位置を設定します。</p>
+        <p>【関　数】</p>
+        <table width="65%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="45%" class="function_heading">void Gtk::ScrolledWindow::set_placement(</th>
+            <td width="5%" class="function_cell">CornerType</td>
+            <td width="15%" class="function_cell">window_placement <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>
+        <br>       
+        <table width="55%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th class="table_heading" colspan="2">Gtk::CornerType</th>
+          </tr>
+          <tr>
+            <td width="10" class="table_heading">書式</td>
+            <td width="45%" class="table_heading">内容</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">TOP_LEFT</td>
+            <td width="45%" class="table_cell">ウィジットの上端と右端にスクロールバーを配置</td>
+          </tr>
+          <tr>
+            <td width="10" class="table_cell">BOTTOM_LEFT</td>
+            <td width="45%" class="table_cell">ウィジットの下端と左端にスクロールバーを配置</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">TOP_RIGHT</td>
+            <td width="45%" class="table_cell">ウィジットの上端と右端にスクロールバーを配置</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">BOTTOM_RIGHT</td>
+            <td width="45%" class="table_cell">ウィジットの下端と右端にスクロールバーを配置</td>
+          </tr>
+        </table>
+        <br style="clear:both">       
+        <br>
+
+      <li>子ウィジットの大きさを指定</li>
+        <p>子ウィジットの幅・高さを指定しています。Gtk::PolicyTypeがAUTOMATICの場合は、親ウィジットより幅・高さが大きい場合は、水平・垂直方向のｽｸﾛｰﾙﾊﾞｰが有効になります。</p>      
+        <br>
+
+      <li>Gtk::ScrollWindowに子ウィジットをセット</li>
+        <p>Gtk::ScrolledWindowに子ウィジットをセットします。サンプルプログラムでは、Gtk::DrawingAreaをセットしています。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Gtk::ScrollWindow::set_child(</th>
+            <td width="10%" class="function_cell">Widget &</td>
+            <td width="10%" class="function_cell">child <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+    </ol>
+    
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyDrawArea : public Gtk::DrawingArea {
+public:
+MyDrawArea();
+    virtual ~MyDrawArea() = default;
+    int diff;
+protected:
+    virtual void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+    bool   on_timeout();
+    double m_radius1, m_radius2;
+    int    degree1, degree2;
+};
+  
+MyDrawArea::MyDrawArea()
+{
+    Glib::signal_timeout().connect( sigc::mem_fun( *this, &MyDrawArea::on_timeout), 20 );
+    set_draw_func( sigc::mem_fun( *this, &MyDrawArea::on_draw ));
+    m_radius1 =  200.0;
+    m_radius2 =   25.0;
+    diff = 1;
+}
+  
+void MyDrawArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    double dx1, dy1;
+    double dx2, dy2;
+    double cx,  cy;
+  
+   // 画面の中心位置
+    cx = 0.5 * width;
+    cy = 0.5 * height;
+  
+   // 背景の着色
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "black" ));
+    cr->paint();
+  
+   // 座標軸
+    cr->move_to( 0.0, cy );
+    cr->rel_line_to( width, 0.0 );
+    cr->move_to( cx, 0.0 );
+    cr->rel_line_to( 0.0, height );
+    cr->set_line_width( 1.0 );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "Aquamarine" ));
+    cr->stroke();
+  
+   // circle1
+    cr->arc( cx, cy, m_radius1, 0.0, 2.0 * M_PI  );
+    cr->set_line_width( 1.5 );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "Aqua" ));
+    cr->stroke();
+  
+   // ball1
+    degree1 += diff;
+    if ( degree1 >= 360 ) {
+        degree1 = 0;
+    }
+    dx1 = m_radius1 * cos( degree1 * M_PI / 180 );
+    dy1 = m_radius1 * sin( degree1 * M_PI / 180 );
+    cr->arc( cx + dx1, cy + dy1, 8.0, 0.0, 2.0 * M_PI  );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "blue" ));
+    cr->fill();
+  
+   // circle2
+    cr->arc( cx + dx1, cy + dy1, m_radius2, 0.0, 2.0 * M_PI  );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "yellow" ));
+    cr->set_line_width( 0.5 );
+    cr->stroke();
+  
+   // ball2
+    degree2 += diff * 4;
+    if ( degree2 >= 360 ) {
+        degree2 = 0;
+    }
+    dx2 = m_radius2 * cos( degree2 * M_PI / 180 );
+    dy2 = m_radius2 * sin( degree2 * M_PI / 180 );
+    cr->arc( cx + dx1 + dx2, cy + dy1 + dy2, 4.0, 0.0, 2 * M_PI );
+    Gdk::Cairo::set_source_rgba( cr, Gdk::RGBA( "gold" ));
+    cr->fill();
+}
+  
+bool MyDrawArea::on_timeout()
+{
+    queue_draw();
+    return true;
+}
+  
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+   // Child widgets:
+   // <span class="emphasis">1.宣言</span>
+    Gtk::ScrolledWindow m_scr;
+    MyDrawArea m_drawarea;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "ScrolledWindow" );
+    set_default_size( 380, 360 );
+   // <span class="emphasis">2.ScrolledWindowを親ウィジットの子ウィジットとして指定</span>
+    set_child( m_scr );
+  
+    m_scr.set_margin( 10 );
+    m_scr.set_expand();
+   // <span class="emphasis">3.スクロールバーの表示のタイプ</span>
+    m_scr.<span class="highlight">set_policy(</span> Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::ALWAYS <span class="highlight">)</span>;
+   // <span class="emphasis">4.スクロールバーの表示位置</span>
+    m_scr.<span class="highlight">set_placement(</span> Gtk::CornerType::TOP_RIGHT <span class="highlight">)</span>;
+   // <span class="emphasis">5.子ウィジットの大きさを指定</span>
+    m_drawarea.set_size_request( 640, 480 );
+   // <span class="emphasis">6.ScrollWindowに子ウィジットをセット</span>
+    m_scr.set_child( m_drawarea );  
+}
+  
+int main(int argc, char *argv[]) 
+{
+    auto app = Gtk::Application::create( "gtkmm4.examples" );
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="result-table">
+      <br>
+      <table width="50%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Gtk::ScrolledWindow</font></th>
+        </tr>
+        <tr>
+          <td width="25%" class="table_heading">鉛直方向のスクロールバー</td>
+          <td width="25%" class="table_heading">水平方向のスクロールバー</td>
+        </tr>
+        <tr>
+          <td width="25%" class="table_figure"><img src="../basic/images/container-scrolledwindow1.png"></td>
+          <td width="25%" class="table_figure"><img src="../basic/images/container-scrolledwindow2.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="container-frame.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="container-box.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

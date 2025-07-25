@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::Grid</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::Grid</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Gtk::Gridは、multi-item containerです。Gtk::Boxの中に複数のウィジットを格納することができます。</p>
+      <br>
+    <h3>レイアウト</h3>
+      <div class="paragraph">
+        <p>Gtk::Gridのレイアウトを次に示します。行列上に子ウィジットを配置します。子ウィジットの行間の間隔と列間の間隔を指定することができます。</p>
+        <p><center><img src="images/container-grid-layout.png" class="figure_L2"></center></p>
+      </div>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>Gtk::Gridの宣言</li>
+        <p>Gtk::Boxのwidgetの宣言を行います。</p>     
+        <br>
+      
+      <li>マージンの指定</li>
+        <p>Gtk::Gridの周囲にマージンを指定します。指定する数値はpixel単位です。set_margin()では、4辺の周囲に同じマージンをセットします。</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Widget::set_margin(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">margin <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <!-- <p style="clear:both"></p> -->
+        <br>
+        <p>【返　値】 : 無し</p>
+        <p>※マージンを指定する方法は、この他に各辺ごとにマージンをセットすることができます。<br>set_margin_top():上端、set_margin_start():左端、set_margin_end():右端、set_margin_bottom():下端</p>       
+        <br>
+      
+      <li>行間の指定</li>
+        <p>Gtk::Gridが格納する子ウィジットの行間の間隔を指定します。指定する数値はpixel単位です。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Grid::set_row_spacing(</th>
+            <td width="5%" class="function_cell">guint</td>
+            <td width="10%" class="function_cell">spacing <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>列間の指定</li>
+        <p>Gtk::Gridが格納する子ウィジットの列間の間隔を指定します。指定する数値はpixel単位です。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Grid::set_column_spacing(</th>
+            <td width="5%" class="function_cell">guint</td>
+            <td width="10%" class="function_cell">spacing <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>子ウィジットの追加</li>
+        <p>Gtk::Gridに子ウィジットを追加します。</p>
+        <br>
+
+      <li>Gtk::Gridを親ウィジットの子ウィジットとして指定</li>
+        <p>Gtk::Gridを子Widgetとして親Widgetにセットします。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Widget::append(</th>
+            <td width="10%" class="function_cell">Gtk::Grid</td>
+            <td width="10%" class="function_cell">grid <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        
+      <li>Gtk::Grid内の子ウィジットの配置A</li>
+        <p>Gtk::Gridの子Widgetの配置を親Widgetにセットします。</p>
+        <p>【関　数】</p>
+        <table width="75%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="25%" class="function_heading">void Gtk::Grid:attach(</th>
+            <td width="10%" class="function_cell">Widget &</td>
+            <td width="10%" class="function_cell">child,</td>
+            <td width="25%" class="function_cell">// 子ウィジット</td>
+          </tr>
+          <tr>
+            <td width="25%" class="function_cell" rowspan="4"></td>
+            <td width="10%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">column,</td>
+            <td width="25%" class="function_cell">// 子ウィジットを配置する列</td>
+          </tr>
+          <tr>
+            <td width="10%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">row,</td>
+            <td width="25%" class="function_cell">// 子ウィジットを配置する行</td>
+          </tr>
+          <tr>
+            <td width="10%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">width=1,</td>
+            <td width="25%" class="function_cell">// 子ウィジットを配置する行数</td>
+          </tr>
+          <tr>
+            <td width="10%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">height=1 <span style="font-weight:BOLD">)</span></td>
+            <td width="25%" class="function_cell">// 子ウィジットを配置する列数</td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>Gtk::Grid内の子ウィジットの配置B</li>
+        <p>Gtk::Gridの子Widgetの配置を親Widgetにセットします。</p>
+        <p>【関　数】</p>
+        <table width="80%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="30%" class="function_heading">void Gtk::Grid:attach_next_to(</th>
+            <td width="10%" class="function_cell">Widget &</td>
+            <td width="10%" class="function_cell">child,</td>
+            <td width="25%" class="function_cell">// 子ウィジット</td>
+          </tr>
+          <tr>
+            <td width="30%" class="function_cell" rowspan="3"></td>
+            <td width="10%" class="function_cell">PositionType</td>
+            <td width="10%" class="function_cell">side,</td>
+            <td width="25%" class="function_cell">// 子ウィジットを配置する位置</td>
+          </tr>
+          <tr>
+            <td width="10%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">width=1,</td>
+            <td width="25%" class="function_cell">// 子ウィジットを配置する行数</td>
+          </tr>
+          <tr>
+            <td width="10%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">height=1 <span style="font-weight:BOLD">)</span></td>
+            <td width="25%" class="function_cell">// 子ウィジットを配置する列数</td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+        <table width="40%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th class="table_heading" colspan="2">Gtk::PositionType</th>
+          </tr>
+          <tr>
+            <td width="10%" class="table_heading">書式</td>
+            <td width="30%" class="table_heading">内容</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">LEFT</td>
+            <td width="30%" class="table_cell">子ウィジットを左端に配置</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">RIGHT</td>
+            <td width="30%" class="table_cell">子ウィジットを右端に配置</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">TOP</td>
+            <td width="30%" class="table_cell">子ウィジットを上端に配置</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">BOTTOM</td>
+            <td width="30%" class="table_cell">子ウィジットを下端に配置</td>      
+          </tr>
+        </table>
+        <br style="clear:both">       
+        <br>
+      
+      <li>Gtk::Grid内の子ウィジットの行の幅を揃える</li>
+        <p>Gtk::Gridに格納する子ウィジットの行の幅を均等に揃えます。</p>
+        <p>【関　数】</p>
+        <table width="65%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="40%" class="function_heading">void Gtk::GridGrid::set_row_homogeneous(</th>
+            <td width="5%" class="function_cell">bool</td>
+            <td width="20%" class="function_cell">homogeneous=true <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>Gtk::Grid内の子ウィジットの列の幅を揃える</li>
+        <p>Gtk::Gridに格納する子ウィジットの列の幅を均等に揃えます。</p>
+        <p>【関　数】</p>
+        <table width="65%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="40%" class="function_heading">void Gtk::GridGrid::set_column_homogeneous(</th>
+            <td width="5%" class="function_cell">bool</td>
+            <td width="20%" class="function_cell">homogeneous=true <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+    </ol>
+    
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+   // Signal handlers:
+    void on_button_clicked( const Glib::ustring& data );
+    void on_button_quit();
+    void on_button_test();
+    
+   // Child widgets:
+    Gtk::Button m_button_test, m_button_quit;
+    Gtk::Box m_box;
+   // <span class="emphasis">1.宣言</span>
+    Gtk::Grid m_grid;
+};
+
+MyWindow::MyWindow()
+ : m_box( Gtk::Orientation::VERTICAL ),
+   m_button_test( "Test" ),
+   m_button_quit( "Close" )
+{
+    set_title( "Box" );
+    set_child( m_box );
+    m_box.set_margin( 5 );
+    m_box.set_spacing( 10 );
+   // <span class="emphasis">2.マージンの指定</span>
+    m_grid.<span class="highlight">set_margin(</span> 10 <span class="highlight">)</span>;
+   // <span class="emphasis">3.行間の指定</span>
+    m_grid.<span class="highlight">set_row_spacing(</span> 15 <span class="highlight">)</span>;
+   // <span class="emphasis">4.列間の指定</span>
+    m_grid.<span class="highlight">set_column_spacing(</span> 5 <span class="highlight">)</span>;
+   // <span class="emphasis">5.親ウィジットの子ウィジットとして指定</span>
+    m_box.append( m_grid );
+
+    for( int i = 0; i &lt; 3; i++ ) {
+        for( int j = 0; j &lt; 3; j++ ) {
+            auto d = Glib::ustring::compose( "%1", i * 3 + j + 1 );
+            auto pbutton = Gtk::make_managed&lt;Gtk::Button&gt;( d );
+            pbutton->signal_clicked().connect( sigc::bind(
+                sigc::mem_fun( *this, &MyWindow::on_button_clicked), std::to_string( i * 3 + j + 1 )));
+           // <span class="emphasis">6.子ウィジットの配置A</span>
+            m_grid.<span class="highlight">attach(</span> *pbutton, i, j <span class="highlight">)</span>;
+        }
+    }
+
+    m_button_test.signal_clicked().connect( sigc::mem_fun( *this, &MyWindow::on_button_test ));
+   // <span class="emphasis">7.子ウィジットの配置B</span>
+    m_grid.<span class="highlight">attach_next_to(</span> m_button_test, Gtk::PositionType::BOTTOM, 3, 1 <span class="highlight">)</span>;
+
+    m_button_quit.signal_clicked().connect( sigc::mem_fun( *this, &MyWindow::on_button_quit ));
+    m_button_quit.set_halign( Gtk::Align::END );
+    m_box.append( m_button_quit );
+}
+
+void MyWindow::on_button_clicked( const Glib::ustring& data )
+{
+    std::cout &lt;&lt; "output : " &lt;&lt; data &lt;&lt; std::endl;
+}
+
+void MyWindow::on_button_quit()
+{
+    set_visible( false );
+}
+
+void MyWindow::on_button_test()
+{
+    std::cout &lt;&lt; "test" &lt;&lt; std::endl;
+}
+
+int main(int argc, char *argv[]) 
+{
+    auto app = Gtk::Application::create( "gtkmm4.examples" );
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="result-table">
+      <table width="30%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Gtk::Grid</font></th>
+        </tr>
+        <tr>
+          <td width="15%" class="table_heading">Console</td>
+          <td width="15%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="15%" class="terminal_cell">
+          $ 1<br>
+          2<br> 
+          3<br>
+          4<br>
+          5<br>
+          6<br>
+          7<br>
+          8<br>
+          9<br>
+          test
+          </td>
+          <td width="15%" class="table_figure"><center><img src="../basic/images/container-grid.png"></center></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="container-box.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="css.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

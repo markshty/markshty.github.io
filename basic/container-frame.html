@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::frame</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::frame</h1>
+    <p class="update">(update:2025/7/25)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+    <p class="paragraph">frameを表示します。</p>
+    <h3>使い方</h3>
+    <ol class="paragraph">
+      <li>frameのラベルのセット</li>
+        <p>frameの上端にラベルをセットします。ラベルの配置は、デフォルトでは、フレームの上端の左端となります。</p>
+        <p>【関　数】</p>
+        <table width="60%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="20%" class="function_heading">Gtk::Frame::set_label(</th>
+            <td width="25%" class="function_cell">const Glib::ustring &</td>
+            <td width="10%" class="function_cell">label <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        
+      <li>frameの配置</li>
+        <p>frameのラベルの配置をセットします。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Gtk::Frame::set_label_align(</th>
+            <td width="5%" class="function_cell">Align</td>
+            <td width="15%" class="function_cell">xalign <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+        <table width="40%" border="0" cellspacong="1" bgcolor="#000000">
+          <tr>
+            <th class="table_heading" colspan="2">Gtk::Align</th>
+          </tr>
+          <tr>
+            <td width="10" class="table_heading">書式</td>
+            <td width="30%" class="table_heading">内容</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">FILL</td>
+            <td width="30%" class="table_cell">枠のスペースの幅一杯に配置</td>
+          </tr>
+          <tr>
+            <td width="10" class="table_cell">STRAT</td>
+            <td width="30%" class="table_cell">左端あるいは上端に寄せる</td>      
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">END</td>
+            <td width="30%" class="table_cell">右端あるいは下端に寄せる</td>
+          </tr>
+          <tr>
+            <td width="10%" class="table_cell">CENTER</td>
+            <td width="30%" class="table_cell">枠の中心に配置</td>
+          </tr>
+        </table>
+        <br style="clear:both">       
+        <br>
+
+      <li>marginの指定</li>
+        <p>frameの周囲のmarginをセットします。もし、marginが0ならば、frameの枠線は表示されません。</p>
+        <p>【関　数】</p>
+        <table width="45%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Gtk::Widget::set_margin(</th>
+            <td width="5%" class="function_cell">int</td>
+            <td width="10%" class="function_cell">margin <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>frameに表示するwidgetをセット</li>
+        <p>frameに子Widgetをセットします。Gtk::frameは、Single-item Containerですので単一のWidgetしか格納できません。複数のWidgetを格納する場合は、Gtk::BoxなどのMulti-item ContainerにWidgetを格納してから、Gtk::frameに格納します。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Gtk::Frame::set_child(</th>
+            <td width="10%" class="function_cell">Widget &</td>
+            <td width="10%" class="function_cell">child <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+
+      <li>frameを親のwidgetにセット</li>
+        <p>frameを子Widgetとして親Widgetにセットします。</p>
+        <p>【関　数】</p>
+        <table width="50%" border="0" bgcolor="#ffffff" align="left">
+          <tr>
+            <th width="5%" class="function_heading">void</th>
+            <th width="25%" class="function_heading">Gtk::Frame::set_child(</th>
+            <td width="10%" class="function_cell">Widget &</td>
+            <td width="10%" class="function_cell">child <span style="font-weight:BOLD">)</span></td>
+          </tr>
+        </table>
+        <p style="clear:both"></p>
+        <p>【返　値】 : 無し</p>       
+        <br>
+    </ol>
+    
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window {
+private:
+    Gtk::Frame m_frame;
+    Gtk::Image m_image;
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Frame" );
+    set_default_size( 320, 330 );
+    m_image.set_expand( true );
+   // <span class="emphasis">1.frameのラベルのセット</span>
+    m_frame.<span class="highlight">set_label(</span> "&lt; tree &gt;" <span class="highlight">)</span>;
+   // <span class="emphasis">2.frameの配置</span>
+    m_frame.<span class="highlight">set_label_align(</span> Gtk::Align::CENTER <span class="highlight">)</span>;
+   // <span class="emphasis">3.marginの指定</span>
+    m_frame.<span class="highlight">set_margin(</span> 10 <span class="highlight">)</span>;
+      
+    m_image.set( "tree0.png" );
+   // <span class="emphasis">4.frameに表示するwidgetをセット</span>
+    m_frame.set_child( m_image );
+   // <span class="emphasis">5.frameを親のwidgetにセット</span>
+    set_child( m_frame );
+} 
+  
+int main(int argc, char *argv[]) 
+{
+    auto app = Gtk::Application::create( "gtkmm4.examples" );
+    return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/container-frame.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="image-display.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="container-scrolledwindow.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
