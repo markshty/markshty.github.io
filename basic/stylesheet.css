@@ -46,8 +46,53 @@ h4 {
     border-top:       dotted 2px #2e8b67;
 }
 
+h5 {
+    text-align:       left;
+    padding:          0.1em;
+    color:            #006e54;
+    background:       #ffffdb;
+    border-bottom:    dotted 2px #2e8b67;
+    border-top:       dotted 2px #2e8b67;
+}
+
 .update {
     text-align:       right;
+}
+
+.figure_M0 {
+	width:            320px;              /* 画像の表示サイズ(幅)   */
+    height:           240px;              /* 画像の表示サイズ(高さ) */
+    /*margin:           0px 20px 20px 20px; /* マージン 上 右 下 左   */
+	/*float:            right;              /* 画像を右寄せにする     */
+}
+
+.figure_M1 {
+	width:            212px;              /* 画像の表示サイズ(幅)   */
+    height:           611px;              /* 画像の表示サイズ(高さ) */
+    /*margin:           0px 20px 20px 20px; /* マージン 上 右 下 左   */
+	/*float:            right;              /* 画像を右寄せにする     */
+}
+
+.figure_M2 {
+	width:            320px;              /* 画像の表示サイズ(幅)   */
+    height:           200px;              /* 画像の表示サイズ(高さ) */
+    /*margin:           0px 20px 20px 20px; /* マージン 上 右 下 左   */
+	/*float:            right;            画像を右寄せにする     */
+}
+
+.figure_M3 {
+	width:            238px;              /* 画像の表示サイズ(幅)   */
+    height:           843px;              /* 画像の表示サイズ(高さ) */
+    /*margin:           0px 20px 20px 20px; /* マージン 上 右 下 左   */
+	/*float:            right;              /* 画像を右寄せにする     */
+}
+
+.figure_L0 {
+    margin-left:      100px;
+    padding-right:     10px; 
+	width:            240px;              /* 画像の表示サイズ(幅)   */
+	margin:           0px 10px 10px 10px; /* マージン 上 右 下 左   */
+	float:            right;              /* 画像を左寄せにする     */
 }
 
 .figure_L {
@@ -74,6 +119,16 @@ h4 {
     background-color: #dbffdb;;    
 }
 
+.sampleprogram {
+    margin-left:        2%;
+    text-indent:       1rem;
+}
+
+.stylesheet {
+    margin-left:        2%;
+    text-indent:       1rem;
+}
+
 ol {
     width:            80%;
 }
@@ -96,6 +151,13 @@ ol li {
     background:       #ffffff;    
 }
 
+.table_cell2 {
+    text-align:         center;
+    padding-left:       3%;
+    color:            #556b2f;
+    background:       #ffffff;    
+}
+
 .terminal_cell {
     text-align:         left;
     padding-left:       1%;
@@ -110,12 +172,30 @@ ol li {
     background:       #000000;
 }
 
+.comment1 {
+    width:            50%;
+    margin:           1%;
+    float:            left;
+}
+
+.css-example {
+    width:            63%;
+    margin:           0%;
+    padding-left:     1%;
+    color:            #ffffff;      
+    background:       #000000;
+}
+
 .ex1 {
     width:            75px;    
 }
 
 .ex2 {
     width:            240px;
+}
+
+.ex21 {
+    width:            260px;
 }
 
 .ex3 {
@@ -126,8 +206,20 @@ ol li {
     width:            120px;
 }
 
+.ex41 {
+    width:            140px;
+}
+
 .ex5 {
     width:            180px;
+}
+
+.ex6 {
+    width:            280px;
+}
+
+.ex7 {
+    width:            320px;
 }
 
 div#pagebody {
@@ -153,6 +245,11 @@ div#pagebody {
 .emphasis {
     color:          #008000;
     font-weight:      bold;
+}
+
+.emphasis2 {
+    color:            #20B2AA;
+    font-weight:      bold;        
 }
 
 hr{
