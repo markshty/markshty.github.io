@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>インターバルタイマーの起動と停止</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">インターバルタイマーの起動と停止</h1>
+    <p class="update">(update:2025/2/1)</p>
+    <br>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+    <p class="paragraph">インターバルタイマーをプログラムの実行途中で起動したり、停止します。</p>
+    <h3>使い方</h3>
+    <h4>インターバルタイマーの起動</h4>
+    <ul class="paragraph">
+      <li><span class="highlight">sigc::connection</span>型の変数を宣言して、<span class="highlight">Glib::signal_timeout().connect()</span>の返値を渡します。</li>
+      <li><span class="highlight">connect()関数</span>で<span class="emphasis">スロット関数</span>を指定します。</li>
+      <li><span class="highlight">connect()関数</span>では、<span class="highlight">ミリ秒単位</span>で<span class="emphasis">スロット関数</span>の<span class="highlight">発生間隔</span>を指定します。</li>
+    </ul>
+    <h4>インターバルタイマーの停止</h4>
+    <ul class="paragraph">
+      <li>sigc::connection 変数.<span class= "highlight">disconnect()</span>関数を実行します。</li>
+      <li>なお、ワンショットタイマーでは、connect()関数の返値は、&lt;void&gt;となるため、disconnect()関数で停止することはできません。</li>
+    </ul>
+    <!-- Sample Program -->
+    <h2 class="ex2">サンプル プログラム</h2>
+    <div id="pagebody">
+    <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;cmath&gt;
+  
+class Radar: public Gtk::DrawingArea {
+public:
+    Radar();
+    virtual ~Radar() = default;
+    int    diff;
+protected:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+    double m_radius;
+    double m_line_width;
+    int    degree;
+};
+  
+Radar::Radar()
+ : m_radius( 0.42 ), m_line_width( 0.03 )
+{
+    degree = 0;
+    diff   = 2;
+    set_draw_func( sigc::mem_fun(*this, &Radar::on_draw));
+}
+  
+void Radar::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height ) {
+    double dx, dy;
+      
+    cr->scale(width, height);
+    cr->translate( 0.5, 0.5 );
+    cr->set_line_width( m_line_width * 0.2 );
+  
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 1.0 );
+    cr->paint();
+  
+    cr->set_source_rgba(1.0, 1.0, 1.0, 1.0);
+  
+    cr->arc( 0, 0, m_radius, 0, 2 * M_PI );
+    cr->stroke();
+  
+    degree += diff;
+    if ( degree >= 360 ) {
+        degree = 0;
+    }
+  
+    dx = m_radius * cos( degree * M_PI / 180 );
+    dy = m_radius * sin( degree * M_PI / 180 );
+  
+    cr->set_source_rgba( 0.2, 0.2, 1.0, 1.0);
+    cr->arc( dx, dy, m_radius * 0.1, 0.0, 2*M_PI );
+    cr->fill_preserve();
+    cr->stroke();
+}
+  
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+    Gtk::Grid m_Grid;
+    Gtk::Button m_Button_1, m_Button_2;
+    Radar c;
+  
+    <span class="highlight">sigc::connection</span> my_timer;
+    int flag;
+  
+   // Signal handlers:
+    void on_button1_clicked();
+    void on_button2_clicked();
+    bool on_timeout();
+};
+  
+MyWindow::MyWindow()
+{
+    set_title( "Timer Start & Stop" );
+    set_default_size( 300, 380 );
+    set_resizable( false );
+  
+    flag = 0;
+  
+    c.set_size_request( 300, 300 );
+    m_Button_1.set_label( "Start" );
+    m_Button_1.set_size_request( 50, 15 );
+  
+    m_Button_2.set_label( "Stop" );
+    m_Button_2.set_size_request( 50, 15 );
+  
+    m_Button_1.signal_clicked().connect( sigc::mem_fun( *this,
+              &MyWindow::on_button1_clicked ));
+    m_Button_2.signal_clicked().connect( sigc::mem_fun( *this,
+              &MyWindow::on_button2_clicked ));
+  
+    set_child( m_Grid );
+  
+    m_Grid.set_row_spacing( 5 );
+    m_Grid.set_column_spacing( 5 );
+    m_Grid.attach( c, 0, 0, 2, 2 );
+    m_Grid.attach( m_Button_1, 0, 2, 1, 1 );
+    m_Grid.attach( m_Button_2, 1, 2, 1, 1 );
+}
+  
+void MyWindow::on_button1_clicked() {
+    if ( flag &lt;= 0 ) {
+       <span class="emphasis">// インターバルタイマーの起動。</span><span class="highlight">30ミリ秒ごと</span>に<span class="emphasis">スロット関数</span>が実行される。
+        my_timer = <span class="highlight">Glib::signal_timeout().connect(</span> sigc::mem_fun( *this, <span class="emphasis">&MyWindow::on_timeout</span> <span class="highlight">)</span>, <span class="highlight">30</span> );
+        flag = 1;
+    }
+}
+  
+void MyWindow::on_button2_clicked() {
+    if ( flag == 1 ) {
+       <span class="emphasis">// インターバルタイマーの停止</span>
+        my_timer.<span class="highlight">disconnect()</span>;
+        flag = 0;
+    }
+}
+  
+bool MyWindow::on_timeout() {
+    c.queue_draw();
+    return true;
+}
+  
+int main(int argc, char ** argv)
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+    </code></pre>
+    </div>
+    
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/timer-event-interval-start.png"></center>
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="timer-event-oneshot-ms.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
