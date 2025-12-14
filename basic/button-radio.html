@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RadioButton</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">RadioButton</h1>
+    <p class="update">(update:2025/12/14)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Gtkmm4では、Gtk::RadioButtonは削除されています。しかし、Gtk::CheckButtonやGtk::TogglrButtonをset_groupを使って、グループ化することにより、従前のRadioButtonと同様の機能を実現することができます。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      Gtk::CheckButtonウイジットの使い方は次のとおりです。
+      <ol>
+        <li>ボタンの作成</li>
+          <p>Gtk::CheckButtonウイジットの作成は、Gtk::CheckButtonのコンストラクタでラベルとなる文字列を指定します。あるいは、Gtk::CheckButtonのコンストラクタで定義しておいて、ラベルの文字列は、set_label( "文字列" ) を使って後から指定します。</p>
+          <br>
+
+        <li>ボタンのグループ化</li>
+          <p>checkbutton2をcheckbutton1にグループ化する場合は、次の形になります。</p>
+          <p>checkbutton2.<span class="emphasis">set_group(</span> checkbutton1 <span class="emphasis">)</span></p>
+          <br>
+
+        <li>シグナルの発生</li>
+          <p>ボタンをクリックしたときにイベントシグナル(<span class="highlight">signal_toggled</span>)を発生させてシグナルハンドラー<span class="highlight">on_button_toggled()</span>を起動します。</p>
+          <br>
+        
+        <li>get_active()</li>
+          <p>現在の状態を取得（ON/OFF）。</p>
+          <br>
+        
+        <li>set_active( bool )</li>
+          <p>プログラム上でボタンのON(true)、OFF(false)を指定する。</p>
+          <br>
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&lt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+   // signal handler:
+    void on_button_toggled();
+   // child widget:
+    Gtk::Box *m_box;
+    Gtk::CheckButton* check1;
+    Gtk::CheckButton* check2;
+    Gtk::CheckButton* check3;
+    Gtk::Label *status_label;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "RadioButton" );
+    set_default_size( 300, 250 );
+
+   // 内側のBox（ボタンとラベルを縦に並べる）
+    m_box = Gtk::make_managed&lt;Gtk::Box&gt;( Gtk::Orientation::VERTICAL, 10 );
+
+   // 中央寄せ指定（上下左右とも中央）
+    m_box->set_valign( Gtk::Align::CENTER );
+    m_box->set_halign( Gtk::Align::CENTER );
+
+   // チェックボタンを3つ作成
+    check1 = Gtk::make_managed&lt;Gtk::CheckButton&gt;( "Button 1");
+    check2 = Gtk::make_managed&lt;Gtk::CheckButton&gt;( "Button 2" );
+    check3 = Gtk::make_managed&lt;Gtk::CheckButton&gt;( "Button 3" );
+
+   // グループ化
+    // <span class="highlight">checkbutton2をcheckbutton1のグループに加える。</span>
+    check2-><span class="emphasis">set_group(</span> *check1 <span class="emphasis">)</span>;
+    // <span class="highlight">checkbutton3をcheckbutton1のグループに加える。</span>
+    check3-><span class="emphasis">set_group(</span> *check1 <span class="emphasis">)</span>;
+
+   // デフォルトで1つ選択
+    check1-><span class="emphasis">set_active(</span> true <span class="emphasis">)</span>;
+
+   // ラベルを作成
+    status_label = Gtk::make_managed&lt;Gtk::Label&gt;( "Selected: Button 1" );
+
+   // シグナル接続
+    check1-><span class="highlight">signal_toggled()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::on_button_toggled ));
+    check2->signal_toggled().connect(
+        sigc::mem_fun( *this, &MyWindow::on_button_toggled ));
+    check3->signal_toggled().connect(
+        sigc::mem_fun( *this, &MyWindow::on_button_toggled ));
+
+   // 内側Boxに追加
+    m_box->append( *check1 );
+    m_box->append( *check2 );
+    m_box->append( *check3 );
+    m_box->append( *status_label );
+
+   // ウィンドウに直接 inner_box をセット
+    set_child( *m_box );
+}
+
+void MyWindow::<span class="highlight">on_button_toggled()</span>
+{
+    if (check1->get_active()) {
+        status_label->set_text( "Selected: " + check1->get_label() );
+    } else if (check2->get_active()) {
+        status_label->set_text( "Selected: " + check2->get_label() );
+    } else if (check3->get_active()) {
+        status_label->set_text( "Selected: " + check3->get_label() );
+    }
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "radiobutton.examples" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/button-radio.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="button-check.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="button-spin.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

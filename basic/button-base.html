@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Button</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Button</h1>
+    <p class="update">(update:2025/12/14)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Gtk::Buttonは、最も標準的なボタンを表現するためのウイジットです。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      Gtk::Buttonウイジットの使い方は次の通りです。
+      <ol>
+        <li>ボタンの作成</li>
+          <p>Gtk::Buttonウイジットの作成は、Gtk::Buttonのコンストラクタでラベルとなる文字列を指定します。あるいは、Gtk::Buttonのコンストラクタで定義しておいて、ラベルの文字列は、set_label( "文字列" ) を使って後から指定します。</p>
+          <br>
+
+          <li>シグナルの発生</li>
+          <p>ボタンをクリックしたときにイベントシグナル(<span class="highlight">signal_clicked</span>)を発生させてシグナルハンドラー(ｻﾝﾌﾟﾙﾌﾟﾛｸﾞﾗﾑ1では、<span class="highlight">on_button_clicked()</span>)を起動します。</p>
+          <br>
+
+        <li>アクセラレーターキーの定義</li>
+          <p>キーボードナビゲーション用の<span class="highlight">アクセラレータキー</span>を定義するには、ラベルの文字の前にアンダースコア(<span class="highlight">_</span>)を付け、 <span class="highlight">true</span> オプションをmnemonicパラメータに指定します。以下に例を示します。</p>
+
+          <h5 class="ex3">Example</h5>
+          <div class="css-example">
+            <pre><code>
+Gtk::Button *pbutton = new Gtk::Button( "<span class="highlight">_</span>Click", <span class="highlight">true</span> );
+            </code></pre>
+          </div>
+
+          <h5 class="ex41" href="#SampleProgram1">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ1</h5>
+          <a class="sampleprogram" href="#SampleProgram1">test1.cpp</a> 
+          <br>
+
+          <h5 class="ex3">実行結果1</h5>
+          <p><img src="images/button-base1.png"></p>
+          <br>
+
+        <li>コンテナー</li>
+          <p>Gtk::Buttonウイジットは、それ自身が一つのコンテナーウイジットとして機能します。Gtk::Boxなどのコンテナを使用して、Gtk::Butoonの内部に複数のウイジットを格納することができます。</p>
+
+          <h5 class="ex41" href="#SampleProgram2">ｻﾝﾌﾟﾙ ﾌﾟﾛｸﾞﾗﾑ2</h5>
+          <a class="sampleprogram" href="#SampleProgram2">test2.cpp</a> 
+          <br>
+
+          <h5 class="ex3">実行結果2</h5>
+          <p><img src="images/button-base2.png"></p>
+          <br>
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム1</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm/window.h&gt;
+#include &lt;gtkmm/button.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/application.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+protected:
+   //Signal handlers:
+    void on_button_clicked();
+   //Member widgets:
+    Gtk::Button *pm_button;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Button" );
+    pm_button = new Gtk::Button( "<span class="highlight">_</span>Click", <span class="highlight">true</span> );
+    pm_button->set_margin(10);
+    pm_button-><span class="highlight">signal_clicked()</span>.connect( sigc::mem_fun( *this, &MyWindow:<span class="highlight">on_button_clicked</span> ));
+    set_child( *pm_button);
+}
+
+void MyWindow::on_button_clicked()
+{
+    std::cout &lt;&lt; "Click Button" &lt;&lt; std::endl;
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );
+    return app->make_window_and_run&lt;MyWindow&lt;( argc, argv );
+}
+        </code></pre>
+      </div>
+      <br>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram2"/>
+    <h2 class="ex21">サンプル プログラム2</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm/window.h&gt;
+#include &lt;gtkmm/button.h&gt;
+#include &lt;gtkmm/box.h&gt;
+#include &lt;gtkmm/image.h&gt;
+#include &lt;gtkmm/label.h&gt;
+#include &lt;iostream&gt;
+#include &lt;gtkmm/application.h&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+protected:
+   // signal handler:
+    void on_button_clicked();
+   // child widgets:
+    Gtk::Button m_button;
+};
+
+MyWindow::MyWindow()
+{
+    auto m_pixmap = Gtk::make_managed&lt;Gtk::Image&gt;( "click.xpm" );
+    auto m_label = Gtk::make_managed&lt;Gtk::Label&gt;();
+    m_label->set_text( "Click" );
+    m_label->set_expand( true );
+
+    auto m_box = Gtk::make_managed&lt;Gtk::Box&gt;();
+    m_box->append( *m_pixmap );
+    m_box->append( *m_label );
+    m_button.set_child( *m_box );
+
+    set_title( "Button" );
+    m_button.set_margin( 5 );
+    m_button.set_has_frame( true );
+    m_button.<span class="highlight">signal_clicked()</span>.connect( sigc::mem_fun( *this, &MyWindow::<span class="highlight">on_button_clicked</span> ));
+    set_child( m_button );
+}
+
+void MyWindow::<span class="highlight">on_button_clicked()</span>
+{
+    std::cout &lt;&lt; "The Button was clicked." &lt;&lt; std::endl;
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "gtkmm4.example" );   
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+      <br>
+
+<!-- Sample info.xpm -->
+    <h2 class="ex2">XPMフォーマット</h2>
+    <h3>概　要</h3>
+      <p class="paragraph">XPM(X PixMap)フォーマットは、X Window systemで使用される画像ファイルフォーマットの一つです。</p>
+    <h3>用　途</h3>
+      <p class="paragraph">主にアイコンなどの定義に用いられます。</p>
+    <h3>特　徴</h3>
+      <ol class="paragraph">
+        <li>テキスト形式</li>
+          <p>テキストファイルとして書かれており、C言語のchar型の二次元配列として記述されています。テキストエディタで直接編集することができます。</p>
+        <li>色</li>
+          <p>複数色に対応しており、アイコンなどを作成する際に背景を透明にすることができます。</p>
+        <li>画像データの圧縮</li>
+          <p>XPMでは画像データを圧縮しないために、データサイズは大きくなる傾向があります。</p>
+        <li>ファイルの拡張子</li>
+          <p>一般的には ".xpm" が用いられます。</p>
+      </ol>
+      
+    <h3>使用例</h3>
+      <div class="paragraph">
+        <p>本プログラムでの使用例 "click.xpm" を以下に示します。</p>
+        <p>以下の例では、画像の幅(width)を<span style="color:fuchsia">20</span>ピクセル、高さ(height)を<span style="color:fuchsia">20</span>ピクセル、色の数を<span style="color:fuchsia">2</span>色(透明、青)、1ピクセル当たり<span style="color:fuchsia">２</span>文字で色を表現しています。色の定義は None は、透明を指定します。色の名前を直接指定したり、＃＋16進数表記で <span style="color:red">Red</span> <span style="color:green">Green</span> <span style="color:blue">Blue</span> を指定します。</p>
+        <div class="css-example">
+          <pre><code>
+<span style="color:aqua">/* XPM */</span>
+<span style="color:lime">static char</span> *openfile[] = {
+<span style="color:aqua">/* width height num_colors chars_per_pixel */</span>
+<span style="color:fuchsia">"    20    20       2            2"</span>,
+<span style="color:aqua">/* colors */</span>
+<span style="color:fuchsia">".. c None"</span>,
+<span style="color:fuchsia">".z c #0000ff"</span>,
+<span style="color:aqua">/* pixels */</span>
+<span style="color:fuchsia">"........................................"</span>,
+<span style="color:fuchsia">"...............................z.z.z...."</span>,
+<span style="color:fuchsia">"...............................z.z.z...."</span>,
+<span style="color:fuchsia">"...............................z.z.z...."</span>,
+<span style="color:fuchsia">"...............................z.z.z...."</span>,
+<span style="color:fuchsia">"...............................z.z.z...."</span>,
+<span style="color:fuchsia">"...............................z.z.z...."</span>,
+<span style="color:fuchsia">"...............................z.z.z...."</span>,
+<span style="color:fuchsia">".............z.................z.z.z...."</span>,
+<span style="color:fuchsia">"...........z.z.................z.z.z...."</span>,
+<span style="color:fuchsia">".........z.z.z.................z.z.z...."</span>,
+<span style="color:fuchsia">".......z.z.z.z.................z.z.z...."</span>,
+<span style="color:fuchsia">".....z.z.z.z.z.z.z.z.z.z.z.z.z.z.z.z...."</span>,
+<span style="color:fuchsia">"...z.z.z.z.z.z.z.z.z.z.z.z.z.z.z.z.z...."</span>,
+<span style="color:fuchsia">".....z.z.z.z.z.z.z.z.z.z.z.z.z.z.z.z...."</span>,
+<span style="color:fuchsia">".......z.z.z.z.........................."</span>,
+<span style="color:fuchsia">".........z.z.z.........................."</span>,
+<span style="color:fuchsia">"...........z.z.........................."</span>,
+<span style="color:fuchsia">".............z.........................."</span>,
+<span style="color:fuchsia">"........................................"</span>
+};
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <hr>
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="image-display.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="button-toggle.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

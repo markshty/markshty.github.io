@@ -138,6 +138,14 @@ ol li {
     font-weight:      bold;
 }
 
+ul {
+    width:            100%;
+}
+
+ul li {
+    font-weight:      normal;
+}
+
 .table_heading {
     text-align:         center;
     color:            #556b2f;
@@ -168,7 +176,7 @@ ol li {
 .command_line {
     margin-left:      2%;
     padding:          1%;        
-    color:            #e4f124;      
+    color:            #ffffff;      
     background:       #000000;
 }
 
@@ -179,7 +187,7 @@ ol li {
 }
 
 .css-example {
-    width:            63%;
+    width:            70%;
     margin:           0%;
     padding-left:     1%;
     color:            #ffffff;      

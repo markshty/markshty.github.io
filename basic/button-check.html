@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CheckButton</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">CheckButton</h1>
+    <p class="update">(update:2025/12/14)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Gtk::CheckButtonは、クリックするたびにオンとオフといった2つの状態を切り替えるボタンです。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      Gtk::CheckButtonウイジットの使い方は次のとおりです。
+      <ol>
+        <li>ボタンの作成</li>
+          <p>Gtk::CheckButtonウイジットの作成は、Gtk::CheckButtonのコンストラクタでラベルとなる文字列を指定します。あるいは、Gtk::CheckButtonのコンストラクタで定義しておいて、ラベルの文字列は、set_label( "文字列" ) を使って後から指定します。</p>
+          <br>
+
+        <li>シグナルの発生</li>
+          <p>ボタンをクリックしたときにイベントシグナル(<span class="highlight">signal_toggled</span>)を発生させてシグナルハンドラー<span class="highlight">on_button_toggled()</span>を起動します。</p>
+          <br>
+        
+        <li>get_active()</li>
+          <p>現在の状態を取得（ON/OFF）。</p>
+          <br>
+        
+        <li>set_active( bool )</li>
+          <p>プログラム上でボタンのON(true)、OFF(false)を指定する。</p>
+          <br>
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm/application.h&gt;
+#include &lt;gtkmm/window.h&gt;
+#include &lt;gtkmm/checkbutton.h&gt;
+#include &lt;iostream&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+  MyWindow();
+  virtual ~MyWindow() = default;
+
+protected:
+  //Signal handlers:
+  void on_button_toggled();
+  //Child widgets:
+  Gtk::CheckButton m_button;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "CheckButton" );
+
+    m_button.set_label( "Check" );
+    m_button.<span class="emphasis">set_active( false )</span>;
+
+    m_button.<span class="highlight">signal_toggled()</span>.connect( sigc::mem_fun( *this,
+            &MyWindow::<span class="highlight">on_button_toggled</span> ));
+
+    m_button.set_margin( 10 );
+    set_child( m_button );
+}
+
+void MyWindow::<span class="highlight">on_button_toggled()</span>
+{
+    if( m_button.<span class="emphasis">get_active()</span> ) {
+        std::cout &lt;&lt; "チェックされています" &lt;&lt; std::endl;
+    }
+    else {
+        std::cout &lt;&lt; "チェックが外されました" &lt;&lt; std::endl;
+    }
+}
+
+int main( int argc, char *argv[] )
+{
+    auto app = Gtk::Application::create( "check.test" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/button-check.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="button-toggle.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="button-radio.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

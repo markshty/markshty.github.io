@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ToggleButton</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">ToggleButton</h1>
+    <p class="update">(update:2025/12/14)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Gtk::ToggleButtonは、クリックするたびにオンとオフといった2つの状態を切り替えるボタンです。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      Gtk::ToggleButtonウイジットの使い方は次のとおりです。
+      <ol>
+        <li>ボタンの作成</li>
+          <p>Gtk::ToggleButtonウイジットの作成は、Gtk::ToggleButtonのコンストラクタでラベルとなる文字列を指定します。あるいは、Gtk::ToggleButtonのコンストラクタで定義しておいて、ラベルの文字列は、set_label( "文字列" ) を使って後から指定します。</p>
+          <br>
+
+        <li>シグナルの発生</li>
+          <p>ボタンをクリックしたときにイベントシグナル(<span class="highlight">signal_toggled</span>)を発生させてシグナルハンドラー<span class="highlight">on_button_toggled()</span>を起動します。</p>
+          <br>
+        
+        <li>get_active()</li>
+          <p>現在の状態を取得（ON/OFF）。</p>
+          <br>
+        
+        <li>set_active( bool )</li>
+          <p>プログラム上でボタンのON(true)、OFF(false)を指定する。</p>
+          <br>
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyArea : public Gtk::DrawingArea
+{
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+    double r, g, b;
+private:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+
+};
+
+MyArea::MyArea()
+{
+    set_content_width( 400 );
+    set_content_height( 200 );
+    set_draw_func(sigc::mem_fun( *this, &MyArea::on_draw ));
+}
+
+void MyArea::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height)
+{
+    cr->set_source_rgb( r, g, b );
+    cr->paint();
+}
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+    void on_button_toggled();
+    
+    Gtk::Box main_box;
+    Gtk::Box button_box;
+    Gtk::ToggleButton red_button, green_button, blue_button;
+    MyArea drawing_area;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Toggle Button" );
+    set_default_size( 400, 300 );
+
+    red_button.set_label( "Red" );
+    red_button.set_hexpand( true );
+    red_button.set_halign( Gtk::Align::FILL );
+
+    green_button.set_label( "Green" );
+    green_button.set_hexpand( true );
+    green_button.set_halign( Gtk::Align::FILL );
+    
+    blue_button.set_label( "Blue" );
+    blue_button.set_hexpand( true );
+    blue_button.set_halign( Gtk::Align::FILL );
+
+    red_button.<span class="highlight">signal_toggled()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::<span class="highlight">on_button_toggled</span> ));
+    green_button.<span class="highlight">signal_toggled()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::<span class="highlight">on_button_toggled</span> ));
+    blue_button.<span class="highlight">signal_toggled()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::<span class="highlight">on_button_toggled</span> ));
+
+    button_box.set_orientation( Gtk::Orientation::HORIZONTAL );
+    button_box.set_spacing( 20 );
+    button_box.set_halign( Gtk::Align::CENTER );
+    button_box.set_margin_top( 10 );
+    button_box.set_margin_bottom( 10 );
+
+    red_button.set_hexpand( true );
+    green_button.set_hexpand( true );
+    blue_button.set_hexpand( true );
+
+    button_box.append( red_button );
+    button_box.append( green_button );
+    button_box.append( blue_button );
+
+    main_box.set_orientation( Gtk::Orientation::VERTICAL );
+    main_box.set_spacing( 10 );
+    main_box.set_margin( 10 );
+    main_box.append( drawing_area );
+    main_box.append( button_box );
+
+    set_child( main_box );
+}
+
+void MyWindow::<span class="highlight">on_button_toggled()</span>
+{
+    drawing_area.r = red_button.<span class="emphasis">get_active()</span> ? 1.0 : 0.0;
+    drawing_area.g = green_button.<span class="emphasis">get_active()</span> ? 1.0 : 0.0;
+    drawing_area.b = blue_button.<span class="emphasis">get_active()</span> ? 1.0 : 0.0;
+    drawing_area.queue_draw();
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "Toggle.Button" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/button-toggle-blue.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="button-base.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="button-check.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

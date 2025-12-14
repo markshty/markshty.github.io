@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SpinButton</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">SpinButton</h1>
+    <p class="update">(update:2025/12/14)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Gtk::SpinButtonは、数値を入力したり選択するためのウィジェットです。ユーザーは直接数値を入力するか、上下の矢印ボタンで値を増減することによって数値を設定することができます</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      Gtk::SpinButtonの使い方は次のとおりです。
+      <ol>
+        <li>set_range(min, max)</li>
+          <p>Gtk::SpinButtonに入力できる最小値と最大値の範囲を設定するメソッドです。引数は(min,max)の二つの数値です。ユーザーが入力できる値をこの範囲に制限します。範囲外の数値を入力すると、自動的に最小値または最大値に補正されます。</p>
+          <br>
+
+        <li>set_increments(step,page)</li>
+          <ul>
+            <li>Gtk::SpinButtonの値を増減させるときの刻み幅を設定するメソッドです。第1引数が通常のステップ幅、第2引数がページステップ幅です。</li>
+            <li>第１引数stepは、＋－ボタンをクリックしたり上下矢印キーを押したときに増減する量です。</li>
+            <li>第２引数pageは、PageUp / PageDown キーを押したときに増減する量です。</li>
+            <li>値の範囲は set_range() で制御されるため、範囲外にはなりません。</li>           
+          </ul>
+          <br>
+
+        <li>set_value(val)</li>
+          <ul>
+            <li>Gtk::SpinButtonに値を直接設定する メソッドです。</li>
+            <li>引数valに数値を渡すと、その値が直ちに表示され、内部状態も更新されます。</li>
+            <li>範囲がset_range(min, max)によって設定されている場合、範囲外の値を渡すと自動的に補正されます。</li>
+            <li>イベント連動として、signal_value_changed()が接続されている場合、set_value()による変更でもシグナルが発生します。</li>
+          </ul>
+          <br>
+
+        <li>get_value()</li>
+          <ul>
+            <li>Gtk::SpinButtonに現在設定されている数値を取得するメソッドです。</li>
+            <li>戻り値は double型で、SpinButtonの内部値を返します。</li>
+            <li>現在値の取得として、ユーザーが入力した値、またはプログラムで設定した値を返します。</li>
+            <li>- 小数点桁数: set_digits() の設定に従って表示は丸められますが、get_value() は内部の実際の値を返します。
+            <li>set_range()で範囲を指定している場合は、範囲外の値は補正されてから返されます。</li>
+            <li>set_digits()の設定に従って、表示は丸められますが、戻り値の小数点桁数は、get_value()は、内部の実際の値を返します。</li>
+          </ul>
+          <br>
+
+        <li>set_digits(val)</li>
+          <ul>
+            <li>Gtk::SpinButtonに表示される小数点以下の桁数を指定するメソッドです。</li>
+            <li>引数valに整数値を渡し、その数だけ小数点以下を表示します。set_digits(0)ならば、Gtk::SpinButtonに表示される数値は正数、set_digits(3)ならば、Gtk::SpinButtonに表示される数値は小数点以下３桁となります。</li>
+            <li>表示桁数の制御として、set_digits()は表示する桁数を決めるもので、内部的な値の制度を制限するわけではありません。</li>
+            <li>入力時の制約として、set_numeric(true)と組み合わせると、ユーザーは指定桁数までしか入力できません。</li>
+            <li>丸め処理については、表示桁数を減らすと、見た目上は四捨五入されて表示されます。</li>
+          </ul>
+          <br>
+
+        <li>set_numeric(bool)</li>
+          <ul>
+            <li>Gtk::SpinButtonに入力できる文字を数値のみに制限するためのメソッドです。</li>
+            <li>デフォルトは、bool=trueです。</li>
+            <li>引数boolにtrueを指定すると、ユーザーは数字と小数点以外の文字を入力できなくなります。</li>
+            <li>引数boolにfalseを指定すると、任意の文字列を入力可能になります（ただし数値以外を入力すると内部的に解釈できず、値は更新されません）。</li>
+            <li>set_digits(n)を設定している場合は、小数点以下ｎ桁まで入力が可能です。</li>
+          </ul>
+          <br>
+
+        <li>set_wrap(bool)</li>
+          <ul>
+            <li>Gtk::SpinButtonの値が、最大値や最小値の範囲を超えたときにどのように処理するかを制御するメソッドです。</li>
+            <li>デフォルトは、bool=falseです。入力される値が最大値や最小値を超えないように制限されます。</li>
+            <li>set_wrap(true)では、最大値を超えると最小値に戻り、最小値を下回ると最大値に戻ります。いわゆるループ動作となります。</li>
+            <li>set_wrap()は、表示地の制御です。</li>
+          </ul>
+          <br>
+
+        <li>シグナルの発生</li>
+          <p>ボタンをクリックするか、数値を入力して確定したときにイベントシグナル(<span class="emphasis">signal_value_changed</span>)を発生させてシグナルハンドラー<span class="emphasis">on_spin_changed()</span>を起動します。</p>
+          <br>
+        
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&lt;
+#include &lt;cmath&gt;
+
+class MyArea : public Gtk::DrawingArea {
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+    void set_radius( double r );
+
+private:
+    double radius;
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+
+MyArea::MyArea()
+ : radius( 50.0 )
+{
+    set_content_width( 200 );
+    set_content_height( 200 );
+    set_draw_func(sigc::mem_fun( *this, &MyArea::on_draw ));
+}
+
+void MyArea::set_radius( double r )
+{
+    radius = r;
+    queue_draw();
+}
+
+void MyArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    cr->set_source_rgb( 0.2, 0.6, 0.8 );
+    cr->arc( width / 2.0, height / 2.0, radius, 0, 2 * M_PI );
+    cr->fill();
+}
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+   // signal handler:
+    void on_spin_changed();
+   // child widget:
+    Gtk::Box m_box;
+    Gtk::SpinButton m_spin;
+    MyArea m_area;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "SpinButton" );
+    set_default_size( 300, 300 );
+
+   // スピンボタンの範囲を設定
+    m_spin.<span class="emphasis">set_range(</span> 10.0, 100.0 <span class="emphasis">)</span>;   // 最小値10, 最大値100
+    m_spin.<span class="emphasis">set_increments(</span> 0.5, 5.0 <span class="emphasis">)</span>; // ステップ1, ページステップ5
+    m_spin.<span class="emphasis">set_value(</span> 50.0 <span class="emphasis">)</span>;          // 初期値
+    m_spin.<span class="emphasis">set_digits(</span> 1 <span class="emphasis">)</span>;            // 少数第一位まで表示
+    m_spin.<span class="emphasis">set_numeric(</span> true <span class="emphasis">)</span>;        // 入力は数値のみ
+    m_spin.<span class="emphasis">set_wrap(</span> true <span class="emphasis">)</span>;           // 循環
+
+   // スピンボタンの値変更時にDrawingAreaを更新
+    m_spin.<span class="highlight">signal_value_changed()</span>.connect( sigc::mem_fun( *this, &MyWindow::<span class="highlight">on_spin_changed</span> ));
+
+    m_box.set_orientation( Gtk::Orientation::VERTICAL );
+    m_box.set_margin( 10 );
+    m_box.append( m_area );
+    m_box.append( m_spin );
+
+    set_child( m_box );
+}
+
+void MyWindow::<span class="highlight">on_spin_changed()</span>
+{
+    m_area.set_radius( m_spin.get_value() );
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "spinbutton.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/button-spin.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="button-radio.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="../basic/container-frame.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
