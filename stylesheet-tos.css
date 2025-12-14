@@ -1,0 +1,56 @@
+@charset "utf-8";
+body {
+    font-size:        1.0rem;
+    font-family:      "ＭＳ ゴシック",sans-serif;    /* フォントの種類をゴシック系にする */
+    padding:          10px 20px 20px 5px;  
+    line-height:      1.5;
+    color:            #333333;
+    background-color: #eaffea; 
+}
+
+h1 {
+    color:            #02ccba;/*文字色*/
+    text-align:       center;
+    padding:          0.5em 0;/*上下の余白*/
+    border-top:       solid 3px #00ff7f;/*上線*/
+    border-bottom:    solid 3px #00ff7f;/*下線*/
+}
+
+h2 {
+    font-size:        0.9em;
+    text-align:       left;
+    padding:          0.5em 0;
+    color:            #494949;
+}
+
+.update {
+    text-align:       right;
+    margin-left:        10%;
+}
+
+.paragraph {
+    width:              80%;
+    margin-left:        10%;
+    margin-right:       10%;
+    
+    text-indent:       1rem;    
+}
+
+ol {
+    width:            100%;
+}
+
+ol li {
+    color:            #0f5c0f;
+}
+
+ul {
+    width:            100%;
+}
+
+hr{
+    margin:10px 0px;                                /*マージン*/
+    border:1px dotted #cccccc                     /*内容の区切りをグレーの点線表示にする*/
+}
+
+
