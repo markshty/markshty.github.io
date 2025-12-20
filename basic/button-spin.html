@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">SpinButton</h1>
-    <p class="update">(update:2025/12/14)</p>
+    <p class="update">(update:2025/12/20)</p>
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3>
@@ -19,22 +19,22 @@
       <div class="paragraph">
       Gtk::SpinButtonの使い方は次のとおりです。
       <ol>
-        <li>set_range(min, max)</li>
+        <li>set_range( double min, double max )</li>
           <p>Gtk::SpinButtonに入力できる最小値と最大値の範囲を設定するメソッドです。引数は(min,max)の二つの数値です。ユーザーが入力できる値をこの範囲に制限します。範囲外の数値を入力すると、自動的に最小値または最大値に補正されます。</p>
           <br>
 
-        <li>set_increments(step,page)</li>
+        <li>set_increments( double step, double page)</li>
+          <p>Gtk::SpinButtonの値を増減させるときの刻み幅を設定するメソッドです。第1引数が通常のステップ幅、第2引数がページステップ幅です。</p>
           <ul>
-            <li>Gtk::SpinButtonの値を増減させるときの刻み幅を設定するメソッドです。第1引数が通常のステップ幅、第2引数がページステップ幅です。</li>
             <li>第１引数stepは、＋－ボタンをクリックしたり上下矢印キーを押したときに増減する量です。</li>
             <li>第２引数pageは、PageUp / PageDown キーを押したときに増減する量です。</li>
             <li>値の範囲は set_range() で制御されるため、範囲外にはなりません。</li>           
           </ul>
           <br>
 
-        <li>set_value(val)</li>
+        <li>set_value( double val )</li>
+          <p>Gtk::SpinButtonに値を直接設定する メソッドです。</p>
           <ul>
-            <li>Gtk::SpinButtonに値を直接設定する メソッドです。</li>
             <li>引数valに数値を渡すと、その値が直ちに表示され、内部状態も更新されます。</li>
             <li>範囲がset_range(min, max)によって設定されている場合、範囲外の値を渡すと自動的に補正されます。</li>
             <li>イベント連動として、signal_value_changed()が接続されている場合、set_value()による変更でもシグナルが発生します。</li>
@@ -42,8 +42,8 @@
           <br>
 
         <li>get_value()</li>
+          <p>Gtk::SpinButtonに現在設定されている数値を取得するメソッドです。</p>
           <ul>
-            <li>Gtk::SpinButtonに現在設定されている数値を取得するメソッドです。</li>
             <li>戻り値は double型で、SpinButtonの内部値を返します。</li>
             <li>現在値の取得として、ユーザーが入力した値、またはプログラムで設定した値を返します。</li>
             <li>- 小数点桁数: set_digits() の設定に従って表示は丸められますが、get_value() は内部の実際の値を返します。
@@ -52,9 +52,9 @@
           </ul>
           <br>
 
-        <li>set_digits(val)</li>
+        <li>set_digits( int val )</li>
+          <p>Gtk::SpinButtonに表示される小数点以下の桁数を指定するメソッドです。</p>
           <ul>
-            <li>Gtk::SpinButtonに表示される小数点以下の桁数を指定するメソッドです。</li>
             <li>引数valに整数値を渡し、その数だけ小数点以下を表示します。set_digits(0)ならば、Gtk::SpinButtonに表示される数値は正数、set_digits(3)ならば、Gtk::SpinButtonに表示される数値は小数点以下３桁となります。</li>
             <li>表示桁数の制御として、set_digits()は表示する桁数を決めるもので、内部的な値の制度を制限するわけではありません。</li>
             <li>入力時の制約として、set_numeric(true)と組み合わせると、ユーザーは指定桁数までしか入力できません。</li>
@@ -62,27 +62,25 @@
           </ul>
           <br>
 
-        <li>set_numeric(bool)</li>
+        <li>set_numeric( bool numeric )</li>
+          <p>Gtk::SpinButtonに入力できる文字を数値のみに制限するためのメソッドです。</p>
           <ul>
-            <li>Gtk::SpinButtonに入力できる文字を数値のみに制限するためのメソッドです。</li>
-            <li>デフォルトは、bool=trueです。</li>
-            <li>引数boolにtrueを指定すると、ユーザーは数字と小数点以外の文字を入力できなくなります。</li>
-            <li>引数boolにfalseを指定すると、任意の文字列を入力可能になります（ただし数値以外を入力すると内部的に解釈できず、値は更新されません）。</li>
+            <li>"true"  : 数字と小数点以外の文字を入力できなくなります(デフォルト)。</li>
+            <li>"false" : 任意の文字列を入力可能になります（ただし数値以外を入力すると内部的に解釈できず、値は更新されません）。</li>
             <li>set_digits(n)を設定している場合は、小数点以下ｎ桁まで入力が可能です。</li>
           </ul>
           <br>
 
         <li>set_wrap(bool)</li>
+          <p>Gtk::SpinButtonの値が、最大値や最小値の範囲を超えたときにどのように処理するかを制御するメソッドです。</p>
           <ul>
-            <li>Gtk::SpinButtonの値が、最大値や最小値の範囲を超えたときにどのように処理するかを制御するメソッドです。</li>
-            <li>デフォルトは、bool=falseです。入力される値が最大値や最小値を超えないように制限されます。</li>
-            <li>set_wrap(true)では、最大値を超えると最小値に戻り、最小値を下回ると最大値に戻ります。いわゆるループ動作となります。</li>
-            <li>set_wrap()は、表示地の制御です。</li>
+            <li>"true"  : 値が最大値を超えると 最小値に戻り、値が最小値を下回ると最大値に戻る、いわゆる「ループ」「循環」動作になります。</li>
+            <li>"false" : 範囲外に行かないように 値が固定されます(デフォルト)。</li>
           </ul>
           <br>
 
         <li>シグナルの発生</li>
-          <p>ボタンをクリックするか、数値を入力して確定したときにイベントシグナル(<span class="emphasis">signal_value_changed</span>)を発生させてシグナルハンドラー<span class="emphasis">on_spin_changed()</span>を起動します。</p>
+          <p>ボタンをクリックするか、数値を入力して確定したときにイベントシグナル(<span class="highlight">signal_value_changed</span>)を発生させてシグナルハンドラー<span class="highlight">on_spin_changed()</span>を起動します。</p>
           <br>
         
       </ol>
@@ -206,4 +204,3 @@ int main(int argc, char* argv[])
     </div>
   </body>
 </html>
-
