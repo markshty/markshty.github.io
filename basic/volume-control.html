@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Volume Control</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Volume Control</h1>
+    <p class="update">(update:2026/1/2)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3 class="ex3">目　的</h3>
+      <p class="paragraph">Gtk::Scaleを使って、Volume Controlを作成します（gtk4では、Gtk::VolumeButtonの使用は推奨されていません。gtk5で削除される予定）</p>
+      <br>
+
+    <h3 class="ex3">構　成</h3>
+      <div class="paragraph">
+      Volume Controlのプログラムの構成は次のとおりです。
+      <ol>
+        <li>クラスの宣言</li>
+          <ul class="ul1">
+            <li>Gtk::Boxの派生クラスとして、Volume Controlクラスを宣言します。</li>
+            <li>Volume Controlクラスの中で変数として、Gtk::ImageとGtk::Scaleを宣言します。</li>
+            <li>Gtk::Imageはアイコンを格納し、Gtk::Scaleは、スライダーとなります。</li>
+          </ul>
+          <br>
+
+        <li>Volume Controlの実体の生成</li>
+          <p>MyWindowの中でVolumu Controlクラスの実態を生成します。</p>
+          <br>
+        
+        <li>Volume Controlの初期状態の設定</li>
+          <p>Volumu Controlのコンストラクタの中で、</p>
+          <ul class="ul1">
+            <li>スライダーの最小値、最大値、初期値、値の表示の有無、値の小数点以下の表示桁数、値の表示位置を設定します。</li>
+            <li>アイコンの初期値を設定します。</li>
+            <li>Gtk::ImageとGtk::ScaleをVolume Contorolにappendします。</li>
+            <li>スライダーが操作されたときのイベントの起動を設定します。</li>
+          </ul>
+          <br>
+
+        <li>イベントシグナルの設定</li>
+          <p>スライダーを操作したときにイベントシグナル(<span class="highlight">signal_value_changed</span>)を発生させてシグナルハンドラー<span class="highlight">on_scale_changed()</span>を起動します。</p>
+          <br>
+
+        <li>シグナルハンドラーの起動</li>
+          <ul class="ul1">
+            <li><span class="emphasis2">スライダーの値の取得</span></li>
+              <p>スライダーが操作されたときに、スライダーの値をget_value()を実行して取得します。</p>
+            <li><span class="emphasis2">アイコンの設定の変更</span></li>
+              <p>スライダーの値に応じて、set_from_icon_name()を実行し、アイコンの表示内容を変更します。</p>
+          </ul>
+          <br>
+  
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+<span class="emphasis3">// 1.クラスの宣言</span>
+class VolumeControl : public Gtk::Box {
+public:
+    VolumeControl();
+    virtual ~VolumeControl() = default;
+private:
+    <span class="emphasis">Gtk::Scale scale</span>;
+    <span class="emphasis">Gtk::Image icon</span>;
+    void on_volume_changed();
+};
+
+// 3.Volume Controlの初期状態の設定
+VolumeControl::VolumeControl()
+ : Gtk::Box(Gtk::Orientation::HORIZONTAL)
+{
+    <span class="emphasis3">// 3.1 スライダー</span>
+    scale.set_orientation( Gtk::Orientation::HORIZONTAL );
+    scale.set_range( 0.0, 1.0 );
+    scale.set_value( 0.5 );
+    scale.set_draw_value( true );
+    scale.set_digits( 2 );
+    scale.set_value_pos( Gtk::PositionType::RIGHT );
+    scale.set_hexpand( true );
+    <span class="emphasis3">// 3.2 アイコン</span>
+    icon.<span class="emphasis">set_from_icon_name(</span> "audio-volume-medium-symbolic" <span class="emphasis">)</span>;
+    <span class="emphasis3">// 3.3 Volume Controlへのappend</span>
+    <span class="emphasis">append( icon )</span>;
+    <span class="emphasis">append( scale )</span>;
+    <span class="emphasis3">// 4.イベントシグナルの設定</span>
+    scale.<span class="highlight">signal_value_changed()</span>.connect(sigc::mem_fun(*this, &VolumeControl::<span class="highlight">on_volume_changed</span>));
+}
+
+<span class="emphasis3">// 5.シグナルハンドラーの起動</span>
+void VolumeControl::<span class="highlight">on_volume_changed()</span>
+{
+    <span class="emphasis3">// 5.1 スライダーの値の取得</span>
+    double value = scale.<span class="emphasis">get_value()</span>;
+    std::cout &lt;&lt; "Volume: " &lt;&lt; value &lt;&lt; std::endl;
+
+    <span class="emphasis3">// 5.2 アイコンの設定の変更</span>
+    if ( value == 0.0 )
+        icon.<span class="emphasis">set_from_icon_name(</span> "audio-volume-muted-symbolic" <span class="emphasis">)</span>;
+    else if ( value &lt; 0.5 )
+        icon.<span class="emphasis">set_from_icon_name(</span> "audio-volume-low-symbolic" <span class="emphasis">)</span>;
+    else if ( value &lt; 0.8 )
+        icon.<span class="emphasis">set_from_icon_name(</span> "audio-volume-medium-symbolic" <span class="emphasis">)</span>;
+    else
+        icon.<span class="emphasis">set_from_icon_name(</span> "audio-volume-high-symbolic" <span class="emphasis">)</span>;
+}
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+    <span class="emphasis3">// 2.Volume Controlの実体の生成</span>
+    <span class="emphasis">VolumeControl volume_control</span>;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Volume Control" );
+    set_default_size( 300, 50 );
+    volume_control.set_margin( 10 );
+    volume_control.set_spacing( 0 );
+    set_child( volume_control );
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "scale.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/volume-control.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="scale-base.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="adjustment-base.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

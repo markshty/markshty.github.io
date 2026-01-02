@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Adjustment(SpinButtonやScaleとの連携)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Adjustment(SpinButtonやScaleとの連携)</h1>
+    <p class="update">(update:2026/1/2)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex1">目　的</h3>
+      <p class="paragraph">SpinButtonやScaleとの連携の例として、Gtk::SpinButton と Gtk::Scale に同じ Gtk::Adjustment を共有させ、値を同期させるプログラムを作成します。</p>
+
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+        <p>プログラムの構成は次の通りです。</p>
+        <ol>
+          <li>Gtk::Adjustmentの参照ポインタの宣言</li>
+            <ul class="ul1">
+              <li>Gtk::Windowの派生クラスとして、MyWindowクラスを宣言します。</li>
+              <li>MyWindowクラスの中で変数として、Gtk::ScaleGtk::SpinButtonを宣言します。</li>
+              <li>Gtk::Adjustmentの参照ポインタを宣言します。</li>
+            </ul>
+            <br>
+
+          <li>Gtk::Adjustmentの生成</li>
+            <p>Gtk::Adjustment::create（）を用いて、Gtk::Adjustmentの実体を生成します。</p>
+            <br>
+          <li>Gtk::Adjustmentと他のwidgetの連携</li>
+            <ul class="ul1">
+              <li>set_adjustment()を用いて、Gtk::AdjustmentとGtk::SpinButtonを結びつけます。</li>
+              <li>同様にset_adjustment()を用いて、Gtk::AdjustmentとGtk::Scaleを結びつけます。</li>
+            </ul>
+            <br>
+
+          <li>イベントシグナルの設定</li>
+            <p>スピンボタンやスライダーを操作したときにGtk::adjustmentの(<span class="highlight">signal_value_changed</span>)を発生させてシグナルハンドラー<span class="highlight">on_value_changed()</span>を起動します。</p>
+            <br>
+
+          <li>シグナルハンドラーの起動</li>
+            <ul class="ul1">
+              <li><span class="emphasis2">Gtk::Adjustmentの値(value)の取得</span></li>
+                <p>スピンボタンやスライダーが操作されたときに、値(value)をget_value()を実行して取得し、set_radius()に引き渡します。</p>
+              <li><span class="emphasis2">Gtk::DrawingAreaの再描画の実行</span></li>
+                <p>set_radius()の中でGtk::Drawingareaの再描画を実行します。</p>
+            </ul>
+            <br>
+        </ol>
+      </div>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;cmath&gt;
+
+class MyArea : public Gtk::DrawingArea
+{
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+    void set_radius( double r );
+
+private:
+   // signal handler:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+   // child widget:
+    double radius_;
+};
+
+MyArea::MyArea()
+ : radius_( 50.0 )
+{
+    set_content_width( 200 );
+    set_content_height( 200 );
+    set_draw_func( sigc::mem_fun( *this, &MyArea::on_draw ));
+}
+
+void MyArea::set_radius( double r )
+{
+    radius_ = r;
+    queue_draw(); // <span class="emphasis3">5.2 Gtk::DrawingAreaの再描画の実行</span>
+}
+
+void MyArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    cr->set_source_rgb( 0.4, 0.4, 0.9 );
+    cr->arc( width / 2.0, height / 2.0, radius_, 0, 2 * M_PI );
+    cr->fill();
+}
+
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+   // signal_handler:
+    void on_value_changed();
+
+   // child widget:
+    Gtk::Box        m_box;
+    Gtk::SpinButton m_spin;
+    Gtk::Scale      m_scale;
+    MyArea          m_area;
+    <span class="emphasis3">// 1.Gtk::Adjustmentの参照ポインタの宣言</span>
+    <span class="emphasis">Glib::RefPtr&lt;Gtk::Adjustment&gt; m_adjustment</span>;
+    
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Adjustment : SpinButton & Scale");
+    set_default_size( 300, 300 );
+
+    // <span class="emphasis3">2. Gtk::Adjustmentの生成</span>
+    m_adjustment = <span class="emphasis">Gtk::Adjustment::create(</span> 55.0, 10.0, 100.0, 1.0, 5.0 <span class="emphasis">)</span>;
+
+    // <span class="emphasis3">3.1 Gtk::AdjustmentとGtk::SpinButtonの連携</span>
+    m_spin.<span class="emphasis">set_adjustment(</span> m_adjustment <span class="emphasis">)</span>;
+    m_spin.set_digits( 0 );
+    m_spin.set_numeric( true );
+
+    // <span class="emphasis3">3.2 Gtk::AdjustmentとGtk::SpinButtonの連携</span>
+    m_scale.<span class="emphasis">set_adjustment(</span> m_adjustment <span class="emphasis">)</span>;
+    m_scale.set_digits( 0 );
+    m_scale.set_draw_value( true );
+    m_scale.set_orientation( Gtk::Orientation::HORIZONTAL );
+
+    // <span class="emphasis3">4. イベントシグナルの設定</span>
+    m_adjustment-><span class="highlight">signal_value_changed()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::<span class="highlight">on_value_changed</span> ));
+
+    m_box.set_orientation( Gtk::Orientation::VERTICAL );
+    m_box.set_margin( 10 );
+    m_box.append( m_area );
+    m_box.append( m_spin );
+    m_box.append( m_scale );
+
+    set_child( m_box );
+}
+
+// <span class="emphasis3">5.シグナルハンドラーの起動</span>
+void MyWindow::<span class="highlight">on_value_changed()</span>
+{
+    m_area.set_radius( m_adjustment->get_value() ); <span class="emphasis3">// 5.1 値(value)の取得</span>
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "adjustment.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/adjustment-spinscale.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="adjustment-base.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="container-frame.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Adjustment(値の範囲と変化量)</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Adjustment(値の範囲と変化量)</h1>
+    <p class="update">(update:2026/1/2)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex2">Gtk::Adjustmentとは</h3>
+      <p class="paragraph">Gtk::Adjustmentは、「値の範囲と変化量」を表現するオブジェクトです。Gtk::Adjustmentは、単独で値を更新するのではなく、Gtk::SpinButtonやGtk::Scale、Gtk::Scrollbarなどのウィジェットを結びつけます。それによって、複数のウィジェットが同じ調整値を共有し、統一的な動作を実現することができます。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <ol>
+          <li>値の管理</li>
+            <p>Gtk::Adjustmentの現在の値(value)、最小値(lower)、最大値(upper)を保持して、Gtk::Adjustmentが扱う数値の範囲を定義します。</p>
+            <br>  
+          
+          <li>変化量の定義</li>
+            <ol class="ol1">
+              <li>step_increment</li>
+                <p>1ステップの大きさは</p>
+                <ul class="ul1">
+                  <li>SpinButton の矢印ボタンを 1 回押す</li>
+                  <li>キーボードの ↑↓ を押す</li>
+                  <li>スクロールバーの矢印部分をクリックする</li>
+                  <li>マウスホイールで 1 ノッチ動かす</li>
+                </ul>
+                <p>などの操作で<span class="highlight">値</span>(value)が <span class="highlight">1</span>step_increment 分だけ増減します。</p>
+              <li>page_increment</li>
+                <p>ユーザーが「大きく値を動かす操作」をしたときにvalue がどれだけ増減するかを決めるパラメータです。 (PageUp/PageDownキーを押すなど)</p>
+                <br>
+              <li>page_size</li>
+                <ul class="ul1">
+                  <li>表示領域の大きさを表す値</li>
+                    <p>スクロール可能なコンテンツの中で「一度に見えている部分のサイズ」を表します。</p>
+                  <li>スクロールバーのつまみの長さに影響</li>
+                    <p>page_sizeが大きいほど「一度に見える範囲が広い」と解釈され、スクロールバーのスライダー部分が長く描画されます。</p>
+                  <li>値の範囲に組み込まれる</li>
+                    <p>Gtk::Ajustmentの有効範囲は、lower ～ (upper - page_size) となります。</p>
+                </ul>
+            </ol>
+            <br>
+
+          <li>イベントシグナルの発行</li>
+            <p><span class="highlight">値</span>(value)が変化するとイベントシグナル(<span class="highlight">signal_value_changed</span>)を発行します。また、<span class="emphasis3">範囲</span>(lower,upper)や<span class="emphasis3">増分</span>(step_increment,pageincremrnt)及び<span class="emphasis3">page_size</span>などGtk::Adjustmentの構造が変化したときは、イベントシグナル(<span class="highlight">signal_changed</span>)を発行することによって、それぞれアプリケーション側でシグナルハンドラーを起動してイベント処理が可能になります。</p>
+        </ol>
+        <br>
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">    
+        <ol>
+          <li>作成 create()</li>
+            <p>Gtk::Adjustmentの領域を確保し、初期値、最小値、最大値、矢印キーでの移動量やPageUp/PageDownキーでの移動量をセットするメソッドです。</p>
+
+            <table width="80%" border="0" bgcolor="#ffffff" cellspacong="1" align="center">
+              <tr>
+                <th width="80%" class="function_heading" colspan="4">static Glib::RefPtr&lt;Gtk::Adjustment&gt;Gtk::Adjustment::create(</th>
+              </tr>
+              <tr>
+                <td width="20%" class="function_cell" rowspan="7"> </td>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">value,</td>
+                <td width="30%" class="function_cell">// 初期値(スクロール位置)</td>
+              </tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">lower,</td>
+                <td width="30%" class="function_cell">// 最小値</td>
+              </tr>
+              <tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">upper,</td>
+                <td width="30%" class="function_cell">// 最大値</td>      
+              </tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">step_increment = 1,</td>
+                <td width="30%" class="function_cell">// 小さなスクロール</td>      
+              </tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">page_increment = 10,</td>
+                <td width="30%" class="function_cell">// 大きなスクロール</td>      
+              </tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">page_size = 0 <a style="font-weight:BOLD">)</a></td>
+                <td width="30%" class="function_cell">// 表示領域のサイズ</td>      
+              </tr>
+            </table>
+            <ul class="ul1">
+              <li>step_incrementは、矢印キーを押した際などの小さな移動量を表します(default=1)。</li>
+              <li>page_incrementは、PageUp/PageDownキーを押した際の大きな移動量を表します(default=10)</li>
+              <li>page_sizeは、表示領域のサイズです。スクロールバーのつまみの長さや有効範囲の終端を決める重要な要素です。</li>
+            </ul>
+            </br>
+
+          <li>値(value)の取得・設定</li>
+            <ul class="ul1">
+              <li>get_value() と set_value() で現在の値を操作することができます。</li>
+              <li>値(value)は、 lower と upper の範囲に収まるように制御されます。</li>
+            </ul>
+            <br>
+          <li>範囲の変更</li>
+            <ul class="ul1">
+              <li>set_lower() と set_upper() で範囲を変更することが可能です。</li>
+              <li>configure() を使うと一括して範囲を変更することができます。</li>
+            </ul>
+            <table width="80%" border="0" bgcolor="#ffffff" cellspacong="1" align="center">
+              <tr>
+                <th width="80%" class="function_heading" colspan="4">static Glib::RefPtr&lt;Gtk::Adjustment&gt;Gtk::Adjustment::configure(</th>
+              </tr>
+              <tr>
+                <td width="20%" class="function_cell" rowspan="7"> </td>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">value,</td>
+                <td width="30%" class="function_cell">// 初期値(スクロール位置)</td>
+              </tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">lower,</td>
+                <td width="30%" class="function_cell">// 最小値</td>
+              </tr>
+              <tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">upper,</td>
+                <td width="30%" class="function_cell">// 最大値</td>      
+              </tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">step_increment = 1,</td>
+                <td width="30%" class="function_cell">// 小さな増分</td>      
+              </tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">page_increment = 10,</td>
+                <td width="30%" class="function_cell">// 大きな増分</td>      
+              </tr>
+              <tr>
+                <th width="10%" class="function_cell">double</th>
+                <td width="20%" class="function_cell">page_size = 0 <a style="font-weight:BOLD">)</a></td>
+                <td width="30%" class="function_cell">// 表示領域のサイズ</td>      
+              </tr>
+            </table>
+            <p>configure()を使用するメリット</p>
+            <ul class="ul1">  
+              <li>シグナルイベントの起動が最適化</li>
+                <p>set_lower(),set_upper(),set_value()を個別に呼ぶと、その都度イベントシグナルとして、signal_changedやsignal_value_changedが発生します。しかし、configure()は一度の呼び出しでまとめて値や範囲を変更するので余計な再描画やイベントシグナルの発生を抑えることができます。</p>
+              <li>スクロールビューの再設定に有利</li>
+                <p>スクロールコンテンツのサイズが変わったときにupperやpage_sizeをまとめて更新することができます。</p>
+              <li>SpinButtonやScaleの範囲を一括で変更</li>
+            </ul>
+            </br>
+        </ol>
+      </div>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;cmath&gt;
+
+class MyArea : public Gtk::DrawingArea {
+public:
+    MyArea();
+    virtual ~MyArea() = default;
+    void set_radius( double r );
+
+private:
+    double radius;
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context>&gt; cr, int width, int height );
+};
+
+MyArea::MyArea()
+ : radius( 50.0 )
+{
+    set_content_width( 200 );
+    set_content_height( 200 );
+    set_draw_func(sigc::mem_fun( *this, &MyArea::on_draw ));
+}
+
+void MyArea::set_radius( double r )
+{
+    radius = r;
+    queue_draw();
+}
+
+void MyArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context>&gt; cr, int width, int height )
+{
+    cr->set_source_rgb( 0.2, 0.6, 0.8 );
+    cr->arc( width / 2.0, height / 2.0, radius, 0, 2 * M_PI );
+    cr->fill();
+}
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box m_box;
+    Gtk::SpinButton m_spin;
+    MyArea m_area;
+
+    void on_signal_value_changed();
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Adjustment" );
+    set_default_size( 300, 300 );
+
+   // Adjustment: 初期値50.0, 最小10.0, 最大100.0, ステップ0.5, ページ5.0
+    auto adjustment = <span class="emphasis">Gtk::Adjustment::create(</span> 50.0, 10.0, 100.0, 0.5, 5.0 <span class="emphasis">)</span>;
+    m_spin.set_adjustment( adjustment );
+    m_spin.set_digits( 1 );            // 少数第一位まで表示
+    m_spin.set_numeric( true );        // 入力は数値のみ
+    m_spin.set_wrap( true );           // 循環
+
+   // スピンボタンの値変更時にDrawingAreaを更新
+    m_spin.<span class="highlight">signal_value_changed()</span>.connect( sigc::mem_fun( *this, &MyWindow::on_signal_value_changed ));
+
+    m_box.set_orientation( Gtk::Orientation::VERTICAL );
+    m_box.set_margin( 10 );
+    m_box.append( m_area );
+    m_box.append( m_spin );
+
+    set_child( m_box );
+}
+
+void MyWindow::on_signal_value_changed()
+{
+    m_area.set_radius( m_spin.get_value() );
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "Adjustment.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/adjustment-base.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="volume-control.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="adjustment-spinscale.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

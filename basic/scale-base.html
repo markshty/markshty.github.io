@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Scale</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Scale</h1>
+    <p class="update">(update:2026/1/2)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Gtk::Scaleは、ユーザーが数値を直感的に操作できる「スライダー」を提供します。内部的にはGtk::Rangeを継承しており、数値の範囲を視覚的に表現し、ドラッグやクリックで値を変更することができます。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      Gtk::Scakeの使い方は次のとおりです。
+      <ol>
+        <li>set_orientation( Gtk::Orientation orientation )</li>
+          <p>スライダーの方向（水平／垂直）を指定するメソッドです。ユーザーが値を操作する UI の見た目を決定することができます。</p>
+          <table width="40%" border="0" cellspacong="1" bgcolor="#000000">
+            <tr>
+              <th class="table_heading" colspan="2">Gtk::Orientation</th>
+            </tr>
+            <tr>
+              <td width="10%" class="table_heading">書式</td>
+              <td width="30%" class="table_heading">内容</td>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">HORIZONTAL</td>
+              <td width="30%" class="table_cell">水平方向のスライダー</td>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">VERTICAL</td>
+              <td width="30%" class="table_cell">鉛直方向のスライダー</td>      
+            </tr>
+          </table>
+          <br>
+
+        <li>set_range( double min, double max)</li>
+          <p>Gtk::Scaleに入力できる最小値と最大値の範囲を設定するメソッドです。ユーザーが入力できる値をこの範囲に制限します。</p>
+          <ul>
+            <li>min : スライダーの最小値</li>
+            <li>max : スライダーの最大値</li>
+          </ul>
+          <br>
+
+        <li>set_increments( double step, double page )</li>
+          <p>Gtk::Scaleの値を増減させるときの刻み幅を設定するメソッドです。第1引数が通常のステップ幅、第2引数がページステップ幅です。</p>
+          <ul>
+            <li>step : キーボードの矢印キーやマウスホイールで動かしたときに増減する量です。</li>
+            <li>page : PageUp / PageDown キーを押したときに増減する量です。</li>           
+          </ul>
+          <br>
+
+        <li>set_value( double val )</li>
+          <p>スライダーの 現在値をプログラム側から設定する メソッドです。ユーザーがドラッグして値を変えるのと同じように、コードから値を変更することができます。</p>
+          <ul>
+            <li>引数valに数値を渡すと、その値が直ちに表示され、内部状態も更新されます。</li>
+            <li>範囲がset_range(min, max)によって設定されている場合、範囲外の値を渡すと自動的に補正されます。</li>
+            <li>イベント連動として、signal_value_changed()が接続されている場合、set_value()による変更でもシグナルが発生します。</li>
+          </ul>
+          <br>
+
+        <li>get_value()</li>
+          <p>Gtk::Scaleに現在設定されている数値を取得するメソッドです。</p>
+          <ul>
+            <li>戻り値は double型で、Scaleの内部値を返します。</li>
+            <li>現在値の取得として、ユーザーが入力した値、またはプログラムで設定した値を返します。</li>
+            <li>- 小数点桁数: set_digits() の設定に従って表示は丸められますが、get_value() は内部の実際の値を返します。
+            <li>set_range()で範囲を指定している場合は、範囲外の値は補正されてから返されます。</li>
+            <li>set_digits()の設定に従って、表示は丸められますが、戻り値の小数点桁数は、get_value()は、内部の実際の値を返します。</li>
+          </ul>
+          <br>
+
+        <li>set_digits( int val )</li>
+          <p>スライダーの値を表示するときの小数点以下の桁数を指定するメソッドです。</p>
+          <ul>
+            <li>引数valに整数値を渡し、その数だけ小数点以下を表示します。</li>
+            <li>set_digits( 0 ) : 整数表示
+            <li>set_digits( 1 ) : 少数第1位まで表示</li>
+          </ul>
+          <br>
+
+        <li>set_draw_value( bool draw_value )</li>
+          <p>Gtk::Scaleの現在の値をスライダーの横に表示するかどうかを制御するメソッドです。</p>
+          <ul>
+            <li>"true"  : 現在の値をスライダーの横に表示します(デフォルトは)</li>
+            <li>"false" : 値を表示しません。</li>
+          </ul>
+          <br>
+
+        <li>set_value_pos( Gtk::PositionType position )</li>
+          <p>スライダーの値をどこに描画するかを指定するためのメソッドです。</p>
+          <table width="40%" border="0" cellspacong="1" bgcolor="#000000">
+            <tr>
+              <th class="table_heading" colspan="2">Gtk::PositionType</th>
+            </tr>
+            <tr>
+              <td width="10%" class="table_heading">書式</td>
+              <td width="30%" class="table_heading">内容</td>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">TOP</td>
+              <td width="30%" class="table_cell">スライダーの上</td>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">BOTTOM</td>
+              <td width="30%" class="table_cell">スライダーの下</td>      
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">LEFT</td>
+              <td width="30%" class="table_cell">スライダーの左</td>
+            </tr>
+            <tr>
+              <td width="10%" class="table_cell">RIGHT</td>
+              <td width="30%" class="table_cell">スライダーの右</td>      
+            </tr>
+          </table>
+          <br>
+
+        <li>シグナルの発生</li>
+          <p>スライダーを操作したときにイベントシグナル(<span class="highlight">signal_value_changed</span>)を発生させてシグナルハンドラー<span class="highlight">on_scale_changed()</span>を起動します。</p>
+          <br>
+        
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+    void on_scale_changed();
+
+private:
+    Gtk::Scale m_scale;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Scale" );
+    set_default_size( 300, 100 );
+
+    // スケールの範囲を設定、表示する
+    m_scale.<span class="emphasis">set_orientation(</span> Gtk::Orientation::HORIZONTAL <span class="emphasis">)</span>;
+    m_scale.set_margin( 10 );
+
+    m_scale.<span class="emphasis">set_range(</span> 0.0, 100.0 <span class="emphasis">)</span>;
+    m_scale.<span class="emphasis">set_value(</span> 50.0 <span class="emphasis">)</span>;
+    m_scale.<span class="emphasis">set_digits(</span> 0 <span class="emphasis">)</span>; // 小数点以下の数
+    m_scale.<span class="emphasis">set_increments(</span> 1, 10 <span class="emphasis">)</span>; // スライダーを動かしたときに増減する量。第一引数で指定した値で増減する。第二引数はPage Up/Page Downボタンを押下したときの増減数。  
+    m_scale.<span class="emphasis">set_draw_value(</span> true <span class="emphasis">)</span>; // trueにすると現在の値が表示される。表示される場所はposで設定する
+    m_scale.<span class="emphasis">set_value_pos(</span> Gtk::PositionType::TOP <span class="emphasis">)</span>;
+
+    // スケールのスライダーが動かされたときに呼び出されるコールバック関数との紐付けを行う
+    m_scale.<span class="highlight">signal_value_changed()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::<span class="highlight">on_scale_changed</span> ));
+
+    // Windowにボタンを追加
+    set_child( m_scale );
+}
+
+void MyWindow::<span class="highlight">on_scale_changed()</span>
+{
+    std::cout &lt;&lt; "現在値 : " &lt;&lt; m_scale.<span class="emphasis">get_value()</span> &lt;&lt; std::endl;
+}
+
+int main( int argc, char* argv[] )
+{   
+    auto app = Gtk::Application::create( "scale.exsample" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/scale-base.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="button-spin.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="volume-control.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

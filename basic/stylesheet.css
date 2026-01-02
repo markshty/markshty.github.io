@@ -138,11 +138,28 @@ ol li {
     font-weight:      bold;
 }
 
+.ol1 {
+    list-style-type:  upper-latin;
+}
+
+.ol1 li {
+    font-weight:      bold;
+}
+
 ul {
     width:            100%;
 }
 
 ul li {
+    font-weight:      normal;
+}
+
+.ul1 {
+    color:            #000000
+}
+
+.ul1 li {
+    list-style-type:  disc;
     font-weight:      normal;
 }
 
@@ -236,7 +253,6 @@ div#pagebody {
     /*border:           solid 1px #2f4f4f;*/
     padding-left:     10px;
     padding-right:    10px;
-   
     background-color: #ffffea; 
 }
 
@@ -257,6 +273,16 @@ div#pagebody {
 
 .emphasis2 {
     color:            #20B2AA;
+    font-weight:      bold;        
+}
+
+.emphasis3 {
+    color:            #202fb2;
+    font-weight:      bold;        
+}
+
+.emphasis4 {
+    color:            #e69a0e;
     font-weight:      bold;        
 }
 
