@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1 class="title">gtkmm4 introduction</h1>
-    <p class="update">(update:2025/12/14)</p>
+    <p class="update">(update:2026/1/2)</p>
     <p align="center">GtkmmはGUIのフレームワークです。</p>
     <h2 class="section">Basic</h2>
     <h3 class="ex1">Window</h3>
@@ -39,7 +39,20 @@
       <li><a href="./basic/button-radio.html">Radio Button</a></li>
       <li><a href="./basic/button-spin.html">Spin Button</a></li>
     </ul>
+    <h3 class="ex1">Scale</h3>
+    <p>いわゆるスライダーです。</p>
+    <ul>
+      <li><a href="./basic/scale-base.html">Scale</a></li>
+      <li><a href="./basic/volume-control.html">Volume Control</a></li>
+    </ul>
+    <h3 class="ex3">Adjustment</h3>
+    <p>「値の範囲と変化量」を表現するオブジェクトです。</p>
+    <ul>
+      <li><a href="./basic/adjustment-base.html">値の範囲と変化量</a></li>
+      <li><a href="./basic/adjustment-spinscale.html">SpinButtonやScaleとの連携</a></li>
+    </ul>
     <h3 class="ex2">Container</h3>
+    <p>様々なwidgetを格納します。</p>
     <h4>Single-item</h4>
     <ul>
       <li><a href="./basic/container-frame.html">Gtk::Frame</a></li>
@@ -196,11 +209,18 @@
     </ul>
     <hr>
     <h2 class="section">Glib</h2>
-    <h3 class="ex3">Timer event</h3>
+    <h3 class="ex3">SignalTimeout</h3>
+    <p>一定時間後にイベントを起動します。</p>
     <ul>
       <li><a href="./glib/timer-event-interval-ms.html">インターバルタイマー</a></li>
       <li><a href="./glib/timer-event-oneshot-ms.html">ワンショットタイマー</a></li>
       <li><a href="./glib/timer-event-interval-start.html">インターバルタイマーの起動と停止</a></li>
+    </ul>
+    <h3 class="ex1">Timer</h3>
+    <p>経過した時間を測定します。</p>
+    <ul>
+      <li><a href="./glib/timer-elapsed-stopwatch.html">ストップウォッチ</a></li>
+      <li><a href="./glib/timer-elapsed-function.html">演算の実行時間の測定</a></li>
     </ul>
     <hr>
     <!-- 実行環境-->
