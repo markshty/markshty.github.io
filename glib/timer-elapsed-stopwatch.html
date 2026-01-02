@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ストップウォッチ</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">ストップウォッチ</h1>
+    <p class="update">(update:2026/1/2)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Glib::Timerは、Glibライブラリに含まれる軽量なタイマー機能で、経過時間の測定に使用することができます。ストップウォッチとして使用したり、関数等の演算の実行時間の測定に用いることができます。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      Glib::Timerの主なメソッドは、次の通りです。
+      <ol>
+        <li>start()</li>
+          <p>タイマーをスタートします。Glib::Timerのコンストラクタでも自動的にスタートします。</p>
+        <li>stop()</li>
+          <p>タイマーを停止します。</p>
+        <li>reset()</li>
+          <p>タイマーをリセットします。</p>
+        <li>resume()</li>
+          <p>停止したタイマーを再開します。</p>
+        <li>elapsed()</li>
+          <p>double型の返値として、経過時間を秒単位で返します。</p>
+        <li>is_active()</li>
+          <p>bool型の返値として、タイマーがアクティブであればtrueをそうでない場合はfalseを返します。</p>
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div class="paragraph">
+        ここでは、ｻﾝﾌﾟﾙﾌﾟﾛｸﾞﾗﾑとして、ストップウォッチを作成します。startで起動し、stopで停止し、resetで初期化します。
+      </div>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;cmath&gt;
+#include &lt;memory&gt;
+#include &lt;iomanip&gt;
+
+class ElapsedTimer : public Gtk::DrawingArea
+{
+public:
+    ElapsedTimer();
+    virtual ~ElapsedTimer() = default;
+    bool on_timeout();
+    void on_start_clicked();
+    void on_stop_clicked();
+    void on_reset_clicked();
+private:
+    std::unique_ptr&lt;<span class="emphasis">Glib::Timer</span>&gt; timer;
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+
+ElapsedTimer::ElapsedTimer()
+{
+    set_draw_func(sigc::mem_fun( *this, &ElapsedTimer::on_draw ));
+    set_content_width( 300 );
+    set_content_height( 300 );
+    Glib::signal_timeout().connect(
+        sigc::mem_fun( *this, &ElapsedTimer::on_timeout), 50 );
+
+    timer = std::make_unique&lt;<span class="emphasis">Glib::Timer</span>&gt;();
+    timer-><span class="emphasis">stop()</span>;
+    timer-><span class="emphasis">reset()</span>;
+}
+
+bool ElapsedTimer::on_timeout()
+{
+    if (timer-><span class="emphasis">is_active()</span>) {
+        queue_draw(); // 再描画を要求
+    }
+    return true;
+}
+
+void ElapsedTimer::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    double elapsed = 0.0;
+
+    if ( timer-><span class="emphasis">is_active()</span>) {
+        elapsed = timer-><span class="emphasis">elapsed()</span>;
+    }
+    const double max_time = 10.0; // 10秒で1周
+    const double angle = 2 * M_PI * std::fmod(elapsed, max_time) / max_time;
+
+    const double cx = width / 2.0;
+    const double cy = height / 2.0;
+    const double radius = std::min(width, height) / 2.5;
+
+   // 背景円
+    cr->set_line_width(10.0);
+    cr->set_source_rgba(0.8, 0.8, 0.8, 0.5);
+    cr->arc(cx, cy, radius, 0, 2 * M_PI);
+    cr->stroke();
+
+   // 経過時間の弧
+    cr->set_source_rgb(0.2, 0.6, 0.9);
+    cr->arc(cx, cy, radius, -M_PI_2, -M_PI_2 + angle);
+    cr->stroke();
+
+   // 中央に時間表示
+    cr->select_font_face( "Sans", Cairo::ToyFontFace::Slant::NORMAL,
+        Cairo::ToyFontFace::Weight::BOLD );
+    cr->set_font_size( 24.0 );
+    std::string time_str = Glib::ustring::format( std::fixed,
+        std::setprecision( 1 ), elapsed, " s" );
+    Cairo::TextExtents extents;
+    cr->get_text_extents(time_str, extents);
+    cr->move_to( cx - extents.width / 2, cy + extents.height / 2 );
+    cr->set_source_rgb( 0.1, 0.1, 0.1 );
+    cr->show_text( time_str );
+}
+
+void ElapsedTimer::on_start_clicked() {
+    if (!timer-><span class="emphasis">is_active()</span>) {
+        timer-><span class="emphasis">resume()</span>;
+    }
+}
+
+void ElapsedTimer::on_stop_clicked() {
+    if (timer-><span class="emphasis">is_active()</span>) {
+        timer-><span class="emphasis">stop()</span>;
+    }
+}
+
+void ElapsedTimer::on_reset_clicked() {
+    timer-><span class="emphasis">stop()</span>;
+    timer-><span class="emphasis">reset()</span>;
+    queue_draw();
+}
+
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+    ElapsedTimer drawing_area;
+private:
+    Gtk::Box vbox;
+    Gtk::Box hbox;
+    Gtk::Button start_button, stop_button, reset_button;
+};
+
+MyWindow::MyWindow()
+ : start_button( "Start" ),
+   stop_button( "Stop" ),
+   reset_button( "Reset" )
+{
+    set_title( "Elapsed Time" );
+    set_default_size( 300, 350 );
+
+    vbox.set_orientation( Gtk::Orientation::VERTICAL );
+    vbox.set_spacing( 10 );
+    vbox.set_margin ( 10 ) ;
+    set_child(vbox);
+
+    vbox.append( drawing_area );
+
+    start_button.set_expand( true );
+    stop_button.set_expand( true );
+    reset_button.set_expand( true );
+
+    start_button.set_halign( Gtk::Align::FILL );
+    stop_button.set_halign( Gtk::Align::FILL );
+    reset_button.set_halign( Gtk::Align::FILL );
+
+    hbox.set_orientation( Gtk::Orientation::HORIZONTAL );
+    hbox.set_spacing( 5 );
+    hbox.append( start_button );
+    hbox.append( stop_button );
+    hbox.append( reset_button );
+    vbox.append( hbox );
+
+    start_button.signal_clicked().connect(
+        sigc::mem_fun( drawing_area, &ElapsedTimer::on_start_clicked ));
+    stop_button.signal_clicked().connect(
+        sigc::mem_fun( drawing_area, &ElapsedTimer::on_stop_clicked ));
+    reset_button.signal_clicked().connect(
+        sigc::mem_fun( drawing_area, &ElapsedTimer::on_reset_clicked ));
+}
+
+int main( int argc, char* argv[] ) {
+    auto app = Gtk::Application::create( "gtkmm4.timer.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./image/timer-elapsed-stopwatch.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="timer-event-interval-start.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="timer-elapsed-function.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

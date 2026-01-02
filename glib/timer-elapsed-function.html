@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ElapsedTimer</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">演算の実行時間の測定</h1>
+    <p class="update">(update:2026/1/2)</p>
+    <!-- 説明 -->
+    <h2 class="ex1"> 概  要</h2>
+    <h3>機　能</h3>
+      <p class="paragraph">Glib::Timerは、Glibライブラリに含まれる軽量なタイマー機能で、経過時間の測定に使用することができます。ストップウォッチとして使用したり、関数等の演算の実行時間の測定に用いることができます。</p>
+      <br>
+
+    <h3 class="ex3">使い方</h3>
+      <div class="paragraph">
+      関数等の演算の実行時間を測定する手順は、次の通りです。
+      <ol>
+        <li>タイマーのwidgetの宣言</li>
+          <p>Glib::Timerのwidgetを宣言します。</p>
+        <li>測定開始</li>
+          <p>タイマーをスタートさせます。</p>
+        <li>演算</li>
+          <p>ここで測定対象となる関数等を実行します。</p>
+        <li>測定終了</li>
+          <p>stop()を実行してタイマーを停止させます。</p>
+        <li>測定結果の表示</li>
+          <p>elapsed()を実行して経過時間を取得し、標準出力に表示します。</p>
+      </ol>
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div class="paragraph">
+      ここでは、ｻﾝﾌﾟﾙﾌﾟﾛｸﾞﾗﾑとして、乱数生成の実行時間の測定を行います。ﾒﾙｾﾝﾇ・ﾂｲｽﾀ法を用いて、0.0～1.0の範囲の値を持つ実数型の乱数を１００万回生成します。
+      </div>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;glibmm/timer.h&gt;
+#include &lt;random&gt;
+#include &lt;iostream&gt;
+
+int main() {
+    <span class="highlight">Glib::Timer timer</span>;        // <span class="emphasis">１タイマーのwidgetの宣言</span>
+    std::random_device rnd;
+    std::mt19937 mt( rnd() );
+    std::uniform_real_distribution&lt;&gt; rand_B( 0.0, 1.0 );
+
+   // <span class="emphasis">２測定開始</span>
+    timer.<span class="highlight">start()</span>; 
+
+   // <span class="emphasis">３演算</span>
+    for ( int i = 0; i &lt; 1000000; i++ ) {
+        rand_B( mt );
+    }
+
+   // <span class="emphasis">４測定終了</span>
+    timer.<span class="highlight">stop()</span>;  
+
+   // <span class="emphasis">５測定結果の表示</span>
+    std::cout &lt;&lt; "Elapsed time: " &lt;&lt; timer.<span class="highlight">elapsed()</span> &lt;&lt; " seconds" &lt;&lt; std::endl;
+    return 0;
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+
+    <div class="result-table">
+      <table width="30%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Glib::Timer</font></th>
+        </tr>
+        <tr>
+          <td width="30%" class="table_heading">Console</td>
+        </tr>
+        <tr>
+          <td width="30%" class="terminal_cell">
+          $ ./test &<br>
+          $ Elapsed time: 0.077104 seconds<br>
+          $ <br>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="timer-elapsed-stopwatch.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
