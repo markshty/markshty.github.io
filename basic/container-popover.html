@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::Popover</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::Popover</h1>
+    <p class="update">(update:2026/2/18)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex2">Gtk::Popoverとは</h3>
+      <p class="paragraph">Gtk::Popover は、特定のウィジェットに紐づいて表示される軽量なユーザーインターフェースで、メニュー・設定パネル・補助的な入力ユーザーインターフェースを自然に提示するための仕組みです。Gtk::Window のような独立ウィンドウではありませんが、親ウィジェットの位置に従って表示されます。</p>
+      <br>
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <ol>
+          <li>コンテキストに応じた小さなユーザーインターフェースを一時的に表示</li>
+            <p>右クリックメニューやオプション設定、補助フォームなどに適用可能。</p>
+          <li>ユーザーの操作対象に“結びついた”情報を提示</li>
+            <p>どのボタン・どの入力欄に対するユーザーインターフェースなのかが視覚的に明確になります。</p>
+          <li>ウィンドウを増やさずユーザーインターフェースを簡潔に保つ</li>
+            <p>ダイアログほど重くなく、ツールチップよりリッチなユーザーインターフェースを作成することができます。</p>
+        </ol> 
+        <br>   
+      </div>
+
+    <h3 class="ex1">特　徴</h3>
+      <div class="paragraph">
+        <ol>
+          <li>任意のウィジェットをコンテンツとして配置可能</li>
+            <p>Gtk::Button、Gtk::Label、Gtk::Entry、Gtk::Box などのウィジットを自由に配置することができます。</p>
+          <li>親ウィジェットに自動で位置合わせ</li>
+            <p>set_parent() で親を指定すると、クリック位置に自然に表示することができます。</p>
+          <li>自動クローズ機能</li>
+            <p>フォーカスが外れたら閉じます。また、外側クリックでも閉じます。</p>
+          <li>方向の自動調整</li>
+            <p>windowの端部に近い場合、上下左右の表示方向を自動で切り替えます。</p>
+          <li>アニメーションによる自然な表示</li>
+            <p>GTK4 ではフェードイン・アウトが標準で適用されます。</p>
+        </ol>
+      </div>
+    <h3 class="ex1">使い方</h3>
+      <div class="paragraph">
+        <ol>
+          <li>set_parent() を必ず実行する</li>       
+            <p>gtk4 の Popover では親ウィジットが必須であるため、親ウィジットをGtk::Popover と結びつけるために set_parent() を必ず実行しなければなりません。 Gtk::Popover では、プログラムの実行時に set_parent() の実行を忘れるとgtk4ライブラリが警告を発生します。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Widget::set_parent(</span> <span class="emphasis2">Gtk:Widget&</span> <span class="emphasis4">parent</span> <span class="emphasis">)</span></p>
+            <br>
+          <li>コンテンツはコンテナにまとめる</li>
+            <p>後で項目を増やすときに拡張性が高くなります。</p>
+            <br>
+          <li>popup() / popdown() を明示的に使用</li>
+            <p>popup() で Gtk::Popover を開き、popdown() で閉じます。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Popover::popup()</span></p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Popover::popdown()</span></p>
+            <br>
+          <li>make_managed による所有権の明確化</li>
+            <p>gtk4 の推奨スタイルで、メモリ管理が安全です。</p>
+            <br>
+          <li>終了時にunparent() を必ず実行</li>       
+            <p>GTK4 では Popover は ウィジェット階層の“子”として扱われるため、set_parent() を使用した場合は、親ウィジェットが破棄される前に Popover を明示的に切り離す必要があります。</p>
+            <p>サンプルプログラムでは、 Gtk::Window → Gtk::Button → Gtk::Popover という階層になっていて、Gtk::Window が閉じられると Gtk::Button が破棄されます。しかし Gtk::Popover がまだ Gtk::Button の子として残っているとgtk4ライブラリが警告を発生します。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Widget::unparent()</span></p>
+            <br>
+          <li>Gtk::popover を表示する方向を指定</li>
+            <p>set_position()により、Gtk::Popoverの表示方向を指定することができます。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Popover::set_position(</span> <span class="emphasis2">Gtk::PositionType</span> <span class="emphasis4">position</span> <span class="emphasis">)</span></p>
+            <table width="60%" border="0" cellspacong="1" bgcolor="#000000">
+              <tr>
+                <th class="table_heading" colspan="2">Gtk::PositionType</th>
+              </tr>
+              <tr>
+                <th width="15%" class="table_heading">記　号</th>
+                <th width="40%" class="table_heading">内　容</th>
+              </tr>
+              <tr>
+                <td width="15%" class="table_cell">LEFT</td>
+                <td width="40%" class="table_cell">親ウイジットの左向きに表示</td>
+              </tr>
+              <tr>
+                <td width="15%" class="table_cell">RIGHT</td>
+                <td width="40%" class="table_cell">親ウイジットの右向きに表示</td>      
+              </tr>
+              <tr>
+                <td width="15%" class="table_cell">TOP</td>
+                <td width="40%" class="table_cell">親ウイジットの上向きに表示</td>
+              </tr>
+              <tr>
+                <td width="15%" class="table_cell">BOTTOM</td>
+                <td width="40%" class="table_cell">親ウイジットの下向きに表示(デフォルト)</td>
+              </tr>
+            </table>
+            <br>
+        </ol>
+        <br>
+      </div>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+    <h3 class="ex1">考え方</h3>
+      <div class="paragraph">
+        <p>Gtk::Popover に Gtk::Box の内容を格納し、その後、Gtk::Popover を 親ウイジットである Gtk::Button に結びつけます。</p>
+      </div>
+
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+        <ol>
+          <li>child widget の宣言</li>
+            <p>Gtk::Popover を宣言します。</li>
+          <li>Gtk::Popover の親ウイジットの設定</li>
+            <p>set_parent() を用いて 親ウイジットである Gtk::Button と Gtk::Popover を結びつけます。</p>
+          <li>Gtk::Popover の内容の定義</li>
+            <p>Gtk::Box、Gtk::Label、Gtk::Button は、make_managed() を用いて領域を確保し、メモリーの所有権を明確化します。</p>
+            <ul class="ul1">
+              <li>Gtk::Box の領域を確保</li>
+                <p>Gtk::Box を縦書きで領域を確保します。</p>
+              <li>Gtk::Label の領域を確保</li>
+                <p>Gtk::Label を横書きで領域を確保し、表示する内容は、"Choose an option:" とします。</p>
+              <li>Gtk::Button の領域を確保</li>
+                <p>Gtk::Button の領域を確保し、表示する内容は、btn_a は、 "Action A" とし、btn_b は、 "Action B" とします。</p>
+              <li>Gtk::Box に Gtk::Button を格納</li>
+                <p>Gtk::Box に Gtk::Button を apeend() メソッドで格納します。</p>
+              <li>Gtk::Button のイベントシグナルとシグナルハンドラーを接続</li>
+                <p>Gtk::Button のイベントシグナル(signal_click) が発生した際に、標準出力(std::cout)に "Action clicked" となるメッセージを表示します。</p>
+            </ul>
+          <li>Gtk::Popover に Gtk::Box をセット</li>
+            <p>set_child() メソッドを用いて、Gtk::Popover に Gtk::Box をセットします。</p>
+          <li>ボタンを押すと Popover を表示</li>
+            <p>Gtk::Popover を開きます。</p>
+          <li>A・Bボタンを押すと Popover を閉じる</li>
+            <p>Gtk::Popover を閉じて、標準出力にメッセージ"Action * triggered"を表示します。</p>
+          <li>プログラム終了時に Popover を親から分離</li>
+            <p>親ウィジェットである Gtk::Box が破棄される前に Popover を明示的に切り離します。</p>
+        </ol>
+      </div>
+
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    ~MyWindow();
+
+private:
+   // signal handler:
+    void do_up();
+    void do_A();
+    void do_B();
+    
+   // child widget:
+    Gtk::Button  m_button;
+    <span class="emphasis3">// 1.Gtk::Popoverの宣言</span>
+    <span class="emphasis">Gtk::Popover m_popover</span>;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Gtk::Popover" );
+    set_default_size( 300, 200 );
+
+   // ボタン
+    m_button.set_label( "Options" );
+    set_child( m_button );
+
+   // <span class="emphasis3">2.Popover（親を明示）</span>
+    m_popover.<span class="emphasis">set_parent(</span> m_button <span class="emphasis">)</span>;
+
+   // <span class="emphasis3">3.Gtk::Popover の内容の定義</span>
+    // <span class="emphasis3">3.1 Gtk::Box 領域を確保</span>
+    auto box = Gtk::make_managed&lt;Gtk::Box&gt;( Gtk::Orientation::VERTICAL, 6 );
+    box->set_margin( 12 );
+    // <span class="emphasis3">3.2 Gtk::Label の領域を確保</span>
+    auto label = Gtk::make_managed&lt;Gtk::Label&gt;( "Choose an option:" );
+    box->append(*label);
+    // <span class="emphasis3">3.3 Gtk::Button の領域を確保</span>
+    auto btn_a = Gtk::make_managed&lt;Gtk::Button&gt;( "Action A" );
+    auto btn_b = Gtk::make_managed&lt;Gtk::Button&gt;( "Action B" );
+    // <span class="emphasis3">3.4 Gtk::Box に Gtk::Button を格納</span>
+    box->append( *btn_a );
+    box->append( *btn_b );
+
+    // <span class="emphasis3">3.5 Gtk::Button のイベントシグナルとシグナルハンドラーを接続</span>
+    // ボタンを押すと Popover を表示
+    m_button.signal_clicked().connect( sigc::mem_fun( *this, &MyWindow::do_up ));
+    // Popover 内のボタン動作
+    btn_a->signal_clicked().connect( sigc::mem_fun( *this, &MyWindow::do_A ));
+    btn_b->signal_clicked().connect( sigc::mem_fun( *this, &MyWindow::do_B ));
+
+   //<span class="emphasis3">4.Gtk::Popover に Gtk::Box をセット</span>
+    m_popover.<span class="emphasis">set_child(</span> *box <span class="emphasis">)</span>;
+}
+
+MyWindow::~MyWindow()
+{
+   // <span class="emphasis3">7.プログラム終了時に Popover を親から分離</span>
+    m_popover.<span class="emphasis">unparent()</span>;
+}
+
+void MyWindow::do_up()
+{
+   // <span class="emphasis3">5.ボタンを押すと Popover を表示</span>
+    m_popover.<span class="emphasis">popup()</span>;
+}
+
+void MyWindow::do_A()
+{
+   // <span class="emphasis3">6.Aボタンを押すと Popover を閉じる</span>
+    m_popover.<span class="emphasis">popdown()</span>;
+    std::cout &lt;&lt; "Action A triggered\n";
+}
+
+void MyWindow::do_B()
+{
+   // <span class="emphasis3">6.Bボタンを押すと Popover を閉じる</span>
+    m_popover.<span class="emphasis">popdown()</span>;
+    std::cout &lt;&lt; "Action B triggered\n";
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "popover.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="result-table">
+      <table width="65%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Gtk::Popover</font></th>
+        </tr>
+        <tr>
+          <td width="35%" class="table_heading">Console</td>
+          <td width="25%" class="table_heading">Window</td>
+        </tr>
+        <tr>
+          <td width="35%" class="terminal_cell">
+          $ ./test &<br>
+          $ Action A triggered ( ※ Action A を押した時 )<br>
+          $ Action B triggered ( ※ Action B を押した時 )<br>
+          $<br> 
+          </td>
+          <td width="25%" class="table_heading"><img src="./images/container-popover.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="container-scrolledwindow.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="container-box.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

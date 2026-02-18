@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ScrollBar</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">ScrollBar</h1>
+    <p class="update">(update:2026/2/18)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex2">Gtk::ScrollBarBarとは</h3>
+      <p class="paragraph">Gtk::ScrollBarは、は「スクロール可能な領域の現在位置を示し、ユーザーがスクロール操作を行うための UI 部品」です。スクロール位置は GtkAdjustment によって管理され、表示領域の大きさやステップ量などもすべて Adjustment が制御します。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <ol>
+          <li>スクロール位置の可視化</li>
+            <p>スクロールバーは、コンテンツ全体の中で「今どの位置を見ているか」を示すためのユーザーインターフェースです。スクロールバーのスライダーは、Gtk::Adjustment::value() によって位置が決まります。</p>       
+            <ul class="ul1">
+              <li>value ・・・ 現在のスクロール位置</li>
+              <li>lower ・・・ 最小値（通常 0）</li>
+              <li>upper ・・・ コンテンツ全体のサイズ</li>
+              <li>page-size ・・・ 表示領域のサイズ（スライダーの大きさに反映）</li>
+                <p>スライダーの位置は、lower ≦ value ≦ upper ー page-size の範囲で動きます。</p>
+            </ul>
+            <br>
+          <li>ユーザーによるスクロール操作の受付</li>
+            <p>ユーザーがスクロールバーをドラッグしたり、矢印キーを押したりすると、Gtk::Adjustment の値が変化します。</p>
+            <ul class="ul1">
+              <li>小さく動かす（step） → step-increment が加算/減算されます。</li>
+              <li>大きく動かす（page） → page-increment が加算/減算されます。</li>
+            </ul>
+            <br>
+          <li>スクロール可能なウィジェットとの連携</li>
+            <p>Gtk::Scrollbarは、単体では動作せず必ず Gtk::Adjustment とセットで使用します。</p>
+            <br>
+        </ol>
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">    
+        <p>Gtk::Scrollbarの主な機能は次の通りです。</p>
+          <table width="60%" border="0" cellspacong="1" bgcolor="#000000">
+            <tr>
+              <th width="15%" class="table_heading">機　能</th>
+              <th width="40%" class="table_heading">内　容</th>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">スクロール位置の表示</td>
+              <td width="40%" class="table_cell">コンテンツ内の現在位置を視覚化</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">スクロール操作の受付</td>
+              <td width="40%" class="table_cell">ドラッグ、クリック、キー操作でスクロール</td>      
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">Gtk::Adjustment</td>
+              <td width="40%" class="table_cell">値・範囲・ステップ幅を管理</td>
+            </tr>
+            <tr>
+              <td width="15%" class="table_cell">表示領域サイズの反映</td>
+              <td width="40%" class="table_cell">page-sizeに応じてスライダーの大きさが変化</td>
+            </tr>
+          </table>     
+      </div>
+      <br>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;sstream&gt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+   // signal handler:
+    void on_value_changed();
+    void update_label( double value );
+   // child widget:
+    Gtk::Box box;
+    Gtk::Label label;
+    // <span class="emphasis3">1.Gtk::Scrollbarの宣言</span>
+    <span class="emphasis">Gtk::Scrollbar scrollbar</span>;
+    // Gtk::Adjustmentを参照ポインタとして宣言
+    Glib::RefPtr&lt;Gtk::Adjustment&gt; adjustment;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "ScrollBar" );
+    set_default_size( 300, 80 );
+
+    // Adjustmentの作成（初期値, 最小値, 最大値, ステップ, ページサイズ, ページステップ）
+    adjustment = Gtk::Adjustment::create( 50.0, 0.0, 100.0, 1.0, 10.0, 0.0 );
+
+    // Scrollbarの設定
+    // <span class="emphasis3">2.Gtk::Scrollbarを横向きに設定</span>
+    scrollbar.<span class="emphasis">set_orientation(</span> Gtk::Orientation::HORIZONTAL <span class="emphasis">)</span>;
+    // <span class="emphasis3">3.Gtk::ScrollbarとGtk::Adjustmentを連携</span>
+    scrollbar.<span class="emphasis">set_adjustment(</span> adjustment <span class="emphasis">)</span>;
+
+    // ラベルの初期化
+    update_label( adjustment->get_value() );
+
+    // シグナル接続
+    adjustment->signal_value_changed().connect( sigc::mem_fun(
+        *this, &MyWindow::on_value_changed ));
+
+    // レイアウト
+    box.set_orientation( Gtk::Orientation::VERTICAL );
+    box.append( label );
+    box.append( scrollbar );
+    set_child(box);
+}
+
+void MyWindow::on_value_changed()
+{
+    update_label( adjustment->get_value() );
+}
+
+void MyWindow::update_label( double value )
+{
+    std::ostringstream oss;
+    oss &lt;&lt; "Value: " &lt;&lt; static_cast&lt;int&gt;( value );
+    label.set_text( oss.str() );
+}
+
+int main( int argc, char* argv[] )
+{
+  auto app = Gtk::Application::create( "scrollbar.iexample" );
+  return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/bar-scrollbar.png"></center>
+    <hr>
+    
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="bar-progressbar.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="bar-actionbar.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

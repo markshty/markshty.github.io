@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MenuButton --- Gio::Menu</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">MenuButton --- Gio::Menu</h1>
+    <p class="update">(update:2026/2/18)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex1">目　的</h3>
+      <div class="paragraph">
+        <p>ここでは、Gtk::MenuButton に Gio::Menu(MenuModel) を連携させたｻﾝﾌﾟﾙﾌﾟﾛｸﾞﾗﾑを作成します。</p> 
+        <br>   
+      </div>
+
+    <h3 class="ex1">考え方</h3>
+      <div class="paragraph">
+        <p>Gio::Menu(MenuModel) にメニューの内容を登録(Gtk::SimpleActionGroup)し、その後、Gtk::MenuButtonと結びつけます。</p> 
+        <br>   
+      </div>    
+    
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+      <ol>
+        <li>Gtk::MenuButtonの宣言</li>
+          <br>
+
+        <li>アイコンのセット</li>
+          <p><span class="emphasis">set_icon_name()</span> を用いて Gtk::MenuButton に表示するアイコンをセットします。</p>
+          <br>
+
+        <li>Gtk::HeaderBar に Gtk::MenuButton をセット</li>
+          <p>Gtk::HeaderBar の右側に Gtk::MenuButton をセットします。</p>
+          <br>
+
+        <li>Gio::SimpleActionGroup</li>
+          <p>Gio::SimpleActionGroupは、GTK/Gio アプリケーションにおける「アクションの集約・管理コンテナ」として機能するクラスです。</p>
+          <ul class="ul1">
+            <li>Gio::SimpleActionGroup の参照ポインタを宣言</li>
+            <li>Gio::SimpleActionGroup を生成</li>
+              <p>create()メソッドで、Gio::SimpleActionGroup の領域を確保します。</p>
+            <li>Gio::SimpleActionGroup に Gio::SimpleAction を登録</li>
+              <p><span class="highlight">add_action()</span>メソッドを用いて、Gio::SimpleActionGroup に Gio::SimpleAction を登録します。</p>
+          </ul>
+          <br>
+
+        <li>Gio::SimpleAction</li>
+          <p>Gio::SimpleAction は、GTK/Gio アプリケーションにおける「アクション（動作）」を表現するための最小・汎用的な仕組みです。メニュー、ショートカット、ボタン、コマンド実行などを「名前付きアクション」として統一的に扱えるようにするための基盤になっています。</p>
+          <ul class="ul1">
+            <li>Gio::SimpleAction を生成</li>
+              <p>create()メソッドで、Gio::SimpleAction の領域を確保します。</p>
+            <li>Gio::SimpleAction のイベントにシグナルハンドラーを接続</li>
+              <p>各々のGio::SimpleAction にイベント(signal_activated)が発生したときのシグナルハンドラー(on_action*_activated())を接続します。</p>
+          </ul>
+          <br>
+        
+        <li>Gtk::Window に Gio::SimpleActionGroup を挿入</li>
+          <p><span class="highlight">insert_action_group()</span> を用いて、Gtk::Window に Gio::SimpleActionGroup を挿入します。</p>
+          <br>
+
+        <li>Gio::Menu</li>
+          <p>Gio::Menu は GTK/Gio アプリケーションにおける「メニュー構造を記述するためのデータモデル」です。</p>
+          <ul class="ul1">
+            <li>Gio::Menu(MenuModel) を生成</li>
+              <p>create()メソッドで、Gio::menu の領域を確保します。</p>
+            <li>Gio::Menu(MenuModel) に各menuの内容を設定</li>
+              <p><span class="highlight">append()</span>メソッドを用いて、Gio::Menu にメニューの項目と Gio::Action の内容を追加していきます。</p>
+          </ul>
+          <br>
+
+        <li>Gtk::MenuBitton と Gio::Menu との連携</li>
+          <p><span class="emphasis">set_menu_model()</span>メソッドを用いて、Gtk::MenuButton に Gio::Menu を連携させます。</p>
+          <br>
+      </ol>
+      </div>
+
+    <!-- Sample C++ Program -->
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+// ===============================
+// 図形の種類
+// ===============================
+enum class ShapeType {
+    NONE,
+    RED_CIRCLE,
+    GREEN_SQUARE,
+    BLUE_TRIANGLE
+};
+
+// ===============================
+// ShapeArea（DrawingArea 専用クラス）
+// ===============================
+class ShapeArea : public Gtk::DrawingArea {
+public:
+    ShapeArea();
+
+    void set_shape( ShapeType type );
+
+private:
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+
+    ShapeType current_shape = ShapeType::NONE;
+};
+
+// ShapeArea メソッド定義
+ShapeArea::ShapeArea()
+{
+    set_draw_func( sigc::mem_fun( *this, &ShapeArea::on_draw ));
+    set_content_width( 320 );
+    set_content_height( 240);
+}
+
+void ShapeArea::set_shape( ShapeType type ) {
+    current_shape = type;
+    queue_draw();
+}
+
+void ShapeArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    cr->set_line_width( 2.0 );
+
+    switch ( current_shape ) {
+    case ShapeType::RED_CIRCLE:
+        cr->set_source_rgb( 1.0, 0.0, 0.0 );
+        cr->arc( width/2, height/2, 60, 0, 2 * M_PI );
+        cr->fill();
+        break;
+
+    case ShapeType::GREEN_SQUARE:
+        cr->set_source_rgb( 0.0, 1.0, 0.0 );
+        cr->rectangle( width/2 - 60, height/2 - 60, 120, 120 );
+        cr->fill();
+        break;
+
+    case ShapeType::BLUE_TRIANGLE:
+        cr->set_source_rgb( 0.0, 0.0, 1.0 );
+        cr->move_to( width/2, height/2 - 70 );
+        cr->line_to( width/2 - 70, height/2 + 70 );
+        cr->line_to( width/2 + 70, height/2 + 70 );
+        cr->close_path();
+        cr->fill();
+        break;
+
+    default:
+        break;
+    }
+}
+
+
+// ===============================
+// MenuController（アクション専用クラス）
+// ===============================
+class MenuController {
+public:
+    MenuController();
+
+    Glib::RefPtr&lt;Gio::SimpleActionGroup&gt; get_action_group();
+
+    sigc::signal&lt;void(ShapeType)&gt; signal_shape_changed;
+
+private:
+    void on_action1_activated( const Glib::VariantBase& );
+    void on_action2_activated( const Glib::VariantBase& );
+    void on_action3_activated( const Glib::VariantBase& );
+    <span class="emphasis3">// 4.1 Gio::SimpleActionGroup の参照ポインタを宣言</span>
+    <span class="highlight">Glib::RefPtr&lt;Gio::SimpleActionGroup&gt; action_group</span>;
+};
+
+// MenuController メソッド定義
+MenuController::MenuController() {
+    <span class="emphasis3">// 4.2 Gio::SimpleActionGroup を生成</span>
+    action_group = <span class="highlight">Gio::SimpleActionGroup::create()</span>;
+    
+    <span class="emphasis3">// 5.1 Gio::SimpleAction を生成</span>
+    auto action1 = <span class="highlight">Gio::SimpleAction::create(</span> "action1" <span class="highlight">)</span>;
+    auto action2 = <span class="highlight">Gio::SimpleAction::create(</span> "action2" <span class="highlight">)</span>;
+    auto action3 = <span class="highlight">Gio::SimpleAction::create(</span> "action3" <span class="highlight">)</span>;
+    <span class="emphasis3">// 5.2 Gio::SimpleAction のイベントにシグナルハンドラーを接続</span>
+    action1->signal_activate().connect(
+        sigc::mem_fun( *this, &MenuController::on_action1_activated )
+    );
+    action2->signal_activate().connect(
+        sigc::mem_fun( *this, &MenuController::on_action2_activated )
+    );
+    action3->signal_activate().connect(
+        sigc::mem_fun( *this, &MenuController::on_action3_activated )
+    );
+
+    <span class="emphasis3">// 4.3 Gio::SimpleActionGroup に Gio::SimpleAction を登録</span>
+    action_group-><span class="highlight">add_action(</span> action1 <span class="highlight">)</span>;
+    action_group-><span class="highlight">add_action(</span> action2 <span class="highlight">)</span>;
+    action_group-><span class="highlight">add_action(</span> action3 <span class="highlight">)</span>;
+}
+
+Glib::RefPtr&lt;Gio::SimpleActionGroup&gt; MenuController::get_action_group()
+{
+    return action_group;
+}
+
+void MenuController::on_action1_activated( const Glib::VariantBase& )
+{
+    signal_shape_changed.emit( ShapeType::RED_CIRCLE );
+}
+
+void MenuController::on_action2_activated( const Glib::VariantBase& ) {
+    signal_shape_changed.emit( ShapeType::GREEN_SQUARE );
+}
+
+void MenuController::on_action3_activated( const Glib::VariantBase& ) {
+    signal_shape_changed.emit( ShapeType::BLUE_TRIANGLE );
+}
+
+
+// ===============================
+// MyWindow（UI 専用クラス）
+// ===============================
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    void on_shape_changed( ShapeType type );
+
+    MenuController controller;
+
+    Gtk::HeaderBar headerbar;
+    Gtk::Label title_label{ "MenuButton" };
+    <span class="emphasis3">// 1.Gtk::MenuButtonの宣言</span>
+    <span class="emphasis">Gtk::MenuButton menu_button</span>;
+
+    ShapeArea shape_area;
+    Gtk::Box main_box{ Gtk::Orientation::VERTICAL };
+};
+
+// MyWindow メソッド定義
+MyWindow::MyWindow()
+: controller()
+{
+    set_default_size( 320, 240 );
+
+    headerbar.set_title_widget( title_label );
+    set_titlebar( headerbar );
+   <span class="emphasis3">// 2.アイコンのセット</span>
+    menu_button.<span class="emphasis">set_icon_name(</span> "open-menu-symbolic" <span class="emphasis">)</span>;
+   <span class="emphasis3">// 3.Gtk::HeaderBar に Gtk::MenuButton をセット</span>
+    headerbar.pack_end( menu_button );
+
+   <span class="emphasis3">// 6.Gtk::Window に Gio::SimpleActionGroup を挿入</span>
+    <span class="highlight">insert_action_group(</span> "win", controller.get_action_group() <span class="highlight">)</span>;
+
+   <span class="emphasis3">// 7.Gio::Menu</span>
+    <span class="emphasis3">// 7.1 Gio::Menu(MenuModel) を生成</span>
+    auto menu = <span class="highlight">Gio::Menu::create()</span>;
+    <span class="emphasis3">// 7.2 Gio::Menu(MenuModel) に各menuの内容を設定</span>
+    menu-><span class="highlight">append(</span> "Red Circle", "win.action1" <span class="highlight">)</span>;
+    menu-><span class="highlight">append(</span> "Green Square", "win.action2" <span class="highlight">)</span>;
+    menu-><span class="highlight">append(</span> "Blue Triangle", "win.action3" <span class="highlight">)</span>;
+
+   <span class="emphasis3">// 8.Gtk::MenuBitton と Gio::Menu との連携</span>
+    menu_button.<span class="emphasis">set_menu_model(</span> menu <span class="emphasis">)</span>;
+
+    main_box.append( shape_area );
+
+    controller.signal_shape_changed.connect(
+        sigc::mem_fun( *this, &MyWindow::on_shape_changed )
+    );
+
+    set_child( main_box );
+}
+
+void MyWindow::on_shape_changed( ShapeType type ) {
+    shape_area.set_shape( type );
+}
+
+
+// ===============================
+// main()
+// ===============================
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "menubutton.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="result-table">
+      <table width="81%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+        <tr>
+          <th bgcolor="#23ff91" colspan="3"><font color="#ffffff">Gio::Menuで連携</font></th>
+        </tr>
+        <tr>
+          <td width="27%" class="table_heading">Red Circlue</td>
+          <td width="27%" class="table_heading">Green Square</td>
+          <td width="27%" class="table_heading">Blue Triangle</td>
+        </tr>
+        <tr>
+          <td width="27%" class="table_heading"><img src="./images/button-menubuttonR.png"></td>
+          <td width="27%" class="table_heading"><img src="./images/button-menubuttonG.png"></td>
+          <td width="27%" class="table_heading"><img src="./images/button-menubuttonB.png"></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="button-menubutton1.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="scale-base.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

@@ -163,6 +163,15 @@ ul li {
     font-weight:      normal;
 }
 
+.ul2 {
+    color:            #000000
+}
+
+.ul2 li {
+    list-style-type:  disc;
+    font-weight:      bold;
+}
+
 .table_heading {
     text-align:         center;
     color:            #556b2f;
@@ -283,6 +292,16 @@ div#pagebody {
 
 .emphasis4 {
     color:            #e69a0e;
+    font-weight:      bold;        
+}
+
+.emphasis5 {
+    color:            #3a54e6;
+    font-weight:      bold;        
+}
+
+.emphasis6 {
+    color:            #aab609;
     font-weight:      bold;        
 }
 

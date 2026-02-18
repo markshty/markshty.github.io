@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HeaderBar</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">HeaderBar</h1>
+    <p class="update">(update:2026/2/18)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex2">Gtk::HeaderBarとは</h3>
+      <p class="paragraph">Gtk::HeaderBar は、GTK4/gtkmm4 における “カスタムタイトルバー” を実現するための中核ウィジェットです。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <ul>
+          <li>ウィンドウのタイトル表示・ボタン配置・独自ウィジェットの追加を柔軟に行える仕組みです。</li>
+          <li>標準のタイトルバーよりも自由度が高く、アプリ独自の操作ボタンや検索バーなどを自然に統合できます。</li>
+        </ul> 
+        <br>   
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">
+        <ol>
+          <li>ウィンドウのカスタムタイトルバーを提供</li>       
+            <p>GTK4 では GtkWindow に対して set_titlebar() を使うことで、標準タイトルバーの代わりに任意のウィジェットをタイトルバーとして使うことができます</p>
+            <p>そのための“最適化された専用ウィジェット”が Gtk::HeaderBar です。</p>
+            <ul class="ul1">
+              <li>ウィンドウタイトルを中央に配置</li>
+              <li>最小化・最大化・閉じるボタンを表示可能</li>
+              <li>ウィンドウアイコンの表示</li>
+              <li>標準タイトルバーと同等のドラッグ操作（windowhandle ノード）を提供</li>
+            </ul>
+            <br>
+          <li>左右にウィジェットを配置できる柔軟なレイアウト</li>
+            <p>Gtk::HeaderBar は、左右端と中央にウィジェットを配置することができます。</p>
+            <ul class="ul1">
+              <li>start(左側)</li>
+                <p>Gtk::HeaderBar の左側にウイジットを配置します。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::HeaderBar::pack_start(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis">)</span></p>
+              <li>center（タイトル領域）</li>
+                <p>中央のタイトル部分を独自ウィジェットに置き換えます。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::HeaderBar::set_title_widget(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis">)</span></p>
+              <li>end（右側）</li>
+                <p>Gtk::HeaderBar の右側にウイジットを配置します。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::HeaderBar::pack_end(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis">)</span></p>
+            </ul>
+            <br>
+          <li>ウィンドウ操作ボタンの制御</li>
+            <ul class="ul1">
+              <li>標準のタイトルボタンの表示／非表示</li>
+                <p>標準のタイトルボタン（閉じる・最大化・最小化）を表示するかどうかを制御することができます(表示：true、非表示：false)。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::HeaderBar::set_show_title_buttons(</span> <span class="emphasis2">bool</span> <span class="emphasis4">setting=true</span> <span class="emphasis">)</span></p>
+              <li>ボタン配置のカスタマイズ</li>
+                <p>ウィンドウボタン（最小化・最大化・閉じる・アイコン）を左右どちらに配置するか指定するためのメソッドです。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::HeaderBar::set_decoration_layout(</span> <span class="emphasis2">const Glib::ustring&</span> <span class="emphasis4">layout</span> <span class="emphasis">)</span></p>
+                <p>GTK の仕様としては、次のように定義されています</p>
+                <ul class="ul1">
+                  <li>ボタン名をカンマ区切りで並べる</li>
+                  <li>コロン（:）の左側が左側配置、右側が右側配置</li>
+                  <li>認識されるボタン名：minimize、maxmize、close、icon</li>
+                    <p>例．"icon:minimize,maximize,close" → 左にアイコン、右に最小化・最大化・閉じるボタン</p>
+                </ul>
+            </ul>
+            <br>
+        </ol>
+        <br>
+      </div>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+   // signal handler:
+    void on_back_clicked();
+    void on_forward_clicked();
+    void on_search_changed();
+    void on_preferences();
+    void on_about();
+
+   // child widget:
+    <span class="emphasis3">// 1.Gtk::Headerbarの宣言</span>
+    <span class="emphasis">Gtk::HeaderBar m_header</span>;
+
+    Gtk::Box m_box;
+    Gtk::Button back_button, forward_button;
+
+    Gtk::Box title_box;
+    Gtk::Image m_image;
+    Gtk::Label title_label;
+
+    Gtk::SearchEntry search_entry;
+    Gtk::MenuButton menu_button;
+
+    Gtk::Label m_label;
+};
+
+MyWindow::MyWindow()
+{
+    set_default_size( 640, 480);
+
+   // <span class="emphasis3">3.HeaderBarの基本設定</span>
+    // <span class="emphasis3">3.1 標準のタイトルボタンの表示</span>
+    m_header.<span class="emphasis">set_show_title_buttons(</span> true <span class="emphasis">)</span>;
+    // <span class="emphasis3">3.2 ボタン配置のカスタマイズ</span>
+    m_header.<span class="emphasis">set_decoration_layout(</span> "icon:minimize,maximize,close" <span class="emphasis">)</span>;
+
+   // 左側：ナビゲーションボタン
+    m_box.set_orientation( Gtk::Orientation::HORIZONTAL );
+    m_box.set_spacing( 6 );
+
+    back_button.set_icon_name( "go-previous-symbolic" );
+    forward_button.set_icon_name( "go-next-symbolic" );
+
+    back_button.set_tooltip_text( "Back" );
+    forward_button.set_tooltip_text( "Forward" );
+
+    m_box.append( back_button );
+    m_box.append( forward_button );
+    // <span class="emphasis3">4.1 HeaderBarの左側にナビゲーションボタンをを配置</span>
+    m_header.<span class="emphasis">pack_start(</span> m_box <span class="emphasis">)</span>;
+
+   // シグナル
+    back_button.signal_clicked().connect(
+        sigc::mem_fun( *this, &MyWindow::on_back_clicked ));
+    forward_button.signal_clicked().connect(
+        sigc::mem_fun( *this, &MyWindow::on_forward_clicked ));
+
+   // 中央：カスタムタイトルウィジェット（ロゴ＋タイトル）
+    title_box.set_orientation( Gtk::Orientation::HORIZONTAL );
+    title_box.set_spacing( 6 );
+
+    m_image.set_from_icon_name( "applications-graphics-symbolic" );
+    title_label.set_text( "HeaderBar Demo" );
+
+    title_box.append( m_image );
+    title_box.append( title_label );
+    // <span class="emphasis3">4.2 headerbarの中央のタイトル部分にGtk::Boxを配置</span>
+    m_header.<span class="emphasis">set_title_widget(</span> title_box <span class="emphasis">)</span>;
+
+   // 右側：検索バー
+    search_entry.set_placeholder_text( "Search..." );
+    search_entry.signal_search_changed().connect(
+        sigc::mem_fun( *this, &MyWindow::on_search_changed ));
+    // <span class="emphasis3">4.3 HeaderBarの右側に検索バーを配置</span>
+    m_header.<span class="emphasis">pack_end(</span> search_entry <span class="emphasis">)</span>;
+
+   // 右端：設定メニュー（MenuButton）
+    auto action_group = Gio::SimpleActionGroup::create();
+    action_group->add_action( "preferences",
+        sigc::mem_fun( *this, &MyWindow::on_preferences ));
+    action_group->add_action( "about",
+        sigc::mem_fun( *this, &MyWindow::on_about ));
+
+    insert_action_group( "app", action_group );
+
+    auto menu = Gio::Menu::create();
+    menu->append( "Preferences", "app.preferences" );
+    menu->append( "About", "app.about" );
+
+    menu_button.set_icon_name( "open-menu-symbolic" );
+    menu_button.set_menu_model( menu );
+    // <span class="emphasis3">4.4 Headerbarの右側にGtk::MenuButtonを配置</span>
+    m_header.<span class="emphasis">pack_end(</span> menu_button <span class="emphasis">)</span>;
+
+   // <span class="emphasis3">2.HeaderBar をタイトルバーとして設定</span>
+    <span class="highlight">set_titlebar(</span> m_header <span class="highlight">)</span>;
+
+   // メインコンテンツ
+    m_label.set_text( "HeaderBar example.\n"
+                       "Try navigation, search, and menu actions." );
+    set_child( m_label );
+}
+
+void MyWindow::on_back_clicked()
+{
+    m_label.set_text( "Back button pressed" );
+}
+
+void MyWindow::on_forward_clicked()
+{
+    m_label.set_text( "Forward button pressed" );
+}
+
+void MyWindow::on_search_changed()
+{
+    m_label.set_text( "Search: " + search_entry.get_text() );
+}
+
+void MyWindow::on_preferences()
+{
+    m_label.set_text( "Preferences selected" );
+}
+
+void MyWindow::on_about()
+{
+    m_label.set_text( "About selected" );
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "headerbar.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <center><img src="./images/bar-headerbar.png"></center>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="bar-actionbar.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="container-frame.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

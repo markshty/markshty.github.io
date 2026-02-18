@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ProgressBar</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">ProgressBar</h1>
+    <p class="update">(update:2026/2/18)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex2">Gtk::ProgressBarとは</h3>
+      <p class="paragraph">Gtk::Progressbarは、「処理の進行状況」や「進行度が不明な処理の活動状態」を視覚的に示すためのウィジットです。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <ol>
+          <li>処理の進行状況をユーザーに伝えます。</li>       
+          <li>進行度が不明な処理の「動いている感」を示します。</li>
+        </ol>
+        <br>
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">    
+        <ol>
+          <li>通常モード</li>
+            <p>進行度を 0.0〜1.0 の割合で表示します。</p>
+            <ol class="ol1">
+              <li>set_fraction</li>
+                <p>ProgressBar の進行度の値を 0.0〜1.0 の範囲で設定するためのメソッドです。set_fraction() は、通常モード専用です。アクティビティモードでは pulse() を使うため、set_fraction() は使いません。</p>
+                <table width="80%" border="0" bgcolor="#ffffff" align="center">
+                  <tr>
+                    <th width="60%" class="function_heading">void Gtk::ProgressBar::set_fraction(</th>
+                    <th width="5%" class="function_cell">double</th>
+                    <td width="10%" class="function_cell">fraction</td>
+                    <th width="5%" class="function_cell">)</th>
+                  </tr>
+                </table>
+                <ul class="ul1">
+                  <li>引数</li>
+                    <p>fraction : 進行度 0.0 ～ 1.0 を表します。</p>
+                  <li>意味</li>
+                    <p>0.0 ⇒ 0%    0.5 ⇒ 50%    1.0 ⇒ 100% を表します。</p>
+                  <li>範囲外の引数の処理</li>
+                    <p>引数が進行度の範囲を超える場合は自動的に補正されます。</p>
+                    <p>例. -1.0 ⇒ 0.0    2.0 ⇒ 1.0</p>
+                </ul>
+                <br>
+
+              <li>get_fraction</li>
+                <p>ProgressBar の現在の進行度の値を取得します。</p>
+                <table width="55%" border="0" bgcolor="#ffffff" align="center">
+                  <tr>
+                    <th width="55%" class="function_heading">void Gtk::ProgressBar::get_fraction()</th>
+                  </tr>
+                </table>
+                <ul class="ul1">
+                  <li>返値</li>
+                    <p>0.0 ⇒ 0%、1.0 ⇒ 100%、それ以外は進行中の割合を表します。</p>
+                  <li>アクティビティモードは意味をなさない</li>
+                    <p>pulse()を使うモードでは、fractionは更新されないため、通常モードでのみ有効となります。</p>
+                </ul>
+                <br>
+            </ol>
+
+          <li>アクティビティモード</li>
+            <p>進行度が測れない状態です。</p>
+            <ol class="ol1">
+              <li>pulse</li>
+                <p>アクティビティモードでアニメーションを動かすためのメソッドです。</p>
+                <ul class="ul1">
+                  <li>進行度が不明な処理で使う</li>
+                    <p>fraction( 0.0 ～ 1.0 )を使いません。代わりに動いていることを示すアニメーションを表示します。</p>
+                  <li>呼ぶたびに内部ブロックが少し動く</li>
+                    <p>どれだけ動くかはset_pulse_step()で調整します。デフォルトは 0.1(10%移動)です。</p>
+                </ul>
+              <li>set_pulese_step</li>
+                <p>アクティビティモード（pulse モード）で、バー内部のブロックが動く「移動量」を調整するためのメソッドです。</p>
+                <ul class="ul1">
+                  <li>アクティビティモード専用の設定</li>
+                    <p>通常モード（fraction を使うモード）では使用しません。</p>
+                  <li>pulse() を呼ぶたびに、内部ブロックがどれだけ動くかを決める</li>
+                    <p>値は 0.0 ～ 1.0 です。デフォルトは0.1(gtkの内部値)です。</p>
+                  <li>値が大きいほど動きが速くなる</li>
+                    <table width="60%" border="0" cellspacong="1" bgcolor="#000000">
+                      <tr>
+                        <th width="10%" class="table_heading">pulse_step</th>
+                        <th width="45%" class="table_heading">ブロックの動作</th>
+                      </tr>
+                      <tr>
+                        <td width="10%" class="table_cell">0.01</td>
+                        <td width="45%" class="table_cell">とてもゆっくり、落ち着いた動き</td>
+                      </tr>
+                      <tr>
+                        <td width="10%" class="table_cell">0.03</td>
+                        <td width="45%" class="table_cell">ややゆっくり</td>      
+                      </tr>
+                      <tr>
+                        <td width="10%" class="table_cell">0.05</td>
+                        <td width="45%" class="table_cell">標準的</td>
+                      </tr>
+                      <tr>
+                        <td width="10%" class="table_cell">0.1</td>
+                        <td width="45%" class="table_cell">速い(デフォルト)</td>
+                      </tr>
+                      <tr>
+                        <td width="10%" class="table_cell">0.2</td>
+                        <td width="45%" class="table_cell">かなり速い、忙しい印象</td>
+                      </tr>
+                    </table>               
+                </ul>
+                <br>
+            </ol>
+
+          <li>テキストの表示</li>
+            <p></p>
+            <ol class="ol1">
+              <li>set_text</li>
+                <p>ProgressBar に表示する文字列を設定するためのメソッドです。set_show_text( true ) と組み合わせることで、進行状況や状態メッセージをユーザーに伝えることができます。</p>
+                <table width="85%" border="0" bgcolor="#ffffff" align="center">
+                  <tr>
+                    <th width="60%" class="function_heading">void Gtk::ProgressBar::set_text(</th>
+                    <th width="5%" class="function_cell">const</th>
+                    <td width="10%" class="function_cell">Glib::ustring&</td>
+                    <td width="5%" class="function_cell">text</td>
+                    <th width="5%" class="function_cell">)</th>
+                  </tr>
+                </table>
+                <ul class="ul1">
+                  <li>引数</li>
+                    <p>text は、ProgressBarに表示したい文字列です。</p>
+                  <li>注意</li>
+                    <p>set_show_text( true ) を呼ばないと text は表示されません。</p>
+                    <p>長い文字列ははみ出すため、必要に応じて set_ellipsize() を使用します。</p>
+                </ul>
+                <br>
+              <li>set_show_text</li>
+                <p>ProgressBar にテキストを表示するかどうかを ON/OFF するためのメソッドです。</p>
+                <table width="70%" border="0" bgcolor="#ffffff" align="center">
+                  <tr>
+                    <th width="55%" class="function_heading">void Gtk::ProgressBar::set_show_text(</th>
+                    <th width="5%" class="function_cell">bool</th>
+                    <td width="5%" class="function_cell">show</td>
+                    <th width="5%" class="function_cell">)</th>
+                  </tr>
+                </table>
+                <ul class="ul1">
+                  <li>引数</li>
+                    <p>true  ⇒ text を表示</p>
+                    <p>false ⇒ text を非表示(デフォルト)</p>
+                  <li>表示されるテキスト</li>
+                    <p>set_text( "文字列" ) で設定した内容</p>
+                    <p>あるいはgtkが自動生成する進行度(例．30%)</p>
+                </ul>
+                <br>
+              <li>set_ellipsize</li>
+                <p>ProgressBar に表示するテキストが長すぎる場合に、どこを省略するかを指定するためのメソッドです。ProgressBar は set_show_text( true ) を使うと文字列を表示できますが、ウィジェットの幅より長い文字列はそのままでは表示できません。そこで 省略位置を指定して、見た目を整えるのが set_ellipsize の役割です。</p>
+                <table width="90%" border="0" bgcolor="#ffffff" align="center">
+                  <tr>
+                    <th width="65%" class="function_heading">void Gtk::ProgressBar::set_ellipsize(</th>
+                    <th width="15%" class="function_cell">Pango::EllipsizeMode</th>
+                    <td width="5%" class="function_cell">mode</td>
+                    <th width="5%" class="function_cell">)</th>
+                  </tr>
+                </table>
+                <br>
+                <table width="80%" border="0" cellspacong="1" bgcolor="#000000">
+                  <tr>
+                    <th width="40%" class="table_heading">mode</th>
+                    <th width="35%" class="table_heading">意味</th>
+                  </tr>
+                  <tr>
+                    <td width="40%" class="table_cell">Pango::EllipsizeMode:NONE</td>
+                    <td width="35%" class="table_cell">省略しない(デフォルト)</td>
+                  </tr>
+                  <tr>
+                    <td width="40%" class="table_cell">Pango::EllipsizeMode:START</td>
+                    <td width="35%" class="table_cell">先頭を省略する</td>      
+                  </tr>
+                  <tr>
+                    <td width="40%" class="table_cell">Pango::EllipsizeMode:MIDDLE</td>
+                    <td width="35%" class="table_cell">中央を省略する</td>
+                  </tr>
+                  <tr>
+                    <td width="40%" class="table_cell">Pango::EllipsizeMode:END</td>
+                    <td width="35%" class="table_cell">末尾を省略する
+                  </tr>
+                </table>
+              <br>
+            </ol>
+
+          <li>ProgressBarの向きや方向の変更</li>
+            <p></p>
+            <ol class="ol1">
+              <li>set_orientation</li>
+                <p>ProgressBar を横向き（水平）か縦向き（垂直）にするためのメソッドです。</p>
+                <table width="95%" border="0" bgcolor="#ffffff" align="center">
+                  <tr>
+                    <th width="65%" class="function_heading">void Gtk::ProgressBar::set_orientation(</th>
+                    <th width="15%" class="function_cell">Gtk::Orientation</th>
+                    <td width="10%" class="function_cell">orientation</td>
+                    <th width="5%" class="function_cell">)</th>
+                  </tr>
+                </table>
+                <ul class="ul1">
+                  <li>Gtk::Orientation::HORIZONTAL 横向き（左⇒右）※デフォルト</li>
+                  <li>Gtk::Orientation::VERTICAL 縦向き（下⇒上）</li>
+                </ul>
+                <br>
+              <li>set_inverted</li>
+                <p>ProgressBar の進行方向を反転させるための関数です。通常は左→右（または下→上）に進む ProgressBar を右→左（または上→下）に進むように変更できます。</p>
+                <table width="80%" border="0" bgcolor="#ffffff" align="center">
+                  <tr>
+                    <th width="65%" class="function_heading">void Gtk::ProgressBar::set_inverted(</th>
+                    <th width="5%" class="function_cell">bool</th>
+                    <td width="5%" class="function_cell">inverted</td>
+                    <th width="5%" class="function_cell">)</th>
+                  </tr>
+                </table>
+                <ul class="ul1">
+                  <li>true ⇒ 進行方向を反転させる</li>
+                  <li>false ⇒ 通常方向　※デフォルト</li>
+                </ul>
+                <br>
+            </ol>
+        </ol>
+      </div>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iomanip&gt;
+#include &lt;sstream&gt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box m_box;
+    Gtk::ProgressBar m_bar;
+
+    Gtk::Button m_button_mode;
+    Gtk::Button m_button_invert;
+
+    Gtk::Scale m_scale{ Gtk::Orientation::HORIZONTAL };
+    Gtk::Label m_scale_label;
+
+    bool m_activity_mode;
+    bool m_inverted;
+    double m_fraction;
+    double m_pulse_step = 0.04;
+
+    void on_scale_changed();
+    void on_button_mode_clicked();
+    void on_button_invert_clicked();
+    bool on_timeout();
+};
+
+MyWindow::MyWindow()
+ : m_button_mode( "モード切替（現在：通常）" ),
+   m_button_invert( "方向切替（現在：通常）" ),
+   m_activity_mode( false ),
+   m_inverted( false ),
+   m_fraction( 0.0 )
+{
+    set_title( "ProgressBar" );
+    set_default_size( 400, 240 );
+
+    // レイアウト
+    m_box.set_orientation( Gtk::Orientation::VERTICAL );
+    m_box.set_spacing( 10 );
+    m_box.set_margin( 20 );
+    set_child( m_box );
+
+    // ProgressBar
+    m_bar.<span class="emphasis">set_show_text(</span> true <span class="emphasis">)</span>;
+    m_bar.<span class="emphasis">set_fraction(</span> 0.0 <span class="emphasis">)</span>;
+    m_bar.<span class="emphasis">set_text(</span> "0%" <span class="emphasis">)</span>;
+    m_box.append( m_bar );
+
+    // pulse_step スライダー
+    m_scale.set_range( 0.01, 0.20 );
+    m_scale.set_value( 0.04 );
+    m_scale.set_increments( 0.01, 0.05 );
+    m_scale.set_digits( 2 );
+    m_scale.set_hexpand( true );
+
+    m_scale_label.set_text( "pulse_step: 0.04" );
+
+    m_box.append( m_scale_label );
+    m_box.append( m_scale );
+
+    m_scale.signal_value_changed().connect(
+        sigc::mem_fun( *this, &MyWindow::on_scale_changed ));
+
+    // モード切替ボタン
+    m_button_mode.signal_clicked().connect(
+        sigc::mem_fun( *this, &MyWindow::on_button_mode_clicked ));
+    m_box.append( m_button_mode );
+
+    // 方向切替ボタン
+    m_button_invert.signal_clicked().connect(
+        sigc::mem_fun( *this, &MyWindow::on_button_invert_clicked ));
+    m_box.append( m_button_invert );
+
+    // タイマーで更新
+    Glib::signal_timeout().connect(
+        sigc::mem_fun(*this, &MyWindow::on_timeout), 80 );
+}
+
+// スライダー変更
+void MyWindow::on_scale_changed()
+{
+    m_pulse_step = m_scale.get_value();
+
+    std::ostringstream ss;
+    ss &lt;&lt; "pulse_step: " &lt;&lt; std::fixed &lt;&lt; std::setprecision( 2 ) &lt;&lt; m_pulse_step;
+    m_scale_label.set_text( ss.str() );
+
+    if ( m_activity_mode )
+        m_bar.<span class="emphasis">set_pulse_step(</span> m_pulse_step <span class="emphasis">)</span>;
+}
+
+// モード切替
+void MyWindow::on_button_mode_clicked()
+{
+    m_activity_mode = !m_activity_mode;
+
+    if ( m_activity_mode ) {
+        m_button_mode.set_label( "モード切替（現在：アクティビティ）" );
+        m_bar.<span class="emphasis">set_text(</span> "処理中…" <span class="emphasis">)</span>;
+        m_bar.<span class="emphasis">set_pulse_step(</span> m_pulse_step <span class="emphasis">)</span>;
+    } else {
+        m_button_mode.set_label( "モード切替（現在：通常） ");
+        m_bar.<span class="emphasis">set_text(</span> "進行中…" <span class="emphasis">)</span>;
+    }
+}
+
+// 方向切替
+void MyWindow::on_button_invert_clicked()
+{
+    m_inverted = !m_inverted;
+
+    if (m_inverted) {
+        m_button_invert.set_label( "方向切替（現在：反転）" );
+        m_bar.<span class="emphasis">set_inverted(</span> true <span class="emphasis">)</span>;
+    }
+    else {
+        m_button_invert.set_label( "方向切替（現在：通常）" );
+        m_bar.<span class="emphasis">set_inverted(</span> false <span class="emphasis">)</span>;
+    }
+}
+
+// タイマー更新
+bool MyWindow::on_timeout() {
+    if ( m_activity_mode ) {
+        m_bar.<span class="emphasis">pulse()</span>;
+    }
+    else {
+        m_fraction += 0.01;
+        if (m_fraction > 1.0) m_fraction = 0.0;
+
+        m_bar.<span class="emphasis">set_fraction(</span> m_fraction <span class="emphasis">)</span>;
+        m_bar.<span class="emphasis">set_text(</span> std::to_string(int(m_fraction * 100)) + "%" <span class="emphasis">)</span>;
+    }
+    return true;
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "progress.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="result-table">
+    <table width="50%" summary="Result Display" align="center">
+      <tr>
+        <td width="25%" align="center" valign="top">通常モード</td>
+        <td width="25%" align="center" valign="top">アクティビティモード</td>
+      </tr>
+      <tr>
+        <td width="25%" align="center" valign="top"><img src="./images/bar-progressbar1.png"></td>
+        <td width="25%" align="center" valign="top"><img src="./images/bar-progressbar2.png"></td>
+      </tr>
+    </table>
+    </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="adjustment-spinscale.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="bar-scrollbar.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>

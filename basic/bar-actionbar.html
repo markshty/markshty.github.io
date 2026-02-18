@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ActionBar</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">ActionBar</h1>
+    <p class="update">(update:2026/2/18)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex2">Gtk::ActionBarとは</h3>
+      <p class="paragraph">Gtk::ActionBar は、ウィンドウ下部に「文脈に応じた操作（アクション）」をまとめて提示するための専用バーです。左右端と中央にウィジェットを配置することが可能で、revealer を内包しているためスライド表示にも対応しています。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <ol>
+          <li>文脈に応じた操作（Contextual Actions）の提示</li>       
+            <p>Gtk::ActionBar は、アプリケーションの状態に応じて必要な操作をまとめて表示するために設計されています。</p>
+            <p>例えば</p>
+            <ul class="ul1">
+              <li>編集モード時だけ「保存」「キャンセル」を表示</li>
+              <li>メディア再生時に「再生」「停止」「次へ」などを表示</li>
+              <li>フォーム入力時に「送信」「戻る」を表示</li>
+            </ul>
+            <br>
+          <li>ウィンドウ下部のアクション領域としての統一デザイン</li>
+            <p>Gtk::Gtk::ActionBar は 画面下部に水平に広がる操作バー として使うことが前提になっています。</p>
+            <ul class="ul1">
+              <li>下部に固定されることでユーザーが操作を見つけやすい</li>
+              <li>モバイルアプリの「ボトムバー」に近い役割</li>
+              <li>デスクトップでも「フッター操作バー」として自然に使える</li>
+            </ul>
+            <br>
+        </ol>
+        <br>
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">    
+        <ol>
+          <li>左右端と中央にウィジェットを配置することができる</li>
+            <p>Gtk::ActionBar は内部に以下の三つの領域を持ちます。</p>
+            <ul class="ul2">
+              <li>左側（start）</li>
+                <p>Gtk::ActionBar の左側にウイジットを配置します。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::ActionBar::pack_start(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis">)</span></p>
+              <li>中央（center）</li>
+                <p>Gtk::ActionBar の中央にウイジットを配置します。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::ActionBar::set_center_widget(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis">)</span></p>
+              <li>右側（end）</li>
+                <p>Gtk::ActionBar の右側にウイジットを配置します。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::ActionBar::pack_end(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis">)</span></p>
+            </ul>
+            <p>この構造により、「戻る ←（中央情報）→ 次へ」のようなユーザーインターフェースを簡単に作ることができます。</p>
+            <br>
+          <li>revealer によるスライド表示／非表示</li>
+            <p>ActionBar は内部に Revealer を持っており、set_revealed(true/false) でアニメーション付きで表示／非表示とすることができます。</p>
+            <ul class="ul2">
+              <li>Gtk::ActionBar の表示と非表示の切り替え</li>
+                <p>Gtk::ActionBar の表示と非表示の切り替えます。デフォルトは表示です。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::ActionBar::set_revealed(</span> <span class="emphasis2">bool</span> <span class="emphasis4">revealed=true</span> <span class="emphasis">)</span></p>
+              <li>Gtk::ActionBar の表示状態の取得</li>
+                <p>Gtk::ActionBar の現在の表示状態を取得します(表示：true、非表示：false)。</p>
+                <p><span class="emphasis6">bool</span> <span class="emphasis">Gtk::ActionBar::get_revealed() const</span></p>
+            </ul>
+            <br>
+        </ol>
+      </div>
+
+<!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+      <div id="pagebody">
+        <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+// --- Model ---
+struct ActionBarState {
+    bool revealed = true;
+    int page = 1;
+    int max_page = 5;
+};
+
+// --- Controller ---
+class ActionBarController {
+public:
+    ActionBarController( ActionBarState& state, Gtk::ActionBar& view );
+    virtual ~ActionBarController() = default;
+
+    void on_back();
+    void on_next();
+    void toggle_revealed();
+
+private:
+    ActionBarState& m_state;
+    // <span class="emphasis3">1.Gtk::Actionbarを参照型として宣言</span>
+    Gtk::ActionBar& m_view;
+
+    Gtk::Button* back_btn = nullptr;
+    Gtk::Button* next_btn = nullptr;
+    Gtk::Label* center_label = nullptr;
+
+    void setup_view();
+    void update_view();
+};
+
+ActionBarController::ActionBarController( ActionBarState& state, Gtk::ActionBar& view )
+ : m_state( state ), m_view( view )
+{
+    setup_view();
+    update_view();
+}
+
+void ActionBarController::on_back()
+{
+    if ( m_state.page &gt; 1 ) {
+        m_state.page--;
+        update_view();
+    }
+}
+
+void ActionBarController::on_next()
+{
+    if ( m_state.page &lt; m_state.max_page ) {
+        m_state.page++;
+        update_view();
+    }
+}
+
+void ActionBarController::toggle_revealed()
+{
+    m_state.revealed = !m_state.revealed;
+    update_view();
+}
+
+void ActionBarController::setup_view()
+{
+    back_btn = Gtk::make_managed&lt;Gtk::Button&gt;( "戻る" );
+    next_btn = Gtk::make_managed&lt;Gtk::Button&gt;( "次へ" );
+    center_label = Gtk::make_managed&lt;Gtk::Label&gt;( "" );
+
+    back_btn->signal_clicked().connect([this]() { on_back(); });
+    next_btn->signal_clicked().connect([this]() { on_next(); });
+    // <span class="emphasis3">3.1 Gtk::ActionBarの左側にGtk::Buttonを配置</span>
+    m_view.<span class="emphasis">pack_start(</span> *back_btn <span class="emphasis">)</span>;
+    // <span class="emphasis3">3.2 Gtk::ActionBarの中央にGtk::Labelを配置</span>
+    m_view.<span class="emphasis">set_center_widget(</span> *center_label <span class="emphasis">)</span>;
+    // <span class="emphasis3">3.3 Gtk::ActionBarの右側にGtk::Buttonを配置</span>
+    m_view.<span class="emphasis">pack_end(</span> *next_btn <span class="emphasis">)</span>;
+}
+
+void ActionBarController::update_view()
+{
+    center_label->set_text(
+        "ページ " + std::to_string( m_state.page ) +
+        " / " + std::to_string( m_state.max_page ));
+
+    back_btn->set_sensitive( m_state.page &gt; 1 );
+    next_btn->set_sensitive( m_state.page &lt; m_state.max_page );
+    // <span class="emphasis3">4.Gtk::ActionBarの表示／非表示の切替</span>
+    m_view.<span class="emphasis">set_revealed(</span> m_state.revealed <span class="emphasis">)</span>;
+}
+
+// --- Window ---
+class MyWindow : public Gtk::Window
+{
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    Gtk::Box vbox;
+    Gtk::ActionBar action_bar;
+
+    ActionBarState state;
+    std::unique_ptr&lt;ActionBarController&gt; controller;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "ActionBar" );
+    set_default_size( 400, 150 );
+
+    vbox.set_orientation( Gtk::Orientation::VERTICAL );
+    set_child( vbox );
+
+    auto content = Gtk::make_managed&lt;Gtk::Label&gt;( "メインコンテンツ" );
+    content->set_margin( 20 );
+    vbox.append( *content );
+
+
+    auto toggle_btn = Gtk::make_managed&lt;Gtk::Button&gt;( "操作バー表示/非表示" );
+    toggle_btn->signal_clicked().connect([this]() {
+        controller->toggle_revealed();
+    });
+    vbox.append( *toggle_btn );
+    
+    controller = std::make_unique&lt;ActionBarController&gt;( state, action_bar );
+    // <span class="emphasis3">2.Gtk::ActionBarをGtk::Boxに配置</span>
+    <span class="highlight">vbox.append(</span> action_bar <span class="highlight">)</span>;
+}
+
+int main(int argc, char* argv[])
+{
+    auto app = Gtk::Application::create( "actionbar.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+        </code></pre>
+      </div>
+    <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="result-table">
+    <table width="50%" summary="Result Display" align="center">
+      <tr>
+        <td width="25%" align="center" valign="top">ActionBarを表示</td>
+        <td width="25%" align="center" valign="top">ActionBarを非表示</td>
+      </tr>
+      <tr>
+        <td width="25%" align="center" valign="top"><img src="./images/bar-actionbar1.png"></td>
+        <td width="25%" align="center" valign="top"><img src="./images/bar-actionbar2.png"></td>
+      </tr>
+    </table>
+    </div>
+    <hr>
+
+    <!-- フッター -->
+    <div class="navifooter">
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="center"><a href="bar-scrollbar.html">Previous</a></td>
+          <td width="20%" align="center"><a href="../index.html">Top</a></td>
+          <td width="40%" align="center"><a href="bar-headerbar.html">Next</a></td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+
+    <div class="footer">
+      <table width="100%" summary="footer">
+        <tr>
+          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+        </tr> 
+      </table>
+    </div>
+  </body>
+</html>
