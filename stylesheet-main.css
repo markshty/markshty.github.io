@@ -43,6 +43,10 @@ hr{
     border:1px dotted #cccccc                     /*内容の区切りをグレーの点線表示にする*/
 }
 
+.ex0 {
+    width:              60px;
+}
+
 .ex1 {
     width:             100px;
 }
