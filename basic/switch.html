@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Switch</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::Switch</h1>
+    <p class="update">(update:2026/4/30)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex5">Gtk::Switch</h3>
+      <p class="paragraph">Gtk::Switch は、gtkmm4 の中でオン／オフを切り替えるためのシンプルで直感的なトグルスイッチのようなユーザーインターフェースを提供するウィジェットです。スライダーをドラッグしたりクリックすることにより状態を変更することができます。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <ol>
+          <li>二値状態（On/Off）を表す ユーザーインターフェース</li>
+            <ul class="ul1">
+              <li>オン／オフの2状態を持つウィジェット</li>
+              <li>状態は active プロパティで管理( true = on、false = off )</li>
+            </ul>
+            <br>    
+          <li>ユーザーの操作による状態変更</li>
+            <p>ユーザーは、次の操作で Gtk::Switch の状態を切り替えることができます。</p>
+            <ul class="ul1">
+              <li>スイッチ全体をクリック</li>
+              <li>スライダー部分をドラッグ</li>
+            </ul>
+            <br>
+          <li>内部状態（state）と表示状態（active）の分離</li>
+            <p>Gtk::Switch には、二種類の状態が存在します。</p>
+            <table width="65%" border="0" cellspacong="1" bgcolor="#000000" align="left" >
+              <tr>
+                <td width="15%" class="table_heading">状態の種類</td>
+                <td width="50%" class="table_heading">内　容</td>
+              </tr>
+              <tr>
+                <td width="15%" class="table_cell2"><b>active</b></td>
+                <td width="50%" class="table_cell2">表示上のon/off(ユーザーインターフェースの状態)</td>
+              </tr>
+              <tr>
+                <td width="15%" class="table_cell2"><b>state</b></td>
+                <td width="50%" class="table_cell2">バックエンドの実際の状態(遅延反映用)</td>      
+              </tr>
+            </table>
+            <p style="clear:both"></p>
+            <p>※バックエンド処理が遅れる場合に、ユーザーインターフェースと内部状態を一時的に分離することができます。</p>
+            <br>
+            
+            <br>
+          <li>シグナル</li>
+            <table width="95%" border="0" cellspacong="1" bgcolor="#000000" align="left" >
+              <tr>
+                <td width="20%" class="table_heading">シグナル</td>
+                <td width="30%" class="table_heading">シグナルが発生するタイミング</td>
+                <td width="45%" class="table_heading">用　途</td>
+              </tr>
+              <tr>
+                <td width="20%" class="table_cell2">notify::active</td>
+                <td width="30%" class="table_cell2">active が実際に変わった後</td>
+                <td width="45%" class="table_cell2">ユーザーインターフェースの更新や処理の反映</td>
+              </tr>
+              <tr>
+                <td width="20%" class="table_cell2">state_set()</td>
+                <td width="30%" class="table_cell2">ユーザーが操作した瞬間（active が変わる前）</td>
+                <td width="45%" class="table_cell2">状態変更をアプリ側で許可／拒否したいとき</td>      
+              </tr>
+            </table>
+            <p style="clear:both"></p>
+            <br>
+          <li>CSS</li>
+            <p>Gtk::Switchは、次の CSS ノードを持っています</p>
+            <div class="css-node">
+              <pre><code>
+switch
+  └── slider
+              </code></pre>
+            </div>
+            
+            <ul class="ul1">
+              <li><b>switch</b> が本体</li>
+              <li><b>slider</b> が動く丸い部分</li>
+              <li>CSS で色や形をカスタマイズすることができます。</li>
+            </ul>
+            <br>
+        </ol>
+        <br>   
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">
+        <ol>
+          <li>active・stateプロパティの変更</li>
+            <ul class="ul2">
+              <li>set_acitive()</li>
+                <p>Gtk::Switch のactiveプロパティのon/offをセットします。デフォルトは、true(on)です。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Switch::set_active(</span> <span class="emphasis2">bool</span> <span class="emphasis4">is_actibe=true</span> <span class="emphasis"></span>)</span></p>      
+                <br>
+              <li>get_active()</li>
+                <p>Gtk::Switch のactiveプロパティの値を返します。</p>
+                <p><span class="emphasis6">bool</span> <span class="emphasis">Gtk::Switch::get_active()</span> <span class="emphasis7">const</span></p>      
+                <br>
+              <li>set_state()</li>
+                <p>Gtk::Switch のstateプロパティのon/offをセットします。デフォルトは、true(on)です。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Switch::set_active(</span> <span class="emphasis2">bool</span> <span class="emphasis4">is_actibe=true</span> <span class="emphasis"></span>)</span></p>      
+                <br>
+              <li>get_state()</li>
+                <p>Gtk::Switch のstateプロパティの値を返します。</p>
+                <p><span class="emphasis6">bool</span> <span class="emphasis">Gtk::Switch::get_active()</span> <span class="emphasis7">const</span></p>      
+                <br>
+              <li>CSS で簡単にスタイル変更</li>
+                <p>Gtk::StackSwitcher は、CSS でタブ風・ボタン風・フラット UI など自由に変更できます。</p>
+                <br>
+            </ul>
+          <li>シグナルの発生</li>
+            <ul class="ul2">
+              <li>ユーザーの操作直後のシグナルの発生</li>
+                <p>【変更前】ユーザーが Gtk::Switch を操作した時点でシグナルが発生します。</p>
+                <p>【戻り値】bool型です。trueで変更をキャンセルすることができます。</p>
+                <p>【用　途】妥当性の確認、変更の拒否</p>
+                <p>【使用例】</p>
+                <div class="command_line">
+                  <pre><code>
+MyWindow::MyWindow() {
+    auto switch = Gtk::make_managed&lt;Gtk::Switch&gt;();
+
+    switch-><span class="emphasis">signal_state_set()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::on_state_set ),
+        <span class="emphasis4">false</span>
+    );
+}
+
+bool on_state_set( bool new_state ) {
+    std::cout &lt;&lt; "[Before] User tries to change state to: "
+        &lt;&lt; ( new_state ? "ON" : "OFF" ) &lt;&lt; std::endl;
+
+    // 例：OFF → ON を禁止したい場合
+    if ( new_state == true ) {
+        std::cout &lt;&lt; "  → ON は禁止します" &lt;&lt; std::endl;
+        return <span class="highlight">true</span>;  // <span class="highlight">true</span> = <span class="highlight">切り替えをキャンセル</span>
+    }
+
+    return <span class="emphasis4">false</span>; // <span class="emphasis4">false</span> = <span class="emphasis4">切り替え許可</span>
+}
+
+                  </code></pre>
+                </div>
+                <br>
+              <li>プロパティ確定後のシグナルの発生</li>
+                <p>【変更後】プロパティが確定した後にシグナルが発生します。</p>
+                <p>【戻り値】voidl型(戻り値は無し)です。</p>
+                <p>【用　途】ユーザーインターフェースの更新、ロジックの反映</p>
+                <p>【使用例】</p>
+                <div class="command_line">
+                  <pre><code>
+MyWindow::MyWindow() {
+    auto switch = Gtk::make_managed&lt;Gtk::Switch&gt;();
+
+    switch-><span class="emphasis">property_active().signal_changed()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::on_active_changed )
+    );
+}
+
+void on_active_changed() {
+        bool state = switch->get_active();
+        std::cout &lt;&lt; "[After] Switch state changed to: "
+                  &lt;&lt; ( state ? "ON" : "OFF" ) &lt;&lt; std::endl;
+}
+                  </code></pre>
+                </div>
+                <br>
+            </ul>
+        </ol>
+        <br>
+      </div>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+    <h3 class="ex1">考え方</h3>
+      <div class="paragraph">
+        <p>Gtk::Stack に表示するページを登録し、その後、Gtk::Stack を Gtk::StackSwitcher に結びつけます。</p>
+      </div>
+
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+        <ol>
+          <li>child widget の宣言</li>
+            <p>Gtk::Switch を宣言します。</li>
+          <li>css class の読み込み</li>
+            <p>右側の Gtk::Switch の css class をadd_css_class() を用いて読み込みます。Gtk::Switch の表示を縦向きに指定します。</p>
+          <li>右側の Gtk::Switch の activeプロパティ を true にセット</li>
+            <p>set_active() を用いて、Gtk::Switch(right_switch) の activeプロパティを true にセットします。</p>
+          <li>signal_state_set() にシグナルハンドラーを接続</li>
+          <li>activeプロパティが変化した時にシグナルを発生させ、シグナルハンドラーを接続</li>    
+        </ol>
+      </div>
+
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;cmath&gt;
+#include &lt;iostream&gt;
+
+class ColorCirclesArea : public Gtk::DrawingArea {
+public:
+    ColorCirclesArea();
+    virtual ~ColorCirclesArea() = default;
+    void set_circle_visible( int index, bool v );
+    void set_all( bool v );
+
+private:
+    std::array&lt;bool, 3&gt; visible{ false, false, false };
+    std::array&lt;Gdk::RGBA, 3&gt; colors;
+
+protected:
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+};
+
+ColorCirclesArea::ColorCirclesArea()
+{
+    set_content_width( 80 );
+    set_content_height( 150 );
+
+    colors[0].set_rgba(1, 0, 0, 1);
+    colors[1].set_rgba(0, 1, 0, 1);
+    colors[2].set_rgba(0, 0, 1, 1);
+
+    set_draw_func( sigc::mem_fun( *this, &ColorCirclesArea::on_draw ));
+}
+
+void ColorCirclesArea::set_circle_visible( int index, bool v )
+{
+    visible[index] = v;
+    queue_draw();
+}
+
+void::ColorCirclesArea::set_all( bool v )
+{
+    visible = { v, v, v };
+    queue_draw();
+}
+
+void::ColorCirclesArea::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    const int radius  = 12;
+    const int spacing = 40;
+
+    int cx = width  / 2;
+    int cy = height / 2 - spacing;
+
+    for (int i = 0; i &lt; 3; ++i) {
+        if (visible[i]) {
+            cr->set_source_rgba(
+                colors[i].get_red(),
+                colors[i].get_green(),
+                colors[i].get_blue(),
+                1.0
+            );
+            cr->arc(cx, cy, radius, 0, 2 * M_PI);
+            cr->fill();
+        }
+        cy += spacing;
+    }
+}
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    void on_left_switch_changed( int index );
+    bool on_right_switch_state_set( bool new_state );
+    void load_css();
+
+    Gtk::Box root_box{ Gtk::Orientation::HORIZONTAL };
+    Gtk::Box switch_box{ Gtk::Orientation::VERTICAL };
+    Gtk::Box right_box{ Gtk::Orientation::VERTICAL };
+
+    ColorCirclesArea* m_area;
+
+   // <span class="emphasis3">1.child widget の宣言</span>
+    <span class="emphasis">Gtk::Switch* right_switch</span>;
+    <span class="emphasis">std::vector&lt;Gtk::Switch*&gt; left_switches</span>;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "Switch" );
+    set_default_size( 320, 240 );
+    set_resizable( false );
+
+    // CSS 読み込み
+    load_css();
+
+    set_child( root_box );
+    root_box.set_orientation( Gtk::Orientation::HORIZONTAL );
+    root_box.set_spacing( 20 );
+    root_box.set_halign( Gtk::Align::CENTER );
+    root_box.set_valign( Gtk::Align::CENTER );
+
+    // 左側：Switch Box
+    switch_box.set_orientation( Gtk::Orientation::VERTICAL );
+    switch_box.set_spacing( 15 );
+    switch_box.set_halign( Gtk::Align::CENTER );
+    switch_box.set_valign( Gtk::Align::CENTER );
+
+    // 中央：DrawingArea
+    m_area = Gtk::make_managed&lt;ColorCirclesArea&gt;();
+
+    // 右側：回転スイッチ
+    right_box.set_orientation( Gtk::Orientation::VERTICAL );
+    right_box.set_spacing( 10 );
+    right_box.set_halign( Gtk::Align::CENTER );
+    right_box.set_valign( Gtk::Align::CENTER );
+
+    right_switch = Gtk::make_managed&lt;Gtk::Switch&gt;();
+   // <span class="emphasis3">2.css class の読み込み (右側の Gtk::Switch の表示を縦向きに指定)</span>
+    right_switch-><span class="emphasis">add_css_class(</span> "switch-rotate-90" <span class="emphasis">)</span>;
+   // <span class="emphasis3">3.右側の Gtk::Switch の active を true にセット</span>
+    right_switch-><span class="emphasis">set_active(</span> true <span class="emphasis">)</span>;  // ★ 初期値 ON
+    right_box.append( *right_switch );
+
+   // <span class="emphasis3">4.signal_state_set() にシグナルハンドラーを接続</span>
+    right_switch-><span class="emphasis">signal_state_set()</span>.connect(
+        sigc::mem_fun( *this, &MyWindow::on_right_switch_state_set ),
+        false
+    );
+
+    // 左側の 3 つのスイッチ
+    for (int i = 0; i &lt; 3; ++i) {
+        auto sw = Gtk::make_managed&lt;Gtk::Switch&gt;();
+        sw->set_active( false );  // ★ 初期値 ON
+
+        left_switches.push_back( sw );
+
+        int index = i;
+       // <span class="emphasis3">5.activeプロパティが変化した時にシグナルを発生させ、シグナルハンドラーを接続</span>
+        sw-><span class="emphasis">property_active().signal_changed()</span>.connect(
+            sigc::bind(
+                sigc::mem_fun( *this, &MyWindow::on_left_switch_changed ),
+                index
+            )
+        );
+
+        auto row = Gtk::make_managed&lt;Gtk::Box&gt;( Gtk::Orientation::HORIZONTAL );
+        row->set_spacing( 10 );
+
+        auto label = Gtk::make_managed&lt;Gtk::Label&gt;( "Switch " + std::to_string(i + 1) );
+
+        row->append( *label );
+        row->append( *sw );
+
+        switch_box.append( *row );
+    }
+
+    // root に追加
+    root_box.append( switch_box );
+    root_box.append( *m_area );
+    root_box.append( right_box );
+
+    // 初期状態：円も全部 OFF
+    m_area->set_all( false );
+}
+
+void MyWindow::load_css()
+{
+    auto css = Gtk::CssProvider::create();
+    try {
+        css->load_from_path( "style.css" );
+    } catch( const Glib::Error& ex ) {
+        std::cerr &lt;&lt; "CSS load error: " &lt;&lt; ex.what() &lt;&lt; std::endl;
+        return;
+    }
+
+    Gtk::StyleContext::add_provider_for_display(
+        Gdk::Display::get_default(),
+        css,
+        GTK_STYLE_PROVIDER_PRIORITY_USER
+    );
+}
+
+void MyWindow::on_left_switch_changed( int index )
+{
+    m_area->set_circle_visible( index, left_switches[index]-><span class="emphasis">get_active()</span> );
+}
+
+bool MyWindow::on_right_switch_state_set( bool new_state )
+{
+    if ( new_state ) {
+        // ★ ON にしようとしている → 全部 ON
+        for ( auto sw : left_switches ) sw-><span class="emphasis">set_active(</span> true <span class="emphasis">)</span>;
+        m_area->set_all( true );
+        return false;  // 切り替え許可
+    }
+
+    // ★ OFF にしようとしている
+    bool any_on = false;
+    for ( auto sw : left_switches ) {
+        if ( sw-><span class="emphasis">get_active()</span> ) {
+            any_on = true;
+            break;
+        }
+    }
+
+    if ( !any_on ) {
+        // ★ 全部 OFF → right_switch_ を OFF にするのは禁止
+        return true;  // ← 切り替えキャンセル（動かない）
+    }
+
+    // ★ 1つでも ON → OFF を許可
+    for ( auto sw : left_switches ) sw-><span class="emphasis">set_active(</span> false <span class="emphasis">)</span>;
+    m_area->set_all( false );
+
+    return false;  // 切り替え許可
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "switch.example" );
+    return app->make_window_and_run&lt;MyWindow&lt;( argc, argv );
+}
+          </code></pre>
+        </div>
+      </div>
+    <br>
+
+<!-- Sample Cascading Style Sheet -->
+    <h3 class="ex1">css</h3>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+/* ================================
+   Switch（フラットデザイン）
+================================ */
+switch <span style="color:turquoise">{</span>
+    <span style="color:lime">min-width</span>: <span style="color:fuchsia">42px</span>;
+    <span style="color:lime">min-height</span>: <span style="color:fuchsia">24px</span>;
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">12px</span>;
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#c8c8c8</span>; /* OFF の背景 */
+    <span style="color:lime">transition</span>: <span style="color:fuchsia">background 160ms ease</span>;
+<span style="color:turquoise">}</span>
+
+/* ノブ（slider） */
+switch > slider <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#ffffff</span>;
+    <span style="color:lime">min-width</span>: <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">min-height</span>: <span style="color:fuchsia">20px</span>;
+    <span style="color:lime">margin</span>: <span style="color:fuchsia">2px</span>;
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">10px</span>;
+    <span style="color:lime">box-shadow</span>: <span style="color:fuchsia">0 0 0 1px #b0b0b0</span>;
+    <span style="color:lime">transition</span>: <span style="color:fuchsia">transform 160ms ease, background 160ms ease</span>;
+<span style="color:turquoise">}</span>
+
+/* ON のとき */
+switch:<span style="color:yellow">checked</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#0078d4</span>;
+<span style="color:turquoise">}</span>
+
+/* hover */
+switch:<span style="color:red">hover</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#b0b0b0</span>;
+<span style="color:turquoise">}</span>
+
+switch:<span style="color:yellow">checked</span>:<span style="color:red">hover</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#0a84e8</span>;
+<span style="color:turquoise">}</span>
+
+/* 右側の Switch を 270° 回転 */
+.switch-rotate-90 <span style="color:turquoise">{</span>
+    <span style="color:lime">transform</span>: <span style="color:aqua">rotate(</span> <span style="color:fuchsia">270deg</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+    
+      <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+      <div>
+        <table width="70%" border="0" cellspacong="1" bgcolor="#23ff91" align="center">
+          <tr>
+            <th bgcolor="#23ff91" colspan="2"><font color="#ffffff">Gtk::Switch</font></th>
+          </tr>
+          <tr>
+            <td width="35%" class="table_heading">active : off</td>
+            <td width="35%" class="table_heading">active : on</td>
+          </tr>
+          <tr>
+            <td width="35%" class="table_heading"><img src="./images/switch1.png"></td>
+            <td width="35%" class="table_heading"><img src="./images/switch2.png"></td>
+          </tr>
+        </table>  
+      </div>
+      <hr>
+
+    <!-- フッター -->
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="./volume-control.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="./adjustment-base.html">Next</a></td>
+      </tr>
+    </table>
+    <hr>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
+  </body>
+</html>

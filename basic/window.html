@@ -2,31 +2,90 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Windowの表示</title>
+    <title>Gtk::Window</title>
     <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body>
     <!-- タイトル -->
-    <h1 class="title">Windowの表示</h1>
-    <p class="update">(update:2025/2/1)</p>
-    <br>
+    <h1 class="title">Gtk::Window</h1>
+    <p class="update">(update:2026/4/30)</p>
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
-    <h3>機　能</h3> 
-    <p class="paragraph">Windowを表示します。</p>
-    <h3>使い方</h3>
-    <ul class="paragraph">
-      <li>作成したい Window widget を Gtk::Window から継承します</li>
-      <li><span class="highlight">set_title()</span>でwindowのタイトルをセットすることができます。</li>
-      <li><span class="highlight">set_default_size</span>( int <span class="highlight">width</span>, int <span class="highlight">height</span> )でWindowのサイズを指定することができます。</li>  
-      <li><span class="highlight">width</span>はwindowの幅、<span class="highlight">height</span>はwindowの高さ</li>
-      <li><span class="highlight">Gtk::Application::create()</span>でプログラムのタイトルをセット。</li>
-    </ul>
-    <br>
+    <h3 class="ex5">Gtk::Window</h3>
+      <p class="paragraph">Gtk::Window は、gtkmm4 の中で「アプリケーションの最上位コンテナ（トップレベルウィンドウ）」であり、ユーザーインターフェースの土台・ライフサイクル・イベント管理の中心となります。</p>
+      <br>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <p>Gtk::Window は他のウィジェットを入れるための「最上位の入れ物」です。親を持たず、OS のウィンドウマネージャーに直接管理されます。次に示す役割はGtk::Windowが担います。</p>
+        <ul class="ul1">
+          <li>タイトルバー</li>
+          <li>ウィンドウ枠</li>
+          <li>最小化・最大化・閉じるボタン</li>
+          <li>サイズ・位置の管理</li>
+        </ul>
+      </div>
+      <br>
+
+    <h3 class="ex1">機　能</h3> 
+      <div class="paragraph">
+        <ol>
+          <li>ウィジェット階層のルート</li>
+            <p>GTK4 では Window に 1つの子ウィジェットしか配置できません。複数の子ウィジェットを配置したい場合は Gtk::Box や Gtk::Grid を子ウィジェットとして配置し、その中にウィジットを追加します。</p>
+            <br>
+          <li>ウィンドウサイズ・位置の管理</li>
+            <p></p>
+            <ul class="ul1">
+              <li>ウィンドウのサイズの<b>指定</b></li>
+              <li>ウィンドウのサイズの<b>固定</b></li>
+              <li>ウィンドウを<b>前面に表示</b></li>
+            </ul>
+            <br>
+          <li>アプリケーションとの統合</li>
+            <p>gtkmm4 では Window は Gtk::Application によって管理されます。</p>
+            <br>
+          <li>イベント処理の入口</li>
+            <p></p>
+            <ul class="ul1">
+              <li>キー入力</li>
+              <li>マウスイベント</li>
+              <li>フォーカス</li>
+              <li>ウィンドウを閉じるイベント</li>
+            </ul>
+            <br>
+          <li> CSS スタイルのルート</li>
+            <p>Gtk::Window は CSS のルートノードでもあります。GTK4 の CSS は Window から下に伝播するため、アプリ全体のテーマを Window でコントロールできます。</p>
+            <br>
+          <li>描画の基準座標系の起点</li>
+            <p>Gtk::DrawingArea を使う場合、Gtk::Window が描画の基準となる座標系の起点になります。</p>
+            <br>
+        </ol>
+      </div>
+      <br>
+
     <!-- Sample Program -->
     <h2 class="ex2">サンプル プログラム</h2>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h3 class="ex1">考え方</h3>
+      <div class="paragraph">
+        <p>Gtk::Window に<b>タイトルをセット</b>し、ウインドウの<b>サイズを指定し</b>ます。そして、Gtk::Window を<b>表示</b>します。</p>
+      </div>
+
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+        <ol>
+          <li>作成したい Window widget を Gtk::Window から継承します</li>
+          <li><span class="highlight">set_title()</span>でwindowのタイトルをセットすることができます。</li>
+          <li><span class="highlight">set_default_size</span>( int <span class="highlight">width</span>, int <span class="highlight">height</span> )でWindowのサイズを指定することができます。</li>  
+          <li><span class="highlight">width</span>はwindowの幅、<span class="highlight">height</span>はwindowの高さ</li>
+          <li><span class="highlight">Gtk::Application::create()</span>でプログラムのタイトルをセット。</li>
+        </ol>
+      </div>
+      <br>
+
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 
 class MyWindow : public Gtk::Window
@@ -47,31 +106,31 @@ int main(int argc, char* argv[])
     auto app = <span class="highlight">Gtk::Application::create(</span> "gtkmm4.examples" <span class="highlight">)</span>;
     return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
 }
-    </code></pre>
-    </div>
-    <br>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
     <!-- 実行結果-->
     <h2 class="ex3">実行結果</h2>
-    <center><img src="./images/window.png"></center>
-    <hr>
+      <center><img src="./images/window.png"></center>
+      <hr>
     
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="window-quit.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="window-quit.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
-    </body>
+
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+ 
+  </body>
 </html>
