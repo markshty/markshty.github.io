@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">CSS フォント (font-weight)</h1>
-    <p class="update">(update:2025/7/25)</p>
+    <p class="update">(update:2026/4/30)</p>
     <br>
     
     <!-- 説明 -->
@@ -139,8 +139,10 @@
 
     <!-- Sample Program -->
     <h2 class="ex2">サンプル プログラム</h2>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -218,100 +220,103 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-    </code></pre>
-    </div>
-    <br>
+          </code></pre>
+        </div>
+      </div>
+      <br>
 
     <!-- Sample Cascading Style Sheet -->
-    <h2 class="ex1">Css</h2>
-    <div id="pagebody">
-    <pre><code class="language-c++">
-window {
-    background-color: rgba( 0, 0, 0, 1.0 );
-}
+      <h3 class="ex1">css</h3>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 0, 0, 1.0</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
 
-#m-label1 {
-    color:            white;
-    font-weight:      100;
-    font-size:        40px;
-}
+#m-label1 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">100</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-#m-label2 {
-    color:            white;
-    font-weight:      200;
-    font-size:        40px;
-}
+#m-label2 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">200</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-#m-label3 {
-    color:            white;
-    font-weight:      300;
-    font-size:        40px;
-}
+#m-label3 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">300</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-#m-label4 {
-    color:            white;
-    font-weight:      400;
-    font-size:        40px;
-}
+#m-label4 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">400</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-#m-label5 {
-    color:            white;
-    font-weight:      500;
-    font-size:        40px;
-}
+#m-label5 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">500</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-#m-label6 {
-    color:            white;
-    font-weight:      600;
-    font-size:        40px;
-}
+#m-label6 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">600</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-#m-label7 {
-    color :           white;
-    font-weight:      700;
-    font-size:        40px;
-}
+#m-label7 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span> :           <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">700</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-#m-label8 {
-    color:            white;
-    font-weight:      800;
-    font-size:        40px;
-}
+#m-label8 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">800</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-#m-label9 {
-    color:            white;
-    font-weight:      900;
-    font-size:        40px;
-}
+#m-label9 <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-weight</span>:      <span style="color:fuchsia">900</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">40px</span>;
+<span style="color:turquoise">}</span>
 
-.m-range {
-    color:            white;
-    font-size:        30px;
-}
-    </code></pre>
-    </div>
+.m-range <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">30px</span>;
+<span style="color:turquoise">}</span>
+          </code></pre>
+        </div>
+      </div>
+      <br>
 
     <!-- 実行結果 -->
     <h2 class="ex3">実行結果</h2>
-    <center><img src="./images/css-font-font_weight.png"></center>
-    <hr>
+      <center><img src="./images/css-font-font_weight.png"></center>
+      <hr>
+
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="css-font-font_family.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="css-font-font_style.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="css-font-font_family.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="css-font-font_style.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>

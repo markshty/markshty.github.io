@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">CSS フォント (font-size)</h1>
-    <p class="update">(update:2025/7/25)</p>
+    <p class="update">(update:2026/4/30)</p>
     <br>
     
     <!-- 説明 -->
@@ -82,8 +82,10 @@
     <!-- Sample Program -->
     <h2 class="ex2">数値で指定する場合</h2>
     <h3 class="ex2">サンプル プログラム</h3>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h4 class="ex1">リスト</h4>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -161,69 +163,75 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-    </code></pre>
-    </div>
-    <br>
+          </code></pre>
+        </div>
+      </div>
+      <br>
 
     <!-- Sample Cascading Style Sheet -->
-    <h3>CSS</h3>
-    <div id="pagebody">
-    <pre><code class="language-c++">
-window {
-    background-color: rgba( 0, 0, 0, 1.0 );
-}
+    <h4 class="ex1">css</h4>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 0, 0, 1.0</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
 
-#none {
-    color:            white;
-    font-family:      "IPA P明朝", serif;
-}
+#none <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-family</span>:      <span style="color:fuchsia">"IPA P明朝", serif</span>;
+<span style="color:turquoise">}</span>
 
-#px {
-    color:            white;
-    font-family:      "IPA P明朝", serif;
-    font-size:        16<span class="highlight">px</span>;
-}
+#px <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-family</span>:      <span style="color:fuchsia">"IPA P明朝", serif</span>;
+    <span style="color:lime">font-size</span>:        16<span class="highlight">px</span>;
+<span style="color:turquoise">}</span>
 
-#percent {
-    color :           white;
-    font-family:      "IPA P明朝", serif;
-    font-size:        100<span class="highlight">%</span>;
-}
+#percent <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span> :           <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-family</span>:      <span style="color:fuchsia">"IPA P明朝", serif</span>;
+    <span style="color:lime">font-size</span>:        100<span class="highlight">%</span>;
+<span style="color:turquoise">}</span>
 
-#em {
-    color:            white;
-    font-family:      "IPA P明朝", serif;
-    font-size:        1.0<span class="highlight">em</span>;
-}
+#em <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-family</span>:      <span style="color:fuchsia">"IPA P明朝", serif</span>;
+    <span style="color:lime">font-size</span>:        1.0<span class="highlight">em</span>;
+<span style="color:turquoise">}</span>
 
-#ex {
-    color:            white;
-    font-family:      "IPA P明朝", serif;
-    font-size:        2.0<span class="highlight">ex</span>;
-}
+#ex <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-family</span>:      <span style="color:fuchsia">"IPA P明朝", serif</span>;
+    <span style="color:lime">font-size</span>:        2.0<span class="highlight">ex</span>;
+<span style="color:turquoise">}</span>
 
-#rem {
-    color:            white;
-    font-family:      "IPA P明朝", serif;
-    font-size:        1.0<span class="highlight">rem</span>;
-}
+#rem <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-family</span>:      <span style="color:fuchsia">"IPA P明朝", serif</span>;
+    <span style="color:lime">font-size</span>:        1.0<span class="highlight">rem</span>;
+<span style="color:turquoise">}</span>
 
-.m-range {
-    color:            white;
-    font-family:      monospace;
-}
-    </code></pre>
-    </div>
+.m-range <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-family</span>:      <span style="color:fuchsia">monospace</span>;
+<span style="color:turquoise">}</span>
+          </code></pre>
+        </div>
+      </div>
+      <br>
 
     <!-- 実行結果 -->
-    <h3 class="ex3">実行結果</h3>
-    <center><img src="./images/css-font-font_size1.png"></center>
-    <hr>
+    <h4 class="ex3">実行結果</h4>
+      <center><img src="./images/css-font-font_size1.png"></center>
+      <hr>
 
     <h2 class="ex7">キーワードで指定する場合</h2>
-<h3 class="ex2">サンプル プログラム</h3>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h3 class="ex2">サンプル プログラム</h3>
+    <h4 class="ex1">リスト</h4>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -298,82 +306,84 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-    </code></pre>
-    </div>
-    <br>
+          </code></pre>
+        </div>
+      </div>
+      <br>
 
     <!-- Sample Cascading Style Sheet -->
-    <h3>CSS</h3>
-    <div id="pagebody">
-    <pre><code class="language-c++">
-window {
-    background-color: rgba( 0, 0, 0, 1.0 );
-}
+    <h4 class="ex1">css</h4>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 0, 0, 1.0</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
 
-#xx-large {
-    color:            white;
-    font-size:        <span class="highlight">xx-large</span>;
-}
+#xx-large <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span class="highlight">xx-large</span>;
+<span style="color:turquoise">}</span>
 
-#x-large {
-    color :           white;
-    font-size:        <span class="highlight">x-large</span>;
-}
+#x-large <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span> :           <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span class="highlight">x-large</span>;
+<span style="color:turquoise">}</span>
 
-#large {
-    color:            white;
-    font-size:        <span class="highlight">large</span>;
-}
+#large <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span class="highlight">large</span>;
+<span style="color:turquoise">}</span>
 
-#medium {
-    color:            white;
-    font-size:        <span class="highlight">medium</span>;
-}
+#medium <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span class="highlight">medium</span>;
+<span style="color:turquoise">}</span>
 
-#small {
-    color:            white;
-    font-size:        <span class="highlight">small</span>;
-}
+#small <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span class="highlight">small</span>;
+<span style="color:turquoise">}</span>
 
-#x-small {
-    color:            white;
-    font-size:        <span class="highlight">x-small</span>;
-}
+#x-small <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span class="highlight">x-small</span>;
+<span style="color:turquoise">}</span>
 
-#xx-small {
-    color:            white;
-    font-size:        <span class="highlight">xx-small</span>;
-}
+#xx-small <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span class="highlight">xx-small</span>;
+<span style="color:turquoise">}</span>
 
-.m-range {
-    color:            white;
-    font-size:        15px;
-}
-    </code></pre>
-    </div>
+.m-range <span style="color:turquoise">{</span>
+    <span style="color:lime">color</span>:            <span style="color:fuchsia">white</span>;
+    <span style="color:lime">font-size</span>:        <span style="color:fuchsia">15px</span>;
+<span style="color:turquoise">}</span>
+          </code></pre>
+        </div>
+      </div>
+      <br>
 
     <!-- 実行結果 -->
-    <h3 class="ex3">実行結果</h3>
-    <center><img src="./images/css-font-font_size2.png"></center>
-    <hr>
+    <h4 class="ex3">実行結果</h4>
+      <center><img src="./images/css-font-font_size2.png"></center>
+      <hr>
 
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="css-font-font_style.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="keyboard-event-press.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="css-font-font_style.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="keyboard-event-press.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>
