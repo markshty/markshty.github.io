@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">CSS 反復グラデーション</h1>
-    <p class="update">(update:2025/7/25)
+    <p class="update">(update:2026/4/30)
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3>
@@ -28,7 +28,7 @@
           <div class="css-example">
             <pre><code>
 /* 円 */
-#m-label {
+#m-label <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">repeating-linear-gradient(</span>
         <span style="color:fuchsia">-45deg</span>,
         <span style="color:fuchsia">orange</span>,
@@ -36,7 +36,7 @@
         <span style="color:fuchsia">yellow   5px</span>,
         <span style="color:fuchsia">yellow  10px</span>
     <span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
             </code></pre>
           </div>
 
@@ -56,14 +56,14 @@
           <h5 class="ex4">style.css</h5>
           <div class="css-example">
             <pre><code>
-#m-label {
+#m-label<span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">repeating-radial-gradient(</span>
         <span style="color:fuchsia">blue</span>,
         <span style="color:fuchsia">blue   5px</span>,
         <span style="color:fuchsia">white  5px</span>,
         <span style="color:fuchsia">white 10px</span>
     <span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
             </code></pre>
           </div>
 
@@ -75,8 +75,10 @@
     <!-- Sample C++ Program -->
     <a id="SampleProgram" />
     <h2 class="ex21">サンプル プログラム</h2>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -145,28 +147,27 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-    </code></pre>
-    </div>
-    <br>
-    <hr>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+      <hr>
 
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="css-gradient-conic.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="css-font-font_family.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="css-gradient-conic.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="css-font-font_family.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>

@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">画像の読み込み</h1>
-    <p class="update">(update:2025/2/1)</p>
+    <p class="update">(update:2026/4/30)</p>
     <br>
 
     <!-- 説明 -->
@@ -23,8 +23,10 @@
 
     <!-- Sample Program -->
     <h2 class="ex2">サンプル プログラム</h2>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 
 class MyWindow : public Gtk::Window
@@ -54,31 +56,31 @@ int main(int argc, char* argv[])
     auto app = Gtk::Application::create( "gtkmm4.examples" );
     return app->make_window_and_run&lt;MyWindow&gt;(argc, argv);
 }
-    </code></pre>
-    </div>
-    
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
     <!-- 実行結果 -->
     <h2 class="ex3">実行結果</h2>
-    <center><img src="./images/image-read.png"></center>
-    <hr>
+      <center><img src="./images/image-read.png"></center>
+      <hr>
 
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="label-decoration-5convenience.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="image-display.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" summary="Navigation footer">
+      <tr>
+        <td width="10%" align="center"><a href="label-wrap.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="image-display.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>

@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">CSS 放射形グラデーション</h1>
-    <p class="update">(update:2025/7/25)
+    <p class="update">(update:2026/4/30)
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3>
@@ -28,14 +28,14 @@
           <div class="css-example">
             <pre><code>
 /* 円 */
-#m-label1 {
+#m-label1 <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span> <span style="color:fuchsia">circle</span>, yellow 0%, blue 100%<span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
 
 /* 楕円 */
-#m-label2 {
+#m-label2 <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span> <span style="color:fuchsia">ellipse</span> 60% 40%, yellow 0%, blue 100%<span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
             </code></pre>
           </div>
 
@@ -88,7 +88,7 @@
           <div class="css-example">
             <pre><code>
 /* 楕円 closest-side */
-#m-label1 {
+#m-label1 <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
         ellipse <span style="color:fuchsia">closest-side</span>,
         tomato,
@@ -96,10 +96,10 @@
         #00fa9a 50%,
         Bisque 
     <span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
 
 /* 楕円 fathest-corner */ 
-#m-label2 {
+#m-label2 <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
         ellipse <span style="color:fuchsia">farthest-corner</span> at 90% 90%,
         tomato,
@@ -107,10 +107,10 @@
         #00fa9a 50%,
         Bisque
     <span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
 
 /* 円 closest-side */
-#m-label3 {
+#m-label3 <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
         circle <span style="color:fuchsia">closest-side</span> at 25% 75%,
         tomato,
@@ -118,10 +118,10 @@
         #00fa9a 50%,
         Bisque 
     <span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
 
 /* 楕円 半径を<span style="color:fuchsia">％値</span>または<span style="color:fuchsia">長さ</span> */
-#m-label4 {
+#m-label4 <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
         ellipse <span style="color:fuchsia">50% 50px</span>,    /* 水平方向の半径 垂直飛行の半径 */
         tomato,
@@ -129,10 +129,10 @@
         #00fa9a 50%,
         Bisque
     <span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
 
 /* 円 半径を<span style="color:fuchsia">実数</span> */
-#m-label5 {
+#m-label5 <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">radial-gradient(</span>
         circle <span style="color:fuchsia">50px</span>,         /* 半径 */
         tomato,
@@ -140,7 +140,7 @@
         #00fa9a 50%,
         Bisque
     <span style="color:aqua">)</span>;
-}
+<span style="color:turquoise">}</span>
             </code></pre>
           </div>
 
@@ -256,8 +256,10 @@ window {
     <!-- Sample C++ Program -->
     <a id="SampleProgram1"/>
     <h2 class="ex21">サンプル プログラム１</h2>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -330,16 +332,19 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-    </code></pre>
-    </div>
-    <br>
-    <hr>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+      <hr>
 
     <!-- Sample C++ Program -->
     <a id="SampleProgram2" />
     <h2 class="ex21">サンプル プログラム２</h2>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -430,16 +435,19 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-    </code></pre>
-    </div>
-    <br>
-    <hr>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+      <hr>
 
 <!-- Sample C++ Program -->
     <a id="SampleProgram3" />
     <h2 class="ex21">サンプル プログラム３</h2>
-    <div id="pagebody">
-    <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -508,28 +516,27 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-    </code></pre>
-    </div>
-    <br>
-    <hr>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+      <hr>
 
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="css-gradient-linear.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="css-gradient-conic.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="css-gradient-linear.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="css-gradient-conic.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>
