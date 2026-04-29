@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">CSS 線の種類(border-style)</h1>
-    <p class="update">(update:2025/7/25)
+    <p class="update">(update:2026/4/30)
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3>
@@ -66,8 +66,10 @@
       
     <!-- Sample C++ Program -->
     <h2 class="ex21">サンプル プログラム</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -149,105 +151,106 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
       <br>
 
     <!-- Sample Cascading Style Sheet -->
-    <h2 class="ex1">Css</h2>
+    <h3 class="ex1">css</h3>
       <div class="paragraph">
         <div class="css-example">
           <pre><code>
-window {
+window <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-box {
+#m-box <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">margin</span>:           <span style="color:fuchsia">10px</span>;
     <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-none {
+#m-none <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">none</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-dotted {
+#m-dotted <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">dotted</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-dashed {
+#m-dashed <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">dashed</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-solid {
+#m-solid <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-double {
+#m-double <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">double</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-groove {
+#m-groove <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">groove</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-ridge {
+#m-ridge <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">ridge</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-inset {
+#m-inset <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">inset</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-outset {
+#m-outset <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">lightgrey</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">20px</span>;
     <span style="color:lime">color</span>:            <span style="color:fuchsia">red</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">outset</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">5px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">black</span>;
-}
+<span style="color:turquoise">}</span>
           </code></pre>
         </div>
       </div>
@@ -255,28 +258,24 @@ window {
 
     <!-- 実行結果 -->
     <h2 class="ex3">実行結果</h2>
-      <div class="paragraph">
-        <img src="../basic/images/css-border-style.png">  
-      </div>
-    <hr>
+      <center><img src="../basic/images/css-border-style.png"></center>  
+      <hr>
 
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="css-border.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="css-color.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="css-border.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="css-color.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>

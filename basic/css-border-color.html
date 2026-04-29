@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">CSS 枠線の色(border-color)</h1>
-    <p class="update">(update:2025/7/25)
+    <p class="update">(update:2026/4/30)
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3>
@@ -79,8 +79,10 @@
     <!-- Sample C++ Program -->
     <a id="SampleProgram" />
     <h2 class="ex21">サンプル プログラム</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -167,58 +169,59 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
       <br>
 
     <!-- Sample Cascading Style Sheet -->
     <a id="StyleSheet1" />
-    <h2 class="ex41">style1.css</h2>
+    <h3 class="ex41">style1.css</h3>
       <div class="paragraph">
         <div class="css-example">
           <pre><code>
-window {
+window <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-box {
+#m-box <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
     <span style="color:lime">margin</span>:           <span style="color:fuchsia">10px</span>;
     <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>; 
-}
+<span style="color:turquoise">}</span>
 
-#m-label_A {
+#m-label_A <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">aqua</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-label_B {
+#m-label_B <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">#800080</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-label_C {
+#m-label_C <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">rgb(0, 128, 128)</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-label_D {
+#m-label_D <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
     <span style="color:lime">border-radius</span>:    <span style="color:fuchsia">hsl(240, 100%, 50% )</span>;
-}
+<span style="color:turquoise">}</span>
           </code></pre>
         </div>
       </div>
@@ -226,75 +229,73 @@ window {
 
     <!-- Sample Cascading Style Sheet -->
     <a id="StyleSheet2" />
-    <h2 class="ex41">style2.css</h2>
+    <h3 class="ex41">style2.css</h3>
       <div class="paragraph">
         <div class="css-example">
           <pre><code>
-window {
+window <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-box {
+#m-box <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
     <span style="color:lime">margin</span>:           <span style="color:fuchsia">10px</span>;
     <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>; 
-}
+<span style="color:turquoise">}</span>
 
-#m-label_A {
+#m-label_A <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">yellow</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-label_B {
+#m-label_B <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightYellow</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">yellow blue</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-label_C {
+#m-label_C <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">yellow blue lime</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-label_D {
+#m-label_D <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">LightGreen</span>;
     <span style="color:lime">font-size</span>:        <span style="color:fuchsia">25px</span>;
     <span style="color:lime">border-style</span>:     <span style="color:fuchsia">solid</span>;
     <span style="color:lime">border-width</span>:     <span style="color:fuchsia">4px</span>;
     <span style="color:lime">border-color</span>:     <span style="color:fuchsia">Grey</span>;
     <span style="color:lime">border-radius</span>:    <span style="color:fuchsia">yellow blue lime purple</span>;
-}
+<span style="color:turquoise">}</span>
           </code></pre>
         </div>
       </div>
       <br>
+      <hr>
 
-    <hr>
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="css-border-radius.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="css-gradient-linear.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="css-border-radius.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="css-gradient-linear.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>
