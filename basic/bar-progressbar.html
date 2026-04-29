@@ -2,16 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>ProgressBar</title>
+    <title>Gtk::ProgressBar</title>
     <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body>
     <!-- タイトル -->
-    <h1 class="title">ProgressBar</h1>
-    <p class="update">(update:2026/2/18)</p>
+    <h1 class="title">Gtk::ProgressBar</h1>
+    <p class="update">(update:2026/4/30)</p>
     <!-- 説明 -->
     <h2 class="ex1">概  要</h2>
-    <h3 class="ex2">Gtk::ProgressBarとは</h3>
+    <h3 class="ex2">Gtk::ProgressBar</h3>
       <p class="paragraph">Gtk::Progressbarは、「処理の進行状況」や「進行度が不明な処理の活動状態」を視覚的に示すためのウィジットです。</p>
 
     <h3 class="ex1">役　割</h3>
@@ -232,8 +232,10 @@
 <!-- Sample C++ Program -->
     <a id="SampleProgram1"/>
     <h2 class="ex21">サンプル プログラム</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iomanip&gt;
 #include &lt;sstream&gt;
@@ -379,44 +381,42 @@ int main(int argc, char* argv[])
     auto app = Gtk::Application::create( "progress.example" );
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
     <br>
 
     <!-- 実行結果 -->
     <h2 class="ex3">実行結果</h2>
-    <div class="result-table">
-    <table width="50%" summary="Result Display" align="center">
-      <tr>
-        <td width="25%" align="center" valign="top">通常モード</td>
-        <td width="25%" align="center" valign="top">アクティビティモード</td>
-      </tr>
-      <tr>
-        <td width="25%" align="center" valign="top"><img src="./images/bar-progressbar1.png"></td>
-        <td width="25%" align="center" valign="top"><img src="./images/bar-progressbar2.png"></td>
-      </tr>
-    </table>
-    </div>
-    <hr>
+      <div>
+        <table width="50%" summary="Result Display" align="center">
+          <tr>
+            <td width="25%" align="center" valign="top">通常モード</td>
+            <td width="25%" align="center" valign="top">アクティビティモード</td>
+          </tr>
+          <tr>
+            <td width="25%" align="center" valign="top"><img src="./images/bar-progressbar1.png"></td>
+            <td width="25%" align="center" valign="top"><img src="./images/bar-progressbar2.png"></td>
+          </tr>
+        </table>
+      </div>
+      <hr>
 
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="adjustment-spinscale.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="bar-scrollbar.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="adjustment-spinscale.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="bar-scrollbar.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
 
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>

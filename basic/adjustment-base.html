@@ -8,10 +8,10 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">Adjustment(値の範囲と変化量)</h1>
-    <p class="update">(update:2026/1/2)</p>
+    <p class="update">(update:2026/4/30)</p>
     <!-- 説明 -->
     <h2 class="ex1">概  要</h2>
-    <h3 class="ex2">Gtk::Adjustmentとは</h3>
+    <h3 class="ex2">Gtk::Adjustment</h3>
       <p class="paragraph">Gtk::Adjustmentは、「値の範囲と変化量」を表現するオブジェクトです。Gtk::Adjustmentは、単独で値を更新するのではなく、Gtk::SpinButtonやGtk::Scale、Gtk::Scrollbarなどのウィジェットを結びつけます。それによって、複数のウィジェットが同じ調整値を共有し、統一的な動作を実現することができます。</p>
 
     <h3 class="ex1">役　割</h3>
@@ -166,8 +166,10 @@
 <!-- Sample C++ Program -->
     <a id="SampleProgram1"/>
     <h2 class="ex21">サンプル プログラム</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;cmath&gt;
 
@@ -249,32 +251,31 @@ int main(int argc, char* argv[])
     auto app = Gtk::Application::create( "Adjustment.example" );
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
     <br>
 
     <!-- 実行結果 -->
     <h2 class="ex3">実行結果</h2>
-    <center><img src="./images/adjustment-base.png"></center>
-    <hr>
+      <center><img src="./images/application-base.png"></center>
+      <hr>
 
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="volume-control.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="adjustment-spinscale.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" summary="Navigation footer">
+      <tr>
+        <td width="10%" align="center"><a href="./switch.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10" align="center"><a href="./adjustment-spinscale.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>

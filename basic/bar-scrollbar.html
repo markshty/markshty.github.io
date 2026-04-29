@@ -2,16 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>ScrollBar</title>
+    <title>Gtk::ScrollBar</title>
     <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body>
     <!-- タイトル -->
-    <h1 class="title">ScrollBar</h1>
+    <h1 class="title">Gtk::ScrollBar</h1>
     <p class="update">(update:2026/2/18)</p>
     <!-- 説明 -->
     <h2 class="ex1">概  要</h2>
-    <h3 class="ex2">Gtk::ScrollBarBarとは</h3>
+    <h3 class="ex2">Gtk::ScrollBarBar</h3>
       <p class="paragraph">Gtk::ScrollBarは、は「スクロール可能な領域の現在位置を示し、ユーザーがスクロール操作を行うための UI 部品」です。スクロール位置は GtkAdjustment によって管理され、表示領域の大きさやステップ量などもすべて Adjustment が制御します。</p>
 
     <h3 class="ex1">役　割</h3>
@@ -71,8 +71,10 @@
 <!-- Sample C++ Program -->
     <a id="SampleProgram1"/>
     <h2 class="ex21">サンプル プログラム</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;sstream&gt;
 
@@ -138,33 +140,31 @@ int main( int argc, char* argv[] )
   auto app = Gtk::Application::create( "scrollbar.iexample" );
   return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
     <br>
 
     <!-- 実行結果 -->
     <h2 class="ex3">実行結果</h2>
-    <center><img src="./images/bar-scrollbar.png"></center>
-    <hr>
+      <center><img src="./images/bar-scrollbar.png"></center>
+      <hr>
     
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="bar-progressbar.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="bar-actionbar.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" aligny="center">
+      <tr>
+        <td width="10%" align="center"><a href="bar-progressbar.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="bar-actionbar.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
 
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>
