@@ -2,13 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Button</title>
+    <title>Gtk::Button</title>
     <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body>
     <!-- タイトル -->
-    <h1 class="title">Button</h1>
-    <p class="update">(update:2025/12/14)</p>
+    <h1 class="title">Gtk::Button</h1>
+    <p class="update">(update:2026/4/30)</p>
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3>
@@ -62,8 +62,10 @@ Gtk::Button *pbutton = new Gtk::Button( "<span class="highlight">_</span>Click",
 <!-- Sample C++ Program -->
     <a id="SampleProgram1"/>
     <h2 class="ex21">サンプル プログラム1</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm/window.h&gt;
 #include &lt;gtkmm/button.h&gt;
 #include &lt;iostream&gt;
@@ -101,15 +103,18 @@ int main(int argc, char* argv[])
     auto app = Gtk::Application::create( "gtkmm4.example" );
     return app->make_window_and_run&lt;MyWindow&lt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
       <br>
 
     <!-- Sample C++ Program -->
     <a id="SampleProgram2"/>
     <h2 class="ex21">サンプル プログラム2</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm/window.h&gt;
 #include &lt;gtkmm/button.h&gt;
 #include &lt;gtkmm/box.h&gt;
@@ -159,7 +164,8 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
       <br>
 
@@ -220,25 +226,23 @@ int main( int argc, char* argv[] )
         </div>
       </div>
       <br>
+      <hr>
 
-    <hr>
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="image-display.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="button-toggle.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" summary="Navigation footer">
+      <tr>
+        <td width="10%" align="center"><a href="image-display.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="button-toggle.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>
