@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">CSS 画像の表示位置(background-position)</h1>
-    <p class="update">(update:2025/7/25)</p>
+    <p class="update">(update:2026/4/30)</p>
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3>
@@ -28,11 +28,11 @@
           <h5 class="ex4">style.css</h5>
           <div class="css-example">
             <pre><code>
-window {
+window <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">url(</span> <span style="color:fuchsia">"flower.JPG"</span> <span style="color:aqua">)</span>;
     <span style="color:lime">background-repeat</span>: <span style="color:fuchsia">no-repeat</span>;
     <span style="color:lime">background-position</span>: <span style="color:fuchsia">50px 50px</span>;
-}
+<span style="color:turquoise">}</span>
             </code></pre>
           </div>
 
@@ -49,11 +49,11 @@ window {
           <h5 class="ex4">style.css</h5>
           <div class="css-example">
             <pre><code>
-window {
+window <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">url(</span> <span style="color:fuchsia">"flower.JPG"</span> <span style="color:aqua">)</span>;
     <span style="color:lime">background-repeat</span>: <span style="color:fuchsia">no-repeat</span>;
     <span style="color:lime">background-position</span>: <span style="color:fuchsia">50% 50%</span>;
-}
+<span style="color:turquoise">}</span>
             </code></pre>
           </div>
 
@@ -97,11 +97,11 @@ window {
           <h5 class="ex4">style.css</h5>
           <div class="css-example">
             <pre><code>
-window {
+window <span style="color:turquoise">{</span>
     <span style="color:lime">background-image</span>: <span style="color:aqua">url(</span> <span style="color:fuchsia">"flower.JPG"</span> <span style="color:aqua">)</span>;
     <span style="color:lime">background-repeat</span>: <span style="color:fuchsia">no-repeat</span>;
     <span style="color:lime">background-position</span>: <span style="color:fuchsia">center bottom</span>;
-}
+<span style="color:turquoise">}</span>
             </code></pre>
           </div>
 
@@ -115,8 +115,10 @@ window {
     <!-- Sample C++ Program -->
     <a id="SampleProgram" />
     <h2 class="ex21">サンプル プログラム</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -181,28 +183,26 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
-      <br>
+      <hr>
 
-    <hr>
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="css-background-repeat.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="css-border.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="40%" align="center"><a href="css-background-repeat.html">Previous</a></td>
+        <td width="20%" align="center"><a href="../index.html">Top</a></td>
+        <td width="40%" align="center"><a href="css-border.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>

@@ -8,7 +8,7 @@
   <body>
     <!-- タイトル -->
     <h1 class="title">CSS 背景色(background-color)</h1>
-    <p class="update">(update:2025/7/25)</p>
+    <p class="update">(update:2026/4/30)</p>
     <!-- 説明 -->
     <h2 class="ex1"> 概  要</h2>
     <h3>機　能</h3>
@@ -49,8 +49,10 @@
 
     <!-- Sample C++ Program -->
     <h2 class="ex21">サンプル プログラム</h2>
-      <div id="pagebody">
-        <pre><code class="language-c++">
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
 #include &lt;gtkmm.h&gt;
 #include &lt;iostream&gt;
 #include &lt;gtkmm/cssprovider.h&gt;
@@ -126,56 +128,57 @@ int main( int argc, char* argv[] )
     auto app = Gtk::Application::create( "gtkmm4.example" );   
     return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
       <br>
 
     <!-- Sample Cascading Style Sheet -->
-    <h2 class="ex4">Css</h2>
+    <h3 class="ex4">css</h3>
       <div class="paragraph">
         <div class="css-example">
           <pre><code>
-window {
+window <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-box {
+#m-box <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">white</span>;
     <span style="color:lime">margin</span>:           <span style="color:fuchsia">10px</span>;
     <span style="color:lime">padding</span>:          <span style="color:fuchsia">10px</span>; 
-}
+<span style="color:turquoise">}</span>
 
-#m-label_A {
+#m-label_A <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">red</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-label_B {
+#m-label_B <span style="color:turquoise">{</span>
     <span style="color:lime">background-color</span>: <span style="color:fuchsia">#ffa500</span>;
-}
+<span style="color:turquoise">}</span>
 
-#m-label_C {
-    <span style="color:lime">background-color</span>: <span style="color:fuchsia">rgb(255, 255, 0)</span>;
-}
+#m-label_C <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">rgb(</span> <span style="color:fuchsia">255, 255, 0</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
 
-#m-label_D {
-    <span style="color:lime">background-color</span>: <span style="color:fuchsia">rgb(0%, 90%, 0%)</span>;
-}
+#m-label_D <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">rgb(</span> <span style="color:fuchsia">0%, 90%, 0%</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
 
-#m-label_E {
-    <span style="color:lime">background-color</span>: <span style="color:fuchsia">rgba(0, 0, 255, 0.9)</span>;
-}
+#m-label_E <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 0, 255, 0.9</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
 
-#m-label_F {
-    <span style="color:lime">background-color</span>: <span style="color:fuchsia">rgba(0%, 0%, 50%, 0.5)</span>;
-}
+#m-label_F <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0%, 0%, 50%, 0.5</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
 
-#m-label_G {
-    <span style="color:lime">background-color</span>: <span style="color:fuchsia">hsl(300, 100%, 50%)</span>;
-}
+#m-label_G <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">hsl(</span> <span style="color:fuchsia">300, 100%, 50%</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
 
-#m-label_H {
-    <span style="color:lime">background-color</span>: <span style="color:fuchsia">hsla(300, 100%, 50%, 1.0)</span>;
-}
+#m-label_H <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">hsla(</span> <span style="color:fuchsia">300, 100%, 50%, 1.0</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
           </code></pre>
         </div>
       </div>
@@ -183,28 +186,24 @@ window {
     
     <!-- 実行結果 -->
     <h2 class="ex3">実行結果</h2>
-      <div class="paragraph">
-        <img src="../basic/images/css-background-color.png">
-      </div>
-    <hr>
+      <center><img src="../basic/images/css-background-color.png"></center>
+      <hr>
 
     <!-- フッター -->
-    <div class="navifooter">
-      <table width="100%" summary="Navigation footer">
-        <tr>
-          <td width="40%" align="center"><a href="css-color.html">Previous</a></td>
-          <td width="20%" align="center"><a href="../index.html">Top</a></td>
-          <td width="40%" align="center"><a href="css-background-image.html">Next</a></td>
-        </tr>
-      </table>
-    </div>
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="css-color.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="css-background-image.html">Next</a></td>
+      </tr>
+    </table>
     <hr>
-    <div class="footer">
-      <table width="100%" summary="footer">
-        <tr>
-          <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
-        </tr> 
-      </table>
-    </div>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
   </body>
 </html>
