@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::StackSidebar</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::StackSidebar</h1>
+    <p class="update">(update:2026/4/30)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex2">Gtk::StackSidebar</h3>
+      <p class="paragraph">Gtk::StackSidebar は、、GTK4 アプリで「サイドバー形式のページ切り替え UI」を作るための専用ウィジェットです。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <p>Gtk::StackSidebar は Gtk::Stack に含まれるページを自動的にリスト表示し、クリックで切り替えられるサイドバーです。</p> 
+        <ul>
+          <li>Stack の ページのpタイトルを自動で表示</li>
+          <li>ページの切り替え時にStack と同期</li>
+        </ul>
+        <p>つまり、Stack のコントローラー的なユーザインターフェースを提供するウィジットです。</p>
+        <br>   
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">
+        <ol>
+          <li>Gtk::Stack と自動連係</li>
+            <p>Stack のページ一覧を読み取り、ページごとのボタンを自動生成します。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::StackSidebar::set_stack(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis"></span>)</span></p>      
+            <br>
+          <li>ページ切り替えの制御</li>
+            <p>Sidebar をクリックすると Gtk::Stack の visible_child が切り替わります。逆に、Stack 側でページを切り替えると Sidebar の選択も追従します。</p>
+            <br>
+          <li>CSS で簡単にスタイル変更</li>
+            <p>Gtk::StackSidebar では、CSS でサイドバーの背景・選択色・フォントなどを自由に変更できます。</p>
+            <br>
+        </ol>
+        <br>
+      </div>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+    <h3 class="ex1">考え方</h3>
+      <div class="paragraph">
+        <p>Gtk::Stack に表示するページを登録し、その後、Gtk::Stack を Gtk::StackSwitcher に結びつけます。</p>
+      </div>
+
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+        <ol>
+          <li>child widget の宣言</li>
+            <p>Gtk::StackSidebar、Gtk::Stack を宣言します。</li>
+          <li>Gtk::Stack とGtk::StackSidebar の連携</li>
+            <p>Gtk::StackSidebar::set_stack() を用いて、Gtk::Stack とGtk::StackSidebar の連携を行います。</p>
+          <li>Gtk::StackSidebar を Gtk::Box に格納</li>
+            <p>Gtk::Box::append() を用いて、Gtk::StackSidebar を Gtk::Box に格納します。</p>
+        </ol>
+      </div>
+
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    void add_page(const Glib::ustring& text,
+                  const Glib::ustring& name,
+                  const Glib::ustring& title);
+
+    Gtk::Stack stack;
+   // <span class="emphasis3">1.child widget の宣言</span>
+    <span class="emphasis">Gtk::StackSidebar sidebar</span>;
+    Gtk::Box hbox{ Gtk::Orientation::HORIZONTAL };
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "StackSidebar" );
+    set_default_size( 500, 350 );
+
+   // CSS 読み込み
+    auto provider = Gtk::CssProvider::create();
+    provider->load_from_path( "style.css" );
+
+    Gtk::StyleContext::add_provider_for_display(
+        Gdk::Display::get_default(), provider,
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+
+   // Stack 設定
+    stack.set_transition_type( Gtk::StackTransitionType::SLIDE_LEFT_RIGHT );
+    stack.set_transition_duration( 300 );
+
+    add_page( "This is Page 1", "page1", "Page One" );
+    add_page( "This is Page 2", "page2", "Page Two" );
+    add_page( "This is Page 3", "page3", "Page Three" );
+
+   // <span class="emphasis5">2.Gtk::Stack とGtk::StackSidebar の連携</span>
+    sidebar.<span class="emphasis">set_stack(</span> stack <span class="emphasis">)</span>;
+
+   // <span class="emphasis5">3.Gtk::StackSidebar を Gtk::Box に格納</span>
+    hbox.<span class="emphasis">append(</span> sidebar <span class="emphasis">)</span>;
+    hbox.append( stack );
+
+    set_child( hbox );
+}
+
+void MyWindow::add_page(const Glib::ustring& text,
+                  const Glib::ustring& name,
+                  const Glib::ustring& title)
+{
+    auto label = Gtk::make_managed&lt;Gtk::Label&gt;( text );
+    label->set_vexpand( true );
+    label->set_hexpand( true );
+
+    stack.add( *label, name, title );
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "stacksidebar.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+          </code></pre>
+        </div>>
+      </div>
+    <br>
+
+<!-- Sample Cascading Style Sheet -->
+    <h3 class="ex1">Css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+/* Sidebar 全体 */
+stacksidebar <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#f7f7f7</span>;
+    <span style="color:lime">border-right</span>: <span style="color:fuchsia">1px solid #d0d0d0</span>;
+<span style="color:turquoise">}</span>
+
+/* 行の基本スタイル */
+stacksidebar <span style="color:yellow">row</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">padding</span>: <span style="color:fuchsia">10px 14px</span>;
+    <span style="color:lime">border-left</span>: <span style="color:fuchsia">4px solid transparent</span>;
+    <span style="color:lime">transition</span>: <span style="color:fuchsia">background 150ms ease, border-color 150ms ease</span>;
+<span style="color:turquoise">}</span>
+
+/* ホバー */
+stacksidebar <span style="color:yellow">row</span>:<span style="color:red">hover</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#ececec</span>;
+<span style="color:turquoise">}</span>
+
+/* 選択行（アクティブページ） */
+stacksidebar <span style="color:yellow">row</span>:<span style="color:red">selected</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#e6f2ff</span>;
+    <span style="color:lime">border-left</span>: <span style="color:fuchsia">4px solid #007acc</span>;
+    <span style="color:lime">font-weight</span>: <span style="color:fuchsia">600</span>;
+<span style="color:turquoise">}</span>
+
+/* フォーカス（キーボード操作） */
+stacksidebar <span style="color:yellow">row</span>:<span style="color:red">focus</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">outline</span>: <span style="color:fuchsia">none</span>;
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#dcecff</span>;
+<span style="color:turquoise">}</span>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+      <center><img src="./images/container-stacksidebar.png"></center>
+      <hr>
+
+    <!-- フッター -->
+    <table width="100%" align=center></table>
+    <tr>
+      <td width="10%" align="center"><a href="./container-stackswitcher.html">Previous</a></td>
+      <td width="80%" align="center"><a href="../index.html">Top</a></td>
+      <td width="10%" align="center"><a href="">Next</a></td>
+    </tr>
+    </table>
+    <hr>
+
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
+  </body>
+</html>

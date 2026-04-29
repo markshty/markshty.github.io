@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::Stack</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::Stack</h1>
+    <p class="update">(update:2026/4/30)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex4">Gtk::Stack</h3>
+      <p class="paragraph">Gtk::Stack は、 とは、複数の子ウィジェットを重ねて保持し、そのうち1つだけを表示するコンテナです。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <p>Gtk::Stack は、</p> 
+        <ul>
+          <li>“ページ切り替えコンテナ”</li>
+          <li>“画面遷移のためのビュー管理”</li>
+          <li>“タブ・ウィザード・設定画面の切り替え”</li>
+        </ul>
+        <p>といった用途に用いることができます。</p>
+        <br>   
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">
+        <ol>
+          <li>複数ページの管理</li>       
+            <ul class="ul1">
+              <li>add()</li>
+                <p>Gtk::Stack は複数の子ウィジェットを「ページ」として登録します。</p>
+                <table width="100%" border="0" align="left">
+                  <tr>
+                    <th width="30%"><span class="emphasis6">Glib::RefPtr&lt;Gtk::StackPage&gt;</span></th>
+                    <td width="15%"><span class="emphasis">Gtk::Stack::add</span></td>
+                    <td width="2%"><span class="emphasis">(</span></td>
+                    <td width="23%"><span class="emphasis2">Gtk::Widget&</span></td>
+                    <td width="5%"><span class="emphasis4">child</span>,</td>
+                    <td width="15%">// 子ウィジット</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" rowspan="3"></td>
+                    <td width="15%" rowspan="3"></td>
+                    <td width="2%"  rowspan="2"></td>
+                    <td width="23%"><span class="emphasis2">const Glib::ustring&</span></td>
+                    <td width="5%"><span class="emphasis4">name</span>,</td>
+                    <td width="15%">// 名前</td>
+                  </tr>
+                  <tr>
+                    <td width="23%"><span class="emphasis2" rowspan="2">const Glib::ustring&</span></td>
+                    <td width="5%"><span class="emphasis4" rowspan="2">title</span></td>
+                    <td width="15%">// タイトル</td>
+                  </tr>
+                  <tr>
+                    <td width="2%"><span class="emphasis">)</span></td>
+                  </tr>
+                </table>
+                <p style="clear:both"></p>      
+                <br>
+              <li>set_visible_child()</li>
+                <p>1 引数として指定されているスタックの子ウィジットを表示できるように切り替えます。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Stack::set_visible_child(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis">)</span></p>
+                <p>2 引数として指定されている名前(name)の子ウィジットを表示できるように切り替えます。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Stack::set_visible_child(</span> <span class="emphasis2">const Glib::ustring&</span> <span class="emphasis4">name</span> <span class="emphasis">)</span></p>
+                <br>
+              <li>get_visible_child_name()</li>
+                <p>現在表示されているスタックの子ウィジットの名前を返します。</p>
+                <p><span class="emphasis6">Glib::ustring</span> <span class="emphasis">Gtk::Stack::get_visible_child_name()</span> <span class="emphasis7">const</span></p>
+                <br>
+            </ul>
+
+          <li>アニメーション付きのページ切り替え</li>
+            <ul class="ul1">
+              <li>set_transition_type()</li>
+                <p>Gtk::Stack がページを切り替えるときのアニメーション効果を指定するメソッドです。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Stack::set_transition_type(</span> <span class="emphasis2">Gtk::StackTransitionType</span> <span class="emphasis4">transition</span> <span class="emphasis">)</span></p>
+                <table width="95%" border="0" cellspacong="1" bgcolor="#000000">
+                  <tr>
+                    <th class="table_heading" colspan="2">Gtk::StackTransitionType</th>
+                  </tr>
+                  <tr>
+                    <th width="45%" class="table_heading">記　号</th>
+                    <th width="50%" class="table_heading">内　容</th>
+                  </tr>
+                  <tr>
+                    <td width="45%" class="table_cell">NONE</td>
+                    <td width="50%" class="table_cell">アニメーション無し。瞬時に切り替わる。</td>
+                  </tr>
+                  <tr>
+                    <td width="45%" class="table_cell">CROSSFADE</td>
+                    <td width="50%" class="table_cell">フェードしながら切り替わる。</td>      
+                  </tr>
+                  <tr>
+                    <td width="45%" class="table_cell">SLIDE_LEFT/SLIDE_RIGHT/SLIDE_UP/SLIDE_DOWN</td>
+                    <td width="50%" class="table_cell">ページがスライドして入れ替わる。</td>
+                  </tr>
+                  <tr>
+                    <td width="45%" class="table_cell">OVER_UP/OVER_DOWN/OVER_LEFT/OVER_RIGHT</td>
+                    <td width="50%" class="table_cell">新しいページが上からかぶさるように表示される。</td>
+                  </tr>
+                  <tr>
+                    <td width="45%" class="table_cell">UNDER_UP/UNDER_DOWN/UNDER_LEFT/UNDER_RIGHT</td>
+                    <td width="50%" class="table_cell">現在のページが下に潜り込むように切り替わる。</td>
+                  </tr>
+                </table>
+                <br>
+              <li>set_transition_duration()</li>
+                <p>Gtk::Stack がページを切り替えるときの時間を指定します。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Stack::set_transition_duration(</span> <span class="emphasis2">guint</span> <span class="emphasis4">duration</span> <span class="emphasis">)</span></p>
+                <p>※ guint duration : ミリ秒</p>
+                <br>
+            </ul>
+
+          <li>Gtk::StackSwitcher / Gtk::StackSidebar と連携</li>
+            <p>Gtk::Stack の特徴として、ページ切り替えのユーザーインターフェースを自動的に生成できる点があります。</p>
+            <ul class="ul1">
+              <li>Gtk::StackSwitcher</li>
+                <p>ヘッダーバーなどに置くと、タブのような切り替えボタンを自動生成します。Gtk::Stack に接続すると、ページタイトルなどを自動的に読み取ってユーザーインターフェースを構築します。</p>
+                <br>
+              <li>Gtk::StackSidebar</li>
+                <p>左側にナビゲーションリストを作るユーザーインターフェースに適しています。</p>
+                <br>
+            </ul>
+            <br>
+        </ol>
+        <br>
+      </div>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+    <h3 class="ex1">考え方</h3>
+      <div class="paragraph">
+        <p>Gtk::Popover にメニューの内容を登録し、その後、Gtk::Popover を Gtk::MenuButton に結びつけます。</p>
+      </div>
+
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+        <ol>
+          <li>child widget の宣言</li>
+            <p>Gtk::Stack、Gtk::StackSwitcher を宣言します。</li>
+          <li>アニメーション付きの表示切替</li>
+            <p>set_transition_type() を用いて、Gtk::Stackがページを切り替えるときのアニメーション効果を指定します。</p>
+            <p>ｻﾝﾌﾟﾙﾌﾟﾛｸﾞﾗﾑでは、スタックのページは、子ウィジットの要求に応じて左または右向きに切り替わります。</p>
+          <li>アニメーションを表示する時間の指定</li>
+            <p>set_transition_duration() を用いて、Gtk::Stackがページを切り替えるときの時間をミリ秒単位で指定します。</p>
+          <li>Gtk::Stack とGtk::StackSwitcher の連携</li>
+            <p>Gtk::StackSwitcher::set_stack() を用いて、Gtk::Stack とGtk::StackSwitcher の連携を行います。</p>
+          <li>ページの登録</li>
+            <p>add() を用いて、Gtk::Stack にページを登録していきます。</p>
+          <li>ページの切替（表示）</li>
+            <p>set_visible_child() を用いて、引数として指定されているスタックの子ウィジットを表示します。</p>
+          <li>ページの名前の取得</li>
+            <p>get_visible_child_name() を用いて現在表示されているページの名前を返します。</p>
+        </ol>
+      </div>
+
+      <h3 class="ex1">リスト</h3>
+        <div class="paragraph">
+          <div id="pagebody2">
+            <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;cmath&gt;
+#include &lt;vector&gt;
+#include &lt;random&gt;
+
+//
+// =============================
+//  クラス宣言（ヘッダ部）
+// =============================
+//
+
+// HSV → RGB
+void hsv_to_rgb(double h, double s, double v, double& r, double& g, double& b);
+
+// Page1：色相環
+class HueCircle : public Gtk::DrawingArea {
+public:
+    HueCircle();
+    virtual ~HueCircle() = default;
+private:
+    bool on_timeout();
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+    double angle_offset;
+};
+
+// Page2：Composition
+class CompositionArea : public Gtk::DrawingArea {
+public:
+    CompositionArea();
+    virtual ~CompositionArea() = default;
+private:
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+};
+
+// Page3：グラデーション
+class BluePulseArea : public Gtk::DrawingArea {
+public:
+    BluePulseArea();
+    virtual ~BluePulseArea() = default;
+private:
+    bool on_timeout();
+    void on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height);
+    double phase;
+};
+
+// メインウィンドウ
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+private:
+    template&lt;typename T&gt;
+    void add_page( const Glib::ustring& name, const Glib::ustring& title );
+
+    void go_next();
+    void go_prev();
+    int get_current_index();
+   // <span class="emphasis3">1.child widget の宣言</span>
+    <span class="emphasis">Gtk::Stack* stack</span>;
+    <span class="highlight">Gtk::StackSwitcher* switcher</span>;
+    Gtk::Box vbox;
+
+    Gtk::Button prev_btn;
+    Gtk::Button next_btn;
+
+    std::vector&lt;Glib::ustring&gt; page_ids;
+};
+
+
+//
+// =============================
+//  メソッド定義（実装部）
+// =============================
+//
+
+// HSV → RGB
+void hsv_to_rgb(double h, double s, double v, double& r, double& g, double& b)
+{
+    double c = v * s;
+    double x = c * ( 1 - std::fabs( std::fmod(h / 60.0, 2 ) - 1 ));
+    double m = v - c;
+
+    double rp, gp, bp;
+
+    if (h &lt; 60)      { rp = c; gp = x; bp = 0; }
+    else if (h &lt; 120){ rp = x; gp = c; bp = 0; }
+    else if (h &lt; 180){ rp = 0; gp = c; bp = x; }
+    else if (h &lt; 240){ rp = 0; gp = x; bp = c; }
+    else if (h &lt; 300){ rp = x; gp = 0; bp = c; }
+    else             { rp = c; gp = 0; bp = x; }
+
+    r = rp + m;
+    g = gp + m;
+    b = bp + m;
+}
+
+//
+// -----------------------------
+// HueCircle
+// -----------------------------
+HueCircle::HueCircle()
+ : angle_offset(0.0)
+{
+    set_content_width( 300 );
+    set_content_height( 300 );
+
+    set_draw_func( sigc::mem_fun( *this, &HueCircle::on_draw ));
+
+    Glib::signal_timeout().connect(
+        sigc::mem_fun( *this, &HueCircle::on_timeout ), 16 );
+}
+
+bool HueCircle::on_timeout() {
+    angle_offset += 0.5;
+    if ( angle_offset >= 360.0 ) angle_offset -= 360.0;
+
+    queue_draw();
+    return true;
+}
+
+void HueCircle::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height)
+{
+    double cx = width / 2.0;
+    double cy = height / 2.0;
+    double radius = std::min(width, height) / 2.0 - 10;
+
+    for (int angle = 0; angle &lt; 360; angle++) {
+        double r, g, b;
+        hsv_to_rgb( std::fmod( angle + angle_offset, 360.0 ), 1.0, 1.0, r, g, b );
+
+        cr->set_source_rgb( r, g, b );
+        cr->move_to( cx, cy );
+        cr->arc(cx, cy, radius, angle * M_PI / 180.0,
+                ( angle + 1 ) * M_PI / 180.0);
+        cr->close_path();
+        cr->fill();
+    }
+}
+
+//
+// -----------------------------
+// CompositionArea
+// -----------------------------
+CompositionArea::CompositionArea() {
+    set_content_width( 300 );
+    set_content_height( 300 );
+
+    set_draw_func( sigc::mem_fun( *this, &CompositionArea::on_draw ));
+}
+
+void CompositionArea::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height)
+{
+    cr->set_source_rgb( 1, 1, 1 );
+    cr->paint();
+
+    double line_w = 12.0;
+    cr->set_line_width( line_w );
+    cr->set_source_rgb( 0, 0, 0 );
+
+    double w = width;
+    double h = height;
+
+    // 固定レイアウトの縦線
+    cr->move_to( w * 0.33, 0 );
+    cr->line_to( w * 0.33, h );
+    cr->stroke();
+
+    cr->move_to( w * 0.66, 0 );
+    cr->line_to( w * 0.66, h );
+    cr->stroke();
+
+    // 固定レイアウトの横線
+    cr->move_to( 0, h * 0.4 );
+    cr->line_to( w, h * 0.4 );
+    cr->stroke();
+
+    cr->move_to( 0, h * 0.75 );
+    cr->line_to( w, h * 0.75 );
+    cr->stroke();
+
+    // 赤
+    cr->set_source_rgb( 0.9, 0.1, 0.1 );
+    cr->rectangle( 0, 0, w * 0.33 - line_w/2, h * 0.4 - line_w/2 );
+    cr->fill();
+
+    // 青
+    cr->set_source_rgb( 0.1, 0.1, 0.8 );
+    cr->rectangle( w * 0.66 + line_w/2, 0, w - w * 0.66, h * 0.4 - line_w/2 );
+    cr->fill();
+
+    // 黄
+    cr->set_source_rgb( 0.95, 0.9, 0.1 );
+    cr->rectangle( 0, h * 0.75 + line_w/2, w * 0.33 - line_w/2, h - h * 0.75 );
+    cr->fill();
+}
+
+//
+// -----------------------------
+// BluePulseArea
+// -----------------------------
+BluePulseArea::BluePulseArea()
+: phase( 0.0 )
+{
+    set_content_width( 300 );
+    set_content_height( 300 );
+
+    set_draw_func(sigc::mem_fun( *this, &BluePulseArea::on_draw ));
+
+    Glib::signal_timeout().connect(
+        sigc::mem_fun( *this, &BluePulseArea::on_timeout ), 16 );
+}
+
+bool BluePulseArea::on_timeout() {
+    phase += 0.03;
+    if ( phase > 2 * M_PI )
+        phase -= 2 * M_PI;
+
+    queue_draw();
+    return true;
+}
+
+void BluePulseArea::on_draw(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height)
+{
+    double cx = width / 2.0;
+    double cy = height / 2.0;
+    double radius = std::min( width, height ) / 2.0;
+
+    double pulse = 1.0 + 0.2 * std::sin( phase );
+
+    auto grad = Cairo::RadialGradient::create(
+        cx, cy, 0,
+        cx, cy, radius * pulse
+    );
+
+    grad->add_color_stop_rgb( 0.0, 0.4, 0.6, 1.0 );
+    grad->add_color_stop_rgb( 0.5, 0.1, 0.2, 0.6 );
+    grad->add_color_stop_rgb( 1.0, 0.02, 0.05, 0.15 );
+
+    cr->set_source( grad );
+    cr->rectangle( 0, 0, width, height );
+    cr->fill();
+}
+
+//
+// -----------------------------
+// MainWindow
+// -----------------------------
+MyWindow::MyWindow() {
+    set_title( "Stack" );
+    set_default_size( 520, 510 );
+
+    // 外部 CSS
+    auto css = Gtk::CssProvider::create();
+    css->load_from_path( "style.css" );
+
+    Gtk::StyleContext::add_provider_for_display(
+        Gdk::Display::get_default(),
+        css,
+        GTK_STYLE_PROVIDER_PRIORITY_USER
+    );
+
+    stack = Gtk::make_managed&lt;Gtk::Stack&gt;();
+   // <span class="emphasis5">2.アニメーションの設定</span>
+    stack-><span class="emphasis">set_transition_type(</span> Gtk::StackTransitionType::SLIDE_LEFT_RIGHT <span class="emphasis">)</span>;
+   // <span class="emphasis5">3.アニメーションを表示する時間の設定</span>
+    stack-><span class="emphasis">set_transition_duration(</span> 300 <span class="emphasis">)</span>;
+
+    add_page&lt;HueCircle&gt;( "hue", "Hue Circle" );
+    add_page&lt;CompositionArea&gt;( "comp", "Composition" );
+    add_page&lt;BluePulseArea&gt;( "pulse", "Blue Pulse" );
+
+    switcher = Gtk::make_managed&lt;Gtk::StackSwitcher&gt;();
+   // <span class="emphasis5">4.Gtk::Stack とGtk::StackSwitcher の連携</span>
+    switcher-><span class="highlight">set_stack(</span> *stack <span class="highlight">)</span>;
+
+    prev_btn.set_label( "← Prev" ) ;
+    next_btn.set_label( "Next →" );
+
+    prev_btn.signal_clicked().connect([this] { go_prev(); });
+    next_btn.signal_clicked().connect([this] { go_next(); });
+
+    auto btn_box = Gtk::make_managed&lt;Gtk::Box&gt;( Gtk::Orientation::HORIZONTAL );
+    btn_box->set_spacing( 10 );
+    btn_box->set_halign( Gtk::Align::CENTER );
+
+    btn_box->append( prev_btn );
+    btn_box->append( next_btn );
+
+    vbox.set_orientation( Gtk::Orientation::VERTICAL );
+    vbox.set_spacing( 12 );
+    vbox.set_margin( 12 );
+
+    vbox.append( *switcher );
+    vbox.append( *stack );
+    vbox.append( *btn_box );
+
+    set_child( vbox );
+}
+
+template&lt;typename T&gt;
+void MyWindow::add_page( const Glib::ustring& name, const Glib::ustring& title ) {
+    auto area = Gtk::make_managed&lt;T&gt;();
+   // <span class="emphasis5">5.ページの登録</span>
+    stack-><span class="emphasis">add(</span> *area, name, title <span class="emphasis">)</span>;
+    page_ids.push_back( name );
+}
+
+void MyWindow::go_next() {
+    int idx = get_current_index();
+    idx = ( idx + 1 ) % page_ids.size();
+   // <span class="emphasis5">6.ページの切替（表示）</span>
+    stack-><span class="emphasis">set_visible_child(</span> page_ids[idx] <span class="emphasis">)</span>;
+}
+
+void MyWindow::go_prev() {
+    int idx = get_current_index();
+    idx = ( idx - 1 + page_ids.size() ) % page_ids.size();
+   // <span class="emphasis5">6.ページの切替（表示）</span>
+    stack-><span class="emphasis">set_visible_child(</span> page_ids[idx] <span class="emphasis">)</span>;
+}
+
+int MyWindow::get_current_index() {
+   // <span class="emphasis5">7.現在表示されているページの取得</span>
+    Glib::ustring current = stack-><span class="emphasis">get_visible_child_name()</span>;
+    for ( size_t i = 0; i &lt; page_ids.size(); i++ ) {
+        if ( page_ids[i] == current ) return i;
+    }
+    return 0;
+}
+
+//
+// -----------------------------
+// main
+// -----------------------------
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "stack.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+          </code></pre>
+        </div>
+      </div>
+    <br>
+
+<!-- Sample Cascading Style Sheet -->
+    <h3 class="ex1">Css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+window <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#f2f2f5</span>;
+<span style="color:turquoise">}</span>
+
+stack <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">white</span>;
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">12px</span>;
+    <span style="color:lime">padding</span>: <span style="color:fuchsia">12px</span>;
+    <span style="color:lime">box-shadow</span>: <span style="color:fuchsia">0 0 12px</span> <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0,0,0,0.15</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
+
+stackswitcher <span style="color:yellow">button</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">padding</span>: <span style="color:fuchsia">8px 16px</span>;
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">8px</span>;
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#e0e0e5</span>;
+    <span style="color:lime">border</span>: <span style="color:fuchsia">none</span>;
+    <span style="color:lime">margin-right</span>: <span style="color:fuchsia">6px</span>;
+<span style="color:turquoise">}</span>
+
+stackswitcher <span style="color:yellow">button</span>:<span style="color:red">hover</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#d0d0d5</span>;
+<span style="color:turquoise">}</span>
+
+stackswitcher <span style="color:yellow">button</span>:<span style="color:red">checked</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#4a90e2</span>;
+    <span style="color:lime">color</span>: <span style="color:fuchsia">white</span>;
+<span style="color:turquoise">}</span>
+
+<span style="color:yellow">button</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">padding</span>: <span style="color:fuchsia">8px 16px</span>;
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">8px</span>;
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#e0e0e5</span>;
+    <span style="color:lime">border</span>: <span style="color:fuchsia">none</span>;
+    <span style="color:lime">box-shadow</span>: <span style="color:fuchsia">0 2px 4px</span> <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0,0,0,0.2</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
+
+<span style="color:yellow">button</span>:<span style="color:red">hover</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#d0d0d5</span>;
+<span style="color:turquoise">}</span>
+
+<span style="color:yellow">button</span>:<span style="color:red">active</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#c0c0c5</span>;
+<span style="color:turquoise">}</span>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+    <div class="paragraph">
+      <div class="result-example">
+        <table width="81%" border="0" cellspacong="1" bgcolor="#23ff91" align="left">
+          <tr>
+            <th bgcolor="#23ff91" colspan="3"><font color="#ffffff">Gtk::Stack</font></th>
+          </tr>
+          <tr>
+            <td width="27%" class="table_heading">Hue Circlue</td>
+            <td width="27%" class="table_heading">Composition</td>
+            <td width="27%" class="table_heading">Blue Pulse</td>
+          </tr>
+          <tr>
+            <td width="27%" class="table_heading"><img src="./images/container-stack1.png" width="240px"></td>
+            <td width="27%" class="table_heading"><img src="./images/container-stack2.png" width="240px"></td>
+            <td width="27%" class="table_heading"><img src="./images/container-stack3.png" width="240px"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <hr>
+
+    <!-- フッター -->
+    <table width="100%" align=center>
+      <tr>
+        <td width="10%" align="center"><a href="./container-grid.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="./container-stackswitcher.html">Next</a></td>
+      </tr>
+    </table>
+    <hr>
+
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
+  </body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::Overlay</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::Overlay</h1>
+    <p class="update">(update:2026/4/30)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex5">Gtk::Overlay</h3>
+      <p class="paragraph">Gtk::Overlay は、1つのメインウィジェットの上に、複数の補助ウィジェットを重ねて配置するためのコンテナです。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <ul>
+          <li>メインコンテンツ（例：描画領域、Stack、スクロールビュー）</li>
+          <li>その上に重ねるユーザーインターフェース（例：HUD、トースト、フローティングボタン、ガイド線、アニメーション）</li>
+        </ul>
+        <p>という構造を作成することができます。</p>
+        <br>   
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">
+        <ol>
+          <li>Gtk::Overlay にメインコンテンツを配置</li>
+            <p>set_child() を使って、引数として指定したウィジットをメインコンテンツとして Gtk::Overlay に配置します。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Overlay::set_child(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis"></span>)</span></p>      
+            <br>
+          <li>Gtk::Overlay にサブコンテンツを配置</li>
+            <p>add_overlay() を使って、引数として指定したウィジットをサブコンテンツとして Gtk::Overlay に重ねて表示します。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Overlay::add_overlay(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis"></span>)</span></p>      
+            <br>
+          <li>サブコンテンツの書式を指定</li>
+            <p>css を用いて、Gtk::Overlay 上にサブコンテンツとして表示するウイジットの背景色、文字の色・フォント・サイズや枠線・枠線の印影などを自由に変更することができます。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Widget::add_css_class(</span> <span class="emphasis2">const Glib::ustring&</span> <span class="emphasis4">css_class</span> <span class="emphasis"></span>)</span></p>      
+            <br>
+          <li>サブコンテンツの配置を指定</li>
+            <p>Gtk::Overlay 上にサブコンテンツとして表示するウイジットの配置される位置を指定します。</p>
+            <ul class="ul1">
+              <li>水平方向</li>
+                <p>Gtk::Overlay 上で水平方向での左端(<span class="emphasis">Gtk::Align::START</span>)・中央(<span class="emphasis">Gtk::Align::CENTER</span>)・右端(<span class="emphasis">Gtk::Align::END</span>)の位置を指定します。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Widget::set_halign(</span> <span class="emphasis2">Gtk::Align</span> <span class="emphasis4">align</span> <span class="emphasis"></span>)</span></p>      
+                <br>
+              <li>鉛直方向</li>
+                <p>Gtk::Overlay 上で水平方向での上端(<span class="emphasis">Gtk::Align::START</span>)・中央(<span class="emphasis">Gtk::Align::CENTER</span>)・下端(<span class="emphasis">Gtk::Align::END</span>)の位置を指定します。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Widget::set_valign(</span> <span class="emphasis2">Gtk::Align</span> <span class="emphasis4">align</span> <span class="emphasis"></span>)</span></p>      
+                <br>
+              <li>余白・マージン</li>
+                <p>Gtk::Overlay 上に表示するウイジットの余白・マージンを指定します。set_margin() では、上下左右に同じ余白を指定します。また、各辺ごとに余白を指定することもできます(上:set_margin_top()、下:set_margin_bottom()他)。</p>
+                <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::Widget::set_margin(</span> <span class="emphasis2">int</span> <span class="emphasis4">margin</span> <span class="emphasis"></span>)</span></p>      
+                <br>
+            </ul>
+
+        </ol>
+        <br>
+      </div>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+    <h3 class="ex1">考え方</h3>
+      <div class="paragraph">
+        <p>Gtk::Stack に表示するページを登録し、その後、Gtk::Stack を Gtk::StackSwitcher に結びつけます。</p>
+      </div>
+
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+        <ol>
+          <li>child widget の宣言</li>
+            <p>Gtk::Overlay を<span class="emphasis">宣言</span>します。</li>
+            <br>
+          <li>親ウイジットへのセット</li>
+            <p>Gtk::Overlay を<span class="emphasis">親ウイジット</span>である Gtk::Window <span class="emphasis">にセット</span>します。</p>
+            <br>
+          <li>Gtk::Overlay にメインコンテンツをセット</li>
+            <p>Gtk::Overlay に<span class="emphasis">メインコンテンツ</span>となる Gtk::DrawingArea <span class="emphasis">をセット</span>します。</p>
+            <br>
+          <li>Gtk::Overlay にサブコンテンツをセット</li>
+            <ul class="ul1">
+              <li>サブコンテンツとなるウイジットの<span class="emphasis">書式</span>を <span class="emphasis">css</span> で、指定します。</li>
+              <li>サブコンテンツとなるウイジットの<span class="emphasis">配置</span>をプロパティとなる<span class="emphasis">メソッド</span>で指定します。</li>
+              <li>サブコンテンツとなるウイジットを add_overlay() を使って、Gtk::Overlay にセットし、メインコンテンツの上に<span class="emphasis">重ねて表示</span>します。</li>
+            </ul>
+            <br>
+        </ol>
+      </div>
+
+      <h3 class="ex1">リスト</h3>
+        <div class="paragraph">
+          <div id="pagebody2">
+            <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;chrono&gt;
+#include &lt;deque&gt;
+#include &lt;fstream&gt;
+#include &lt;sstream&gt;
+#include &lt;cmath&gt;
+#include &lt;algorithm&gt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+   // <span class="emphasis3">1.child widget の宣言</span>
+    <span class="emphasis">Gtk::Overlay* m_overlay</span>;
+    Gtk::DrawingArea* m_area;
+    Gtk::Label *fps_label, *cpu_label, *mem_label;
+
+    std::chrono::steady_clock::time_point last_time;
+    int frame_count = 0;
+
+    bool cpu_initialized = false;
+    bool mem_initialized = false;
+
+    long last_user=0, last_nice=0, last_system=0, last_idle=0;
+
+    std::deque&lt;int&gt; cpu_history;
+    std::deque&lt;int&gt; mem_history;
+    const size_t max_points = 100;
+
+    void on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height );
+    void draw_grid( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int y, int h );
+
+    void draw_minmax_lines( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr,
+                           const std::deque&lt;int&gt;& data,
+                           int width, int y, int h,
+                           double r, double g, double b,
+                           const std::string& label_prefix );
+
+    void draw_text( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr,
+                   const std::string& text,
+                   double x, double y,
+                   double r, double g, double b, double a );
+
+    void draw_graph(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr,
+                    const std::deque&lt;int&gt;& data,
+                    int width, int y, int h,
+                    double r, double g, double b);
+
+    bool update_hud();
+    void update_fps();
+    void update_cpu();
+    void update_mem();
+    void push_history( std::deque&lt;int&gt;& dq, int value );
+    void load_css();
+};
+
+MyWindow::MyWindow()
+ : last_time( std::chrono::steady_clock::now() )
+{
+    set_title( "Overlay" );
+    set_default_size( 640, 480 );
+
+    load_css();
+
+    m_overlay = Gtk::make_managed&lt;Gtk::Overlay&gt;();
+   // <span class="emphasis3">2.Gtk::Overlay を 親ウイジットである Gtk::Window にセット</span>
+    <span class="emphasis">set_child(</span> *m_overlay <span class="emphasis">)</span>;
+
+    m_area = Gtk::make_managed&lt;Gtk::DrawingArea&gt;();
+    m_area->set_draw_func(sigc::mem_fun( *this, &MyWindow::on_draw ));
+   // <span class="emphasis3">3.Gtk::Overlay にメインコンテンツをセット</span> 
+    m_overlay-><span class="emphasis">set_child(</span> *m_area <span class="emphasis">)</span>;
+
+   // <span class="emphasis3">4.Gtk::Overlay にサブコンテンツをセット</span>
+    // --- HUD ラベル ---
+    // fps
+    fps_label = Gtk::make_managed&lt;Gtk::Label&gt;( "FPS: 0" );
+    // <span class="emphasis3">4.1 css を用いて、Gtk::Label の書式を設定</span>
+    fps_label-><span class="emphasis4">add_css_class(</span> "hud-box" <span class="emphasis4">)</span>;
+    // <span class="emphasis3">4.2 Gtk::Overlay の中での配置を指定</span>
+    fps_label-><span class="highlight">set_halign(</span> Gtk::Align::START <span class="highlight">)</span>; // 水平方向
+    fps_label-><span class="highlight">set_valign(</span> Gtk::Align::START <span class="highlight">)</span>; // 垂直方向
+    fps_label-><span class="highlight">set_margin(</span> 12 <span class="highlight">)</span>; // 余白・マージン                
+    // <span class="emphasis3">4.3 Gtk::Overlay にサブのコンテンツを重ねる</span>
+    m_overlay-><span class="emphasis">add_overlay(</span> *fps_label <span class="emphasis">)</span>;
+
+    // cpu
+    cpu_label = Gtk::make_managed&lt;Gtk::Label&gt;( "CPU: 0%" );
+    cpu_label-><span class="emphasis4">add_css_class(</span> "hud-box" <span class="emphasis4">)</span>;
+    cpu_label-><span class="highlight">set_halign(</span> Gtk::Align::END <span class="highlight">)</span>;
+    cpu_label-><span class="highlight">set_valign(</span> Gtk::Align::START <span class="highlight">)</span>;
+    cpu_label-><span class="highlight">set_margin(</span> 12 <span class="highlight">)</span>;
+    m_overlay-><span class="emphasis">add_overlay(</span> *cpu_label <span class="emphasis">)</span>;
+
+    // mem
+    mem_label = Gtk::make_managed&lt;Gtk::Label&gt;( "MEM: 0%" );
+    mem_label-><span class="emphasis4">add_css_class(</span> "hud-box" <span class="emphasis4">)</span>;
+    mem_label-><span class="highlight">set_halign(</span> Gtk::Align::END <span class="highlight">)</span>;
+    mem_label-><span class="highlight">set_valign(</span> Gtk::Align::END <span class="highlight">)</span>;
+    mem_label-><span class="highlight">set_margin(</span> 12 <span class="highlight">)</span>;
+    m_overlay-><span class="emphasis">add_overlay(</span> *mem_label <span class="emphasis">)</span>;
+
+    Glib::signal_timeout().connect(
+        sigc::mem_fun( *this, &MyWindow::update_hud ), 16 );
+}
+
+// 描画
+void MyWindow::on_draw( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int height )
+{
+    cr->set_source_rgb(0.10, 0.12, 0.18);
+    cr->paint();
+
+    int graph_h = height * 0.35;
+    int graph_y = height - graph_h - 20;
+
+    // 背景
+    cr->set_source_rgba( 0.0, 0.0, 0.0, 0.35 );
+    cr->rectangle( 0, graph_y, width, graph_h );
+    cr->fill();
+
+    // --- グリッド線（点線） ---
+    draw_grid( cr, width, graph_y, graph_h );
+
+    // --- 最大/最小ライン + ラベル ---
+    draw_minmax_lines( cr, cpu_history, width, graph_y, graph_h,
+                      0.9, 0.2, 0.2, "CPU" );
+    draw_minmax_lines( cr, mem_history, width, graph_y, graph_h,
+                      0.2, 0.6, 0.9, "MEM" );
+
+    // --- CPU (赤) ---
+    draw_graph( cr, cpu_history, width, graph_y, graph_h,
+               0.9, 0.3, 0.3 );
+
+    // --- MEM (青) ---
+    draw_graph( cr, mem_history, width, graph_y, graph_h,
+               0.3, 0.7, 0.9 );
+
+    frame_count++;
+}
+
+// グリッド線（点線）
+void MyWindow::draw_grid( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr, int width, int y, int h )
+{
+    cr->save();
+    cr->set_line_width( 1.0 );
+    cr->set_source_rgba( 1.0, 1.0, 1.0, 0.15 );
+
+    std::vector&lt;double&gt; dashes = { 4.0, 4.0 };
+    cr->set_dash(dashes, 0.0);
+
+    for (int i = 0; i &lt;= 10; i++) {
+        double py = y + h - ( h * i / 10.0 );
+        cr->move_to( 0, py );
+        cr->line_to( width, py );
+    }
+
+    for (int i = 0; i &lt;= 10; i++) {
+        double px = width * i / 10.0;
+        cr->move_to( px, y );
+        cr->line_to( px, y + h );
+    }
+
+    cr->stroke();
+    cr->restore();
+}
+
+// 最大値・最小値ライン + ラベル
+void MyWindow::draw_minmax_lines( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr,
+                       const std::deque&lt;int&gt;& data,
+                       int width, int y, int h,
+                       double r, double g, double b,
+                       const std::string& label_prefix )
+{
+    if ( data.empty() ) return;
+
+    int maxv = *std::max_element( data.begin(), data.end() );
+    int minv = *std::min_element( data.begin(), data.end() );
+
+    double max_y = y + h - ( maxv * h / 100.0 );
+    double min_y = y + h - ( minv * h / 100.0 );
+
+    // 最大値ライン（濃い色）
+    cr->save();
+    cr->set_line_width( 2.0 );
+    cr->set_source_rgba( r, g, b, 1.0 );
+    cr->move_to( 0, max_y );
+    cr->line_to( width, max_y );
+    cr->stroke();
+    cr->restore();
+
+    // 最大値ラベル
+    draw_text( cr, label_prefix + " max: " + std::to_string( maxv ) + "%",
+              5, max_y - 2, r, g, b, 1.0 );
+
+    // 最小値ライン（薄い色）
+    cr->save();
+    cr->set_line_width( 1.5 );
+    cr->set_source_rgba( r, g, b, 0.35 );
+    cr->move_to( 0, min_y );
+    cr->line_to( width, min_y );
+    cr->stroke();
+    cr->restore();
+
+    // 最小値ラベル
+    draw_text( cr, label_prefix + " min: " + std::to_string( minv ) + "%",
+              5, min_y - 2, r, g, b, 0.6 );
+}
+
+// テキスト描画（Cairo）
+void MyWindow::draw_text( const Cairo::RefPtr&lt;Cairo::Context&gt;& cr,
+               const std::string& text,
+               double x, double y,
+               double r, double g, double b, double a )
+{
+    cr->save();
+    cr->set_source_rgba( r, g, b, a );
+    cr->select_font_face( "Sans", Cairo::ToyFontFace::Slant::NORMAL,
+            Cairo::ToyFontFace::Weight::NORMAL );
+    cr->set_font_size( 12.0 );
+    cr->move_to( x, y );
+    cr->show_text( text );
+    cr->restore();
+}
+
+// 折れ線グラフ
+void MyWindow::draw_graph(const Cairo::RefPtr&lt;Cairo::Context&gt;& cr,
+                const std::deque&lt;int&gt;& data,
+                int width, int y, int h,
+                double r, double g, double b)
+{
+    if ( data.size() &lt; 2 ) return;
+
+    cr->save();
+    cr->set_line_width( 2.0 );
+    cr->set_source_rgb( r, g, b );
+
+    double dx = (double)width / ( max_points - 1 );
+
+    cr->move_to( 0, y + h - ( data[0] * h / 100 ));
+
+    for (size_t i = 1; i &lt; data.size(); i++) {
+        double px = i * dx;
+        double py = y + h - ( data[i] * h / 100 );
+        cr->line_to( px, py );
+    }
+
+    cr->stroke();
+    cr->restore();
+}
+
+// -----------------------------
+// 更新処理
+// -----------------------------
+
+// HUD
+bool MyWindow::update_hud()
+{
+    update_fps();
+    update_cpu();
+    update_mem();
+
+    m_area->queue_draw();
+    return true;
+}
+
+// fps
+void MyWindow::update_fps()
+{
+    auto now = std::chrono::steady_clock::now();
+    double elapsed = std::chrono::duration&lt;double&gt;(now - last_time ).count();
+
+    if ( elapsed >= 1.0 ) {
+        fps_label->set_text( "FPS: " + std::to_string( frame_count ));
+        frame_count = 0;
+        last_time = now;
+    }
+}
+
+// CPU
+void MyWindow::update_cpu()
+{
+    std::ifstream file( "/proc/stat" );
+    if ( !file ) return;
+
+    std::string line;
+    std::getline( file, line );
+
+    std::istringstream iss( line );
+    std::string cpu;
+    long user, nice, system, idle;
+    iss >> cpu >> user >> nice >> system >> idle;
+
+    if ( !cpu_initialized ) {
+        last_user = user;
+        last_nice = nice;
+        last_system = system;
+        last_idle = idle;
+        cpu_initialized = true;
+        return;
+    }
+
+    long user_d = user - last_user;
+    long nice_d = nice - last_nice;
+    long system_d = system - last_system;
+    long idle_d = idle - last_idle;
+
+    long total = user_d + nice_d + system_d + idle_d;
+    long busy = total - idle_d;
+
+    int cpu_percent = (total > 0) ? (busy * 100 / total) : 0;
+
+    cpu_label->set_text("CPU: " + std::to_string(cpu_percent) + "%");
+    push_history(cpu_history, cpu_percent);
+
+    last_user = user;
+    last_nice = nice;
+    last_system = system;
+    last_idle = idle;
+}
+
+// MEM
+void MyWindow::update_mem()
+{
+    std::ifstream file( "/proc/meminfo" );
+    if ( !file ) return;
+
+    std::string key;
+    long mem_total = 0, mem_free = 0, buffers = 0, cached = 0;
+
+    while ( file >> key ) {
+        if ( key == "MemTotal:" ) file >> mem_total;
+        else if ( key == "MemFree:" ) file >> mem_free;
+        else if ( key == "Buffers:" ) file >> buffers;
+        else if ( key == "Cached:" ) file >> cached;
+    }
+
+    long used = mem_total - ( mem_free + buffers + cached );
+    int percent = ( mem_total > 0 ) ? ( used * 100 / mem_total ) : 0;
+
+    mem_label->set_text( "MEM: " + std::to_string(percent) + "%" );
+
+    if ( !mem_initialized ) {
+        mem_initialized = true;
+        return;
+    }
+
+    push_history( mem_history, percent );
+}
+
+// history 管理
+void MyWindow::push_history( std::deque&lt;int&gt;& dq, int value )
+{
+    dq.push_back( value );
+    if ( dq.size() > max_points )
+        dq.pop_front();
+}
+
+// CSS
+void MyWindow::load_css()
+{
+    auto provider = Gtk::CssProvider::create();
+    provider->load_from_path( "style.css" );
+
+    if ( auto display = Gdk::Display::get_default() ) {
+        Gtk::StyleContext::add_provider_for_display(
+            display, provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION );
+    }
+}
+
+int main( int argc, char** argv )
+{
+    auto app = Gtk::Application::create( "overlay.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+          </code></pre>
+        </div>
+      </div>
+    <br>
+
+<!-- Sample Cascading Style Sheet -->
+    <h3 class="ex1">css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+.hud-box <span style="color:turquoise">{</span>
+    <span style="color:lime">background-color</span>: <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 0, 0, 0.45</span> <span style="color:aqua">)</span>;
+    <span style="color:lime">color</span>: <span style="color:fuchsia">#f5f5f7</span>;
+
+    <span style="color:lime">padding</span>: <span style="color:fuchsia">6px 12px</span>;
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">6px</span>;
+
+    <span style="color:lime">font-weight</span>: <span style="color:fuchsia">600</span>;
+    <span style="color:lime">font-size</span>: <span style="color:fuchsia">14px</span>;
+
+    <span style="color:lime">border</span>: <span style="color:fuchsia">1px solid</span> <span style="color:aqua">rgba(</span> <span style="color:fuchsia">255, 255, 255, 0.12</span> <span style="color:aqua">)</span>;
+    <span style="color:lime">box-shadow</span>: <span style="color:fuchsia">0 2px 8px</span> <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 0, 0, 0.45</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+      <center><img src="./images/container-overlay.png"></center>
+      <hr>
+
+    <!-- フッター -->
+    <table width="100%" align="center">
+      <tr>
+        <td width="10%" align="center"><a href="./container-grid.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="./container-stack.html">Next</a></td>
+      </tr>
+    </table>
+    <hr>
+
+    <table width="100%" summary="footer">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
+  </body>
+</html>

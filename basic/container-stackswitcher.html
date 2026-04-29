@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gtk::StackSwitcher</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <!-- タイトル -->
+    <h1 class="title">Gtk::StackSwitcher</h1>
+    <p class="update">(update:2026/4/30)</p>
+    <!-- 説明 -->
+    <h2 class="ex1">概  要</h2>
+    <h3 class="ex2">Gtk::StackSwitcher</h3>
+      <p class="paragraph">Gtk::StackSwitcher は、gtkmm4 の Stack（Gtk::Stack）と組み合わせて使うナビゲーション用ウィジェットで、アプリの画面切り替えを直感的に扱えるようにするための“タブスイッチャー”のような存在です。</p>
+
+    <h3 class="ex1">役　割</h3>
+      <div class="paragraph">
+        <p>Gtk::StackSwitcher は Gtk::Stack に登録された各ページをボタンとして自動生成し、ユーザーがクリックすると Stack の表示ページが切り替わります。</p> 
+        <ul>
+          <li>Stack の add() で設定したタイトルがそのままボタン名になる“ページ切り替えコンテナ”</li>
+          <li>Stack の visible-child を自動で追従</li>
+          <li>Stack のページ追加・削除にも自動対応</li>
+        </ul>
+        <p>つまり、Stack の状態を反映する“コントロールパネル”です。</p>
+        <br>   
+      </div>
+
+    <h3 class="ex1">機　能</h3>
+      <div class="paragraph">
+        <ol>
+          <li>Gtk::Stack と自動同期</li>
+            <p>Stack のページ一覧を読み取り、ページごとのボタンを自動生成します。</p>
+            <p><span class="emphasis6">void</span> <span class="emphasis">Gtk::StackSwitcher::set_stack(</span> <span class="emphasis2">Gtk::Widget&</span> <span class="emphasis4">child</span> <span class="emphasis"></span>)</span></p>      
+            <br>
+          <li>ページタイトル・アイコンを自動利用</li>
+            <p>Gtk::Stack のページには、タイトルを設定することができます。Gtk::StackSwitcher では、このタイトルをユーザーインターフェースに反映します。</p>
+            <br>
+          <li>CSS で簡単にスタイル変更</li>
+            <p>Gtk::StackSwitcher は、CSS でタブ風・ボタン風・フラット UI など自由に変更できます。</p>
+            <br>
+        </ol>
+        <br>
+      </div>
+
+    <!-- Sample C++ Program -->
+    <a id="SampleProgram1"/>
+    <h2 class="ex21">サンプル プログラム</h2>
+    <h3 class="ex1">考え方</h3>
+      <div class="paragraph">
+        <p>Gtk::Stack に表示するページを登録し、その後、Gtk::Stack を Gtk::StackSwitcher に結びつけます。</p>
+      </div>
+
+    <h3 class="ex1">構　成</h3>
+      <div class="paragraph">
+        <ol>
+          <li>child widget の宣言</li>
+            <p>Gtk::StackSwitcher、Gtk::Stack を宣言します。</li>
+          <li>Gtk::Stack とGtk::StackSwitcher の連携</li>
+            <p>Gtk::StackSwitcher::set_stack() を用いて、Gtk::Stack とGtk::StackSwitcher の連携を行います。</p>
+          <li>Gtk::StackSwitcher の margin の設定</li>
+            <p>set_margin_*() を用いて、Gtk::StackSwitcher の各辺のマージンを設定します。</p>
+            <ul class="ul1">
+              <li>void Gtk::Widget::set_margin_start( int margin )</li>
+                <p>左側のマージンを設定します。</p>
+              <li>void Gtk::Widget::set_margin_top( int margin )</li>
+                <p>上側のマージンを設定します。</p>
+              <li>void Gtk::Widget::set_margin_end( int margin )</li>
+                <p>右側のマージンを設定します。</p>
+              <li>void Gtk::Widget::set_margin_bottom( int margin )</li>
+                <p>下側のマージンを設定します。</p>
+            </ul>
+          <li>Gtk::StackSwitcher を Gtk::Box に格納</li>
+            <p>Gtk::Box::append() を用いて、Gtk::StackSwitcher を Gtk::Box に格納します。</p>
+        </ol>
+      </div>
+
+    <h3 class="ex1">リスト</h3>
+      <div class="paragraph">
+        <div id="pagebody2">
+          <pre><code class="language-c++">
+#include &lt;gtkmm.h&gt;
+#include &lt;iostream&gt;
+
+class MyWindow : public Gtk::Window {
+public:
+    MyWindow();
+    virtual ~MyWindow() = default;
+
+private:
+    void apply_css();
+    Gtk::Stack* stack;
+   // <span class="emphasis3">1.child widget の宣言</span>
+    <span class="emphasis">Gtk::StackSwitcher* switcher</span>;
+};
+
+MyWindow::MyWindow()
+{
+    set_title( "StackSwitcher" );
+    set_default_size( 480, 300 );
+
+   // --- Stack ---
+    stack = Gtk::make_managed&lt;Gtk::Stack&gt;();
+    stack->set_transition_type(Gtk::StackTransitionType::SLIDE_LEFT_RIGHT);
+    stack->set_transition_duration( 250 );
+
+   // --- Page 1 ---
+    auto label1 = Gtk::make_managed&lt;Gtk::Label&gt;( "This is Page One" );
+    label1->set_vexpand( true );
+    stack->add( *label1, "page1", "Page One" );
+
+   // --- Page 2 ---
+    auto label2 = Gtk::make_managed&lt;Gtk::Label&gt;( "This is Page Two" );
+    label2->set_vexpand( true );
+    stack->add( *label2, "page2", "Page Two" );
+
+   // --- Page 3 ---
+    auto label3 = Gtk::make_managed&lt;Gtk::Label&gt;( "This is Page Three" );
+    label3->set_vexpand( true );
+    stack->add( *label3, "page3", "Page Three" );
+
+   // --- StackSwitcher ---
+    switcher = Gtk::make_managed&lt;Gtk::StackSwitcher&gt;();
+    // <span class="emphasis5">2.Gtk::Stack とGtk::StackSwitcher の連携</span>
+    switcher-><span class="emphasis">set_stack(</span> *stack <span class="emphasis">)</span>;
+    // <span class="emphasis5">3.Gtk::StackSwitcher の margin の設定</span>
+    switcher-><span class="emphasis">set_margin_top(</span> 6 <span class="emphasis">)</span>;    // Upper
+    switcher-><span class="emphasis">set_margin_bottom(</span> 6 <span class="emphasis">)</span>; // Lower
+    switcher-><span class="emphasis">set_margin_start(</span> 6 <span class="emphasis">)</span>;  // Left
+    switcher-><span class="emphasis">set_margin_end(</span> 6 <span class="emphasis">)</span>;    // Right
+
+   // --- Layout ---
+    auto vbox = Gtk::make_managed&lt;Gtk::Box&gt;( Gtk::Orientation::VERTICAL );
+    // <span class="emphasis5">4.Gtk::StackSwitcher を Gtk::Box に格納</span>
+    vbox-><span class="emphasis">append(</span> *switcher <span class="emphasis">)</span>;
+    vbox->append( *stack );
+
+    set_child( *vbox );
+
+   // --- CSS 適用 ---
+    apply_css();
+}
+
+void MyWindow::apply_css() {
+    auto provider = Gtk::CssProvider::create();
+    try {
+        provider->load_from_path("style.css");
+    } catch( const Glib::Error& ex ) {
+        std::cerr &lt;&lt; "CSS load error: " &lt;&lt; ex.what() &lt;&lt; std::endl;
+        return;
+    }
+
+    auto display = Gdk::Display::get_default();
+    Gtk::StyleContext::add_provider_for_display(
+        display, provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
+int main( int argc, char* argv[] )
+{
+    auto app = Gtk::Application::create( "stackswitcher.example" );
+    return app->make_window_and_run&lt;MyWindow&gt;( argc, argv );
+}
+          </code></pre>
+        </div>
+      </div>
+    <br>
+
+<!-- Sample Cascading Style Sheet -->
+    <h3 class="ex1">Css</h2>
+      <div class="paragraph">
+        <div class="css-example">
+          <pre><code>
+/* ================================
+   StackSwitcher 全体
+   ================================ */
+stackswitcher <span style="color:turquoise">{</span>
+    <span style="color:lime">padding</span>: <span style="color:fuchsia">8px</span>;
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#f7f7f9</span>;
+    <span style="color:lime">border-bottom</span>: <span style="color:fuchsia">1px solid</span> <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 0, 0, 0.08</span> <span style="color:aqua">)</span>;
+
+    /* 全体を少し浮かせる */
+    <span style="color:lime">box-shadow</span>: <span style="color:fuchsia">0 1px 3px</span> <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0,0,0,0.08</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
+
+/* ================================
+   タブ（ボタン）
+   ================================ */
+stackswitcher <span style="color:yellow">button</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">border</span>: <span style="color:fuchsia">none</span>;
+    <span style="color:lime">background</span>: <span style="color:fuchsia">transparent</span>;
+    <span style="color:lime">padding</span>: <span style="color:fuchsia">8px 18px</span>;
+    <span style="color:lime">margin</span>: <span style="color:fuchsia">0 6px</span>;
+
+    <span style="color:lime">color</span>: <span style="color:fuchsia">#333</span>;
+    <span style="color:lime">font-weight</span>: <span style="color:fuchsia">500</span>;
+
+    /* より洗練された角丸 */
+    <span style="color:lime">border-radius</span>: <span style="color:fuchsia">14px</span>;
+
+    /* インジケータ線の土台（透明） */
+    <span style="color:lime">border-bottom</span>: <span style="color:fuchsia">3px solid transparent</span>;
+
+    <span style="color:lime">transition</span>:
+        <span style="color:fuchsia">background 140ms ease</span>,
+        <span style="color:fuchsia">color 140ms ease</span>,
+        <span style="color:fuchsia">border-bottom 140ms ease</span>,
+        <span style="color:fuchsia">box-shadow 140ms ease</span>;
+<span style="color:turquoise">}</span>
+
+/* ホバー時：軽い浮遊感 */
+stackswitcher <span style="color:yellow">button</span>:<span style="color:red">hover</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 0, 0, 0.06</span> <span style="color:aqua">)</span>;
+    <span style="color:lime">box-shadow</span>: <span style="color:fuchsia">0 1px 2px</span> <span style="color:aqua">rgba(</span> 0,0,0,0.12 <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
+
+/* ================================
+   選択中タブ（インジケータ線 + 影）
+   ================================ */
+stackswitcher <span style="color:yellow">button</span>:<span style="color:red">checked</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">background</span>: <span style="color:fuchsia">#ffffff</span>;
+    <span style="color:lime">color</span>: <span style="color:fuchsia">#0078D4</span>;
+
+    /* インジケータ線 */
+    <span style="color:lime">border-bottom</span>: <span style="color:fuchsia">3px solid #0078D4</span>;
+
+    /* 選択タブを少し浮かせる */
+    <span style="color:lime">box-shadow</span>: <span style="color:fuchsia">0 2px 6px</span> <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 120, 212, 0.25</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
+
+/* ================================
+   フォーカスリング（控えめで美しい）
+   ================================ */
+stackswitcher <span style="color:yellow">button</span>:<span style="color:red">focus-visible</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">outline</span>: <span style="color:fuchsia">none</span>;
+    <span style="color:lime">box-shadow</span>: <span style="color:fuchsia">0 0 0 3px</span> <span style="color:aqua">rgba(</span> <span style="color:fuchsia">0, 120, 212, 0.35</span> <span style="color:aqua">)</span>;
+<span style="color:turquoise">}</span>
+
+/* 無効状態 */
+stackswitcher <span style="color:yellow">button</span>:<span style="color:red">disabled</span> <span style="color:turquoise">{</span>
+    <span style="color:lime">opacity</span>: <span style="color:fuchsia">0.4</span>;
+<span style="color:turquoise">}</span>
+          </code></pre>
+        </div>
+      </div>
+      <br>
+
+    <!-- 実行結果 -->
+    <h2 class="ex3">実行結果</h2>
+      <center><img src="./images/container-stackswitcher.png"></center>
+      <hr>
+
+    <!-- フッター -->
+    <table width="100%" summary="Navigation footer">
+      <tr>
+        <td width="10%" align="center"><a href="./container-stack.html">Previous</a></td>
+        <td width="80%" align="center"><a href="../index.html">Top</a></td>
+        <td width="10%" align="center"><a href="./container-stacksidebar.html">Next</a></td>
+      </tr>
+    </table>
+    <hr>
+
+    <table width="100%">
+      <tr>
+        <th bgcolor="#23ff91"><font color="#ffffff">Copyright (c) Henrry Yamm Project All Rights Reserved.</font></th>
+      </tr> 
+    </table>
+
+  </body>
+</html>
